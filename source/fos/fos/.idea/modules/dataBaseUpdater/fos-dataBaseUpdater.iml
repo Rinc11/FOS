@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":dataBaseUpdater" external.linked.project.path="$MODULE_DIR$/../../../dataBaseUpdater" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.fos" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../dataBaseUpdater">
+      <excludeFolder url="file://$MODULE_DIR$/../../../dataBaseUpdater/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../dataBaseUpdater/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../dataBaseUpdater/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

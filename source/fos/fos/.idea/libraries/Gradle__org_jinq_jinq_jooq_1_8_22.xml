@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jinq:jinq-jooq:1.8.22">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jinq/jinq-jooq/1.8.22/d588dfb42a8011cbe5a1fed0b101b590daed0c9c/jinq-jooq-1.8.22.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jinq/jinq-jooq/1.8.22/e3435f2d336c85057160e0af5064da8864b36cbd/jinq-jooq-1.8.22-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

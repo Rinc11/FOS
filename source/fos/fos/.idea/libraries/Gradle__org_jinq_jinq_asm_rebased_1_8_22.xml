@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jinq:jinq-asm-rebased:1.8.22">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jinq/jinq-asm-rebased/1.8.22/e15ffe07e3d0c448a034284eededd192a296e8d0/jinq-asm-rebased-1.8.22.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jinq/jinq-asm-rebased/1.8.22/8df7032ac6669c8189bdf7a6f0fa8d43d44e08c/jinq-asm-rebased-1.8.22-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

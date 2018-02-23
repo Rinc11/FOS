@@ -1,0 +1,45 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Gradle : com.fos-1.0.war (exploded)">
+    <output-path>$PROJECT_DIR$/build/libs/exploded/com.fos-1.0.war</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$">
+        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/build/libs/exploded/com.fos-1.0.war/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="com.fos_main/web/Web Gradle : com.fos-1.0.war" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="com.fos_main" />
+          <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-catalina:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jsp-api:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-util-scan:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-api:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-coyote:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-servlet-api:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.postgresql:postgresql:42.2.1" />
+          <element id="library" level="project" name="Gradle: org.jinq:jinq-jooq:1.8.22" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-util:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-juli:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-annotations-api:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jni:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:9.0.4" />
+          <element id="library" level="project" name="Gradle: org.jinq:analysis:1.8.22" />
+          <element id="library" level="project" name="Gradle: org.jinq:api:1.8.22" />
+          <element id="archive" name="com.fos-dataBaseUpdater-1.0.jar">
+            <element id="module-output" name="dataBaseUpdater_main" />
+            <element id="dir-copy" path="$PROJECT_DIR$/dataBaseUpdater/out/production/resources" />
+          </element>
+          <element id="library" level="project" name="Gradle: org.jinq:jinq-asm-rebased:1.8.22" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-el-api:9.0.4" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

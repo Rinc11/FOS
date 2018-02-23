@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.tomcat:tomcat-coyote:9.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-coyote/9.0.4/c463a9d45274a96d51df1e4102bdcdaac08ce46f/tomcat-coyote-9.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-coyote/9.0.4/2afa651334889d0d2111607f5c2a3acd73805060/tomcat-coyote-9.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
