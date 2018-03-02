@@ -1,0 +1,37 @@
+#logoStartseite {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#logoDefault {
+    float: right;
+    width: 17%;
+}
+
+footer {
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 1rem;
+    background-color: rgb(64, 99, 180);
+    text-align: center;
+}
+
+.jumbotron {
+    color: white;
+    background-color: rgb(64, 99, 180);
+}
+
+.panel>.panel-heading {
+    background-image: none;
+    background-color: rgb(64, 99, 180);
+    color: white;
+}
+
+.welcome {
+    background-image: url("../img/login_background.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
