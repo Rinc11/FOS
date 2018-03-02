@@ -1,0 +1,13 @@
+-Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 9.0
+-Dcatalina.base=C:\Program Files\Apache Software Foundation\Tomcat 9.0
+-Djava.io.tmpdir=C:\Program Files\Apache Software Foundation\Tomcat 9.0\temp
+-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+-Djava.util.logging.config.file=C:\Program Files\Apache Software Foundation\Tomcat 9.0\conf\logging.properties
+
+
+-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.port=1099
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.ssl=false
+>>>>>>>>>>>>> die unteren 4 Linien sind von mir wichtig mit ok speicher und
+ dann neu öffnen und dann server starten: nicht übernehme benutzen
