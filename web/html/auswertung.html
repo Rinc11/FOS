@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>FOS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../img/FOS_favicon.png">
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+
+<body>
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                <a class="navbar-brand" href="#">Fahrzeug Organisations-System</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="startseite.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="fahrt.html">Fahrt erfassen</a>
+                    </li>
+                    <li>
+                        <a href="fahrzeug.html">Fahrzeug</a>
+                    </li>
+                    <li class="active">
+                        <a href="auswertung.html">Auswertungen</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+        <!--/.container-fluid -->
+    </nav>
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="container">
+        <div class="jumbotron">
+            <img id="logoDefault" src="../img/FOS_weiss.png" />
+            <h1>Auswertungen</h1>
+            <br>
+            <p>Hier können Sie Ihre Auswertungen machen.</p>
+        </div>
+        <fieldset>
+            <legend>Filter</legend>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="fahrzeug">Fahrzeug</label>
+                        <input type="text" class="form-control" placeholder="Fahrzeug">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="fahrer">Fahrer</label>
+                        <input type="text" class="form-control" placeholder="Fahrer">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Datum von</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Datum bis</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Fahrttyp">Fahrttyp</label>
+                        <select class="form-control">
+              <option>geschäftlich</option>
+              <option>privat</option>
+            </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="panel panel-default" id="auswertungen">
+            <div class="panel-heading">Auswertungen
+            </div>
+
+            <div class="panel-body">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fahrtnr.</th>
+                            <th>Fahrer</th>
+                            <th>Auto</th>
+                            <th>Fahrt Start</th>
+                            <th>Fahrt Ziel</th>
+                            <th>Kilometer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Fabian Wipf</td>
+                            <td>Fiat pink</td>
+                            <td>Frauenfeld</td>
+                            <td>Winterthur</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jonas Rüegge</td>
+                            <td>Smart</td>
+                            <td>Romanshorn</td>
+                            <td>Zürich</td>
+                            <td>40</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Reto Mayer</td>
+                            <td>VW</td>
+                            <td>Romanshorn</td>
+                            <td>Zürich</td>
+                            <td>40</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Marco Sutter</td>
+                            <td>Audi</td>
+                            <td>Romanshorn</td>
+                            <td>Zürich</td>
+                            <td>40</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- // container -->
+    <br>
+    <footer>© 2017 FOS | All Rights Reserved</footer>
+</body>
+
+</html>
