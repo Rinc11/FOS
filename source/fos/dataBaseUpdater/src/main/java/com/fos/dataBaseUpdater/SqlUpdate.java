@@ -1,13 +1,11 @@
 package com.fos.dataBaseUpdater;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -16,14 +14,29 @@ public class SqlUpdate {
     private HashMap<Integer, String> commands = new HashMap<>();
 
     public SqlUpdate() throws Exception {
-        addCommand(1, ""+
-                "CREATE TABLE bla (\n" +
-                "  col int not null\n" +
-                ");");
-        addCommand(2, ""+
-                "CREATE TABLE blaa (\n" +
-                "  col int not null\n" +
-                ");");
+        File file = new File(getClass().getClassLoader().getResource("dataBaseUpdateSkript.sql").getFile());
+
+        Scanner scanner = new Scanner(file);
+        StringBuilder sb = new StringBuilder();
+        int commandNumber = -1;
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            if(line.startsWith("--#")){
+                if(commandNumber != -1){
+                    addCommand(commandNumber, sb.toString());
+                    sb = new StringBuilder();
+                }
+                String numberStr = line.substring("--#".length(), line.indexOf(":"));
+                commandNumber = Integer.parseInt(numberStr);
+                continue;
+            }else{
+                sb.append(line);
+                sb.append("\n");
+            }
+        }
+        if(commandNumber != -1){
+            addCommand(commandNumber, sb.toString());
+        }
     }
 
     private int lastCommandId = -1;

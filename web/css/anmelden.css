@@ -1,0 +1,56 @@
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.jumbotron {
+    margin: 50px auto;
+    max-width: 400px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+}
+
+.login-title {
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.jumbotron img {
+    width: 80%;
+    height: 80%;
+    display: block;
+    margin: auto auto auto auto;
+}
+
+.login-title {
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.container {
+    padding: 0px;
+    height: auto;
+    background-color: rgb(64, 99, 180);
+}

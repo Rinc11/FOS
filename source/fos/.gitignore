@@ -20,6 +20,14 @@
 /.gradle
 /build
 /.idea/libraries
+/.idea/workspace.xml
+/.idea/runConfigurations/TomcatExternServer.xml
+/.idea/artifacts/Gradle___com_fos_1_0_war__exploded_.xml
+/.idea/modules/com.fos_main.iml
+/.idea/runConfigurations/TomcatIntellijServer.xml
+/.idea/dataSources
+/.idea/dataSources.xml
+/.idea/dataSources.local.xml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

@@ -19,6 +19,4 @@ public class DataBaseUpdater {
         conn.setSchema("fos");
         new SqlUpdate().UpdateDatabase(conn);
     }
-
-
 }
