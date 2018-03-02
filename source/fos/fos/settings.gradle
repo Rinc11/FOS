@@ -1,5 +1,0 @@
-rootProject.name = 'com.fos'
-include ':dataBaseUpdater'
-
-project(':dataBaseUpdater').projectDir = new File(settingsDir, 'dataBaseUpdater')
-

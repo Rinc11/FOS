@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"com.fos.login","l":"Login"},{"p":"com.fos.login","l":"Logout"}]
