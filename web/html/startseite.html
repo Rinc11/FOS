@@ -27,17 +27,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                <a class="navbar-brand" href="startseite.html">Fahrzeug Organisations-System</a>
+                <a class="navbar-brand" href="startseite.html"><img id="logoNav" src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" style="width:70px; margin-top:-12px;" /></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="startseite.html">Home</a></li>
-                    <li><a href="fahrt.html">Fahrt erfassen</a></li>
-                    <li><a href="fahrzeug.html">Fahrzeug</a></li>
-                    <li><a href="auswertung.html">Auswertungen</a></li>
-
+                    <li class="active" class="menu"><a href="startseite.html"><strong class="active">Home</strong></a></li>
+                    <li><a href="fahrt.html" class="menu"><strong>Fahrten</strong></a></li>
+                    <li><a href="fahrzeug.html" class="menu"><strong>Fahrzeuge</strong></a></li>
+                    <li><a href="auswertung.html" class="menu"><strong>Auswertung</strong></a></li>
+                    <li><a href="benutzer.html" class="menu">Muster AG<img id="logoNav" src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px;" /></a></li>
                 </ul>
-
             </div>
             <!--/.nav-collapse -->
         </div>
@@ -46,22 +45,67 @@
 
     <!-- Main component for a primary marketing message or call to action -->
     <div class="container">
-        <div class="jumbotron">
-            <h1>Fahrzeug Organisations-Systems</h1>
-            <p>Herzlich Willkommen auf FOS. Bitte wählen Sie Ihr Fahrzeug aus.</p>
-            <select class="form-control">
-              <option>Opel</option>
-              <option>Audi</option>
-              <option>Opel</option>
-              <option>Audi</option>
-              <option>Opel</option>
-              <option>Audi</option>
-            </select>
-            <br>
-            <p><a class="btn btn-primary btn-large" style="width:100%" href="fahrt.html">GO</a></p>
-            <br>
-            <img id="logoStartseite" src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" />
+
+        <div class="title">
+            <h1>Fahrten erfassen</h1>
+            <p>Hier können Sie Ihre Daten festhalten.</p>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default" id="formStart">
+                    <div class="panel-heading">Formular
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <fieldset>
+                                <legend>Fahrt starten</legend>
+                                <div class="form-group">
+                                    <label for="ort">Ortschaft</label>
+                                    <input type="text" class="form-control" placeholder="Ortschaft">
+                                </div>
+                                <div class="form-group">
+                                    <label for="kmstart">Kilometerstand</label>
+                                    <input type="number" class="form-control" placeholder="Kilometerstand">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fahrttyp">Fahrttyp</label>
+                                    <select class="form-control">
+                                    <option>geschäftlich</option>
+                                    <option>privat</option>
+                            </select>
+                                </div>
+                                <button type="submit" class="btn btn-default">Senden</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default" id="formStop">
+                    <div class="panel-heading">Formular
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <fieldset>
+                                <legend>Fahrt stoppen</legend>
+                                <div class="form-group">
+                                    <label for="ort">Ortschaft</label>
+                                    <input type="text" class="form-control" placeholder="Ortschaft">
+                                </div>
+                                <div class="form-group">
+                                    <label for="kmstart">Kilometerstand</label>
+                                    <input type="number" class="form-control" placeholder="Kilometerstand">
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Senden</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
     </div>
     <!-- // container -->
     <br>

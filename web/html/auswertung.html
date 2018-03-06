@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script>
+    function toggle() {
+    var x = document.getElementById("filteroptionen");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+    </script>
 </head>
 
 <body>
@@ -24,22 +34,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-                <a class="navbar-brand" href="#">Fahrzeug Organisations-System</a>
-            </div>
+  <a class="navbar-brand" href="startseite.html"><img id="logoNav" src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" style="width:70px; margin-top:-12px;" /></a>            </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="startseite.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="fahrt.html">Fahrt erfassen</a>
-                    </li>
-                    <li>
-                        <a href="fahrzeug.html">Fahrzeug</a>
-                    </li>
-                    <li class="active">
-                        <a href="auswertung.html">Auswertungen</a>
-                    </li>
+                  <li class="menu"><a href="startseite.html"><strong>Home</strong></a></li>
+                  <li><a href="fahrt.html" class="menu"><strong>Fahrten</strong></a></li>
+                  <li><a href="fahrzeug.html" class="menu"><strong>Fahrzeuge</strong></a></li>
+                  <li class="active"><a href="auswertung.html" class="menu"><strong class="active">Auswertung</strong></a></li>
+                  <li><a href="benutzer.html" class="menu">Muster AG<img id="logoNav" src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px;" /></a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -49,14 +51,12 @@
 
     <!-- Main component for a primary marketing message or call to action -->
     <div class="container">
-        <div class="jumbotron">
-            <img id="logoDefault" src="../img/FOS_weiss.png" />
-            <h1>Auswertungen</h1>
-            <br>
-            <p>Hier können Sie Ihre Auswertungen machen.</p>
+        <div class="title">
+          <h1>Auswertung</h1>
+          <p>Laden Sie Ihre ausgewerteten Daten bequem als *.csv herunter.</p>
         </div>
-        <fieldset>
-            <legend>Filter</legend>
+        <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+        <fieldset id="filteroptionen">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
@@ -100,9 +100,8 @@
             <div class="panel-heading">Auswertungen
             </div>
 
-            <div class="panel-body">
-
-                <table class="table table-hover">
+            <div class="scrollme">
+                <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th>Fahrtnr.</th>
@@ -117,7 +116,7 @@
                         <tr>
                             <td>1</td>
                             <td>Fabian Wipf</td>
-                            <td>Fiat pink</td>
+                            <td>Fiat</td>
                             <td>Frauenfeld</td>
                             <td>Winterthur</td>
                             <td>15</td>

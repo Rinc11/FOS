@@ -12,6 +12,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script>
+    function toggle() {
+    var x = document.getElementById("filteroptionen");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+    </script>
 </head>
 
 <body>
@@ -25,14 +35,14 @@
                        <span class="icon-bar"></span>
                        <span class="icon-bar"></span>
                      </button>
-                <a class="navbar-brand" href="startseite.html">Fahrzeug Organisations-System</a>
-            </div>
+  <a class="navbar-brand" href="startseite.html"><img id="logoNav" src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" style="width:70px; margin-top:-12px;" /></a>            </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="startseite.html">Home</a></li>
-                    <li><a href="fahrt.html">Fahrt erfassen</a></li>
-                    <li class="active"><a href="fahrzeug.html">Fahrzeug</a></li>
-                    <li><a href="auswertung.html">Auswertungen</a></li>
+                  <li class="menu"><a href="startseite.html"><strong>Home</strong></a></li>
+                  <li><a href="fahrt.html" class="menu"><strong>Fahrten</strong></a></li>
+                  <li class="active"><a href="fahrzeug.html" class="menu"><strong class="active">Fahrzeuge</strong></a></li>
+                  <li><a href="auswertung.html" class="menu"><strong>Auswertung</strong></a></li>
+                  <li><a href="benutzer.html" class="menu">Muster AG<img id="logoNav" src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px;" /></a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -41,19 +51,60 @@
     </nav>
     <!-- Main component for a primary marketing message or call to action -->
     <div class="container">
-        <div class="jumbotron">
-            <img id="logoDefault" src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" />
-            <h1 class="display-3">Fahrzeuge</h1>
-            <br>
-            <p>Hier können Sie Ihre Fahrzeuge verwalten</p>
+
+        <div class="title">
+            <h1>Fahrzeuge</h1>
+            <p>Hier können Sie bereits eingetragene Fahrzeuge einsehen, editieren und neue hinzufügen.</p>
         </div>
+        <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+        <fieldset id="filteroptionen">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="fahrzeug">Fahrzeug</label>
+                        <input type="text" class="form-control" placeholder="Fahrzeug">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="fahrer">Fahrer</label>
+                        <input type="text" class="form-control" placeholder="Fahrer">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Datum von</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Datum bis</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Fahrttyp">Fahrttyp</label>
+                        <select class="form-control">
+              <option>geschäftlich</option>
+              <option>privat</option>
+            </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
         <div class="panel panel-default" id="tables">
             <div class="panel-heading">Liste
             </div>
             <div class="panel-body">
-                <a class="btn btn-default" href="fahrzeugFormularNeu.html">Fahrzeug hinzufügen</a>
+                <a class="btn btn-default" href="fahrzeugFormularNeu.html" style="color: rgb(64, 99, 180);">Fahrzeug hinzufügen</a>
                 <br><br>
-                <table class="table table-hover">
+                <div class="scrollme">
+                    <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th>Seriennummer</th>
@@ -72,7 +123,7 @@
                             <td>2009</td>
                             <td>Diesel</td>
                             <td>
-                                <a class="btn btn-default" href="fahrzeugFormularBearbeiten.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                 <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
@@ -83,7 +134,7 @@
                             <td>2009</td>
                             <td>Diesel</td>
                             <td>
-                                <a class="btn btn-default" href="fahrzeugFormularBearbeiten.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                 <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
@@ -94,7 +145,7 @@
                             <td>2009</td>
                             <td>Diesel</td>
                             <td>
-                                <a class="btn btn-default" href="fahrzeugFormularBearbeiten.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                 <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
@@ -105,7 +156,7 @@
                             <td>2009</td>
                             <td>Diesel</td>
                             <td>
-                                <a class="btn btn-default" href="fahrzeugFormularBearbeiten.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                 <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
@@ -114,6 +165,7 @@
             </div>
         </div>
     </div>
+  </div>
     <!-- // container -->
     <br>
     <footer>© 2017 FOS | All Rights Reserved</footer>
