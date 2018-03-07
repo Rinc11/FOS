@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.fos.Startseite" %>
 <%--
   Created by IntelliJ IDEA.
   User: retom
@@ -15,9 +17,16 @@
     if(session.getAttribute("userName") == null){
         response.sendRedirect("login.jsp");
     }
+    Startseite startseite = new Startseite();
+
+    request.setAttribute("page", startseite);
 %>
 <h1>Startseite</h1>
 <p>user: ${userName}</p>
+
+<c:forEach items="${page.items}" var="conf">  <%--hier muss der get anfang von der Methode weggelassen werden--%>
+    <p>Id:${conf.id} Wert: ${conf.value}</p>
+</c:forEach>
 
 <form action="Logout">
     <input type="submit" value="Logout">

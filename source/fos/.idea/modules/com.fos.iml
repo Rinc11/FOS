@@ -4,6 +4,7 @@
     <facet type="web" name="Web">
       <configuration>
         <descriptors>
+          <deploymentDescriptor name="context.xml" url="file://$MODULE_DIR$/../../fos/build/libs/exploded/com.fos-1.0.war/META-INF/context.xml" />
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/../../fos/build/libs/exploded/com.fos-1.0.war/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
@@ -14,6 +15,7 @@
     <facet type="web" name="Web2">
       <configuration>
         <descriptors>
+          <deploymentDescriptor name="context.xml" url="file://$MODULE_DIR$/../../fos/src/main/webapp/META-INF/context.xml" />
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/../../fos/src/main/webapp/WEB-INF/web.xml" />
         </descriptors>
         <webroots>

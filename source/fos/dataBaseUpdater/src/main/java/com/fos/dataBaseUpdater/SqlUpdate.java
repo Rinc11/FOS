@@ -1,6 +1,9 @@
 package com.fos.dataBaseUpdater;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,13 +17,12 @@ public class SqlUpdate {
     private HashMap<Integer, String> commands = new HashMap<>();
 
     public SqlUpdate() throws Exception {
-        File file = new File(getClass().getClassLoader().getResource("dataBaseUpdateSkript.sql").getFile());
-
-        Scanner scanner = new Scanner(file);
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+        String line;
         StringBuilder sb = new StringBuilder();
         int commandNumber = -1;
-        while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
+        while ((line = reader.readLine()) != null){
             if(line.startsWith("--#")){
                 if(commandNumber != -1){
                     addCommand(commandNumber, sb.toString());
@@ -34,6 +36,7 @@ public class SqlUpdate {
                 sb.append("\n");
             }
         }
+
         if(commandNumber != -1){
             addCommand(commandNumber, sb.toString());
         }
@@ -71,20 +74,20 @@ public class SqlUpdate {
         int dbVersion = -1;
         try {
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT value FROM \"Config\" WHERE \"Id\"='dbVersion'");
+            ResultSet resultSet = statement.executeQuery("SELECT ConfigValue FROM FosConfig WHERE ConfigId='dbVersion'");
             resultSet.next();
             dbVersion = Integer.parseInt(resultSet.getString(1));
         }catch(SQLException e) {
             Statement statement = conn.createStatement();
             statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
             statement.execute(""+
-                    "CREATE TABLE \"Config\" (\n" +
-                    "  \"Id\"  TEXT NOT NULL\n" +
-                    "    CONSTRAINT \"Config_pkey\"\n" +
+                    "CREATE TABLE FosConfig (\n" +
+                    "  ConfigId TEXT NOT NULL\n" +
+                    "    CONSTRAINT FosConfig_pkey\n" +
                     "    PRIMARY KEY,\n" +
-                    "  value TEXT\n" +
+                    "  ConfigValue TEXT\n" +
                     ");\n");
-            statement.execute("INSERT INTO \"Config\" (\"Id\", value) VALUES ('dbVersion', '0');");
+            statement.execute("INSERT INTO FosConfig (ConfigId, ConfigValue) VALUES ('dbVersion', '0');");
         }
 
         conn.setAutoCommit(false);
@@ -93,7 +96,7 @@ public class SqlUpdate {
             for(Map.Entry<Integer, String> command : commands){
                 try {
                     conn.createStatement().execute(command.getValue());
-                    conn.createStatement().execute("UPDATE \"Config\" set value = '" + command.getKey() + "' WHERE \"Id\" = 'dbVersion'");
+                    conn.createStatement().execute("UPDATE FosConfig set ConfigValue = '" + command.getKey() + "' WHERE ConfigId = 'dbVersion'");
                     conn.commit();
                     System.out.println("command " + command.getKey() + " executed");
                 }catch (SQLException e){

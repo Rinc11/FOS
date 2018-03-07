@@ -1,3 +1,5 @@
+import jdk.internal.dynalink.linker.LinkerServices
+
 version '1.0'
 
 apply plugin: 'java'
@@ -7,6 +9,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -14,6 +17,7 @@ dependencies {
     implementation 'org.apache.tomcat:tomcat-catalina:8.5.28'
     implementation 'org.apache.tomcat:tomcat-servlet-api:8.5.28'
 
+    compile 'javax.servlet:jstl:1.2'
     implementation 'org.postgresql:postgresql:42.2.1'
 
     compile project (':dataBaseUpdater')

@@ -10,6 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="com.fos_main" />
+    <orderEntry type="library" name="Gradle: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-catalina:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jsp-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-util-scan:8.5.28" level="project" />
