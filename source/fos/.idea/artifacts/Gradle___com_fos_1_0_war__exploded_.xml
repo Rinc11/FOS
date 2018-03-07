@@ -10,31 +10,31 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/build/libs/exploded/com.fos-1.0.war/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="com.fos_main/web/Web Gradle : com.fos-1.0.war" />
+      <element id="javaee-facet-resources" facet="source-com.fos_main/web/Web Gradle : com.fos-1.0.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="com.fos_main" />
+          <element id="module-output" name="source-com.fos_main" />
           <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: javax.servlet:jstl:1.2" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-catalina:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jsp-api:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-util-scan:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-api:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-coyote:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-servlet-api:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.postgresql:postgresql:42.2.1" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-util:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-annotations-api:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jni:8.5.28" />
           <element id="archive" name="com.fos-dataBaseUpdater-1.0.jar">
             <element id="module-output" name="dataBaseUpdater_main" />
             <element id="dir-copy" path="$PROJECT_DIR$/dataBaseUpdater/out/production/resources" />
           </element>
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:8.5.28" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-el-api:8.5.28" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-catalina/8.5.28/f06f94704c423061e8a597e2986d01e12d2433cb/tomcat-catalina-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-jsp-api/8.5.28/7475bd9a32f56355964ae01258822bf2340ff763/tomcat-jsp-api-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-util-scan/8.5.28/7426ccf021f1625305a8edc21169628dbaffe0a6/tomcat-util-scan-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-api/8.5.28/2013e684c441d810c417ca8c7705b6509dbc124d/tomcat-api-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-coyote/8.5.28/54b3436b1efec7a00e5b0bcdca22b685652b97ce/tomcat-coyote-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-servlet-api/8.5.28/c3337264bf45efce59665d63e4ecd6be6c8efe60/tomcat-servlet-api-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/42.2.1/b7f61848ac43ae9fa6e38935bfd75628b7fc9086/postgresql-42.2.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-util/8.5.28/d53a31fe605c1bbba753dd57846a77b22bc7d7b0/tomcat-util-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-juli/8.5.28/e29e7e448a8f8d600e139b7bba58dac25a25064b/tomcat-juli-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-annotations-api/8.5.28/25dd92ba2548e684687f9024e2848ea98ab63f3a/tomcat-annotations-api-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-jni/8.5.28/e2b86ebbc1b5bccddb53a2c54c9b45e353204156/tomcat-jni-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-jaspic-api/8.5.28/568fa8d129ba42b35fbe10c03bf730c3a596ba1e/tomcat-jaspic-api-8.5.28.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-el-api/8.5.28/7d218e7412ad5463f0f1c9638076ab46a2cae5f5/tomcat-el-api-8.5.28.jar" />
         </element>
       </element>
     </root>

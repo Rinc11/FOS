@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dataBaseUpdater/dataBaseUpdater_main.iml" filepath="$PROJECT_DIR$/.idea/modules/dataBaseUpdater/dataBaseUpdater_main.iml" group="dataBaseUpdater" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dataBaseUpdater/dataBaseUpdater_test.iml" filepath="$PROJECT_DIR$/.idea/modules/dataBaseUpdater/dataBaseUpdater_test.iml" group="dataBaseUpdater" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dataBaseUpdater/fos-dataBaseUpdater.iml" filepath="$PROJECT_DIR$/.idea/modules/dataBaseUpdater/fos-dataBaseUpdater.iml" group="dataBaseUpdater" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-com.fos_main.iml" filepath="$PROJECT_DIR$/.idea/modules/source-com.fos_main.iml" group="com.fos" />
     </modules>
   </component>
 </project>
