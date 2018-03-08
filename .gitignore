@@ -104,7 +104,6 @@ crashlytics-build.properties
 fabric.properties
 
 source/fos/.gitignore
-source/fos/.idea/modules/com.fos_main.iml
 source/fos/.idea/runConfigurations/TomcatExternServer.xml
 source/fos/.idea/runConfigurations/TomcatIntellijServer.xml
 source/fos/.idea/workspace.xml
