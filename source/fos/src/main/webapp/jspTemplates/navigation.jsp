@@ -1,11 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: retom
-  Date: 09.03.2018
-  Time: 17:41
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -20,14 +13,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li <c:if  test="${navSelection=='Startseite'}"> class="active" class="menu" </c:if> ><a href="startseite.html"><strong class="active">Home</strong></a></li>
-                <li><a href="fahrt.html" class="menu"><strong>Fahrten</strong></a></li>
-                <li><a href="fahrzeug.html" class="menu"><strong>Fahrzeuge</strong></a></li>
-                <li><a href="auswertung.html" class="menu"><strong>Auswertung</strong></a></li>
-                <li><a href="benutzer.html" class="menu">Muster AG<img id="logoNav" src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px;" /></a></li>
+                <li <c:if  test="${navSelection=='Startseite'}"> class="active" </c:if>><a href="../startPage.jsp"><strong>Home</strong></a></li>
+                <li <c:if  test="${navSelection=='Fahrt'}"> class="active" </c:if>><a href="../fahrt.jsp"><strong>Fahrten</strong></a></li>
+                <li <c:if  test="${navSelection=='Fahrzeug'}"> class="active" </c:if>><a href="../fahrzeug.jsp"><strong>Fahrzeuge</strong></a></li>
+                <li <c:if  test="${navSelection=='Auswertung'}"> class="active" </c:if>><a href="../auswertung.jsp"><strong>Auswertung</strong></a></li>
+                <li <c:if  test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../benutzer.jsp"><strong>Muster AG</strong>
+                    <img id="logoNav" src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px; margin-right:0px;" /></a></li>
+                <li><a href="Logout" class="menu" style="margin-left:-15px;"><strong>Abmelden</strong></a></li>
             </ul>
         </div>
-        <!--/.nav-collapse -->
     </div>
-    <!--/.container-fluid -->
 </nav>
