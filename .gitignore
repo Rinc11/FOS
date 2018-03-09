@@ -11,4 +11,5 @@
 *.zip
 *.tar.gz
 *.rar
-documents/00_Sitzungen/Milestone_1/~$Meilenstein1.pptx
+*/~$*.pptx
+*/~$*.docx
