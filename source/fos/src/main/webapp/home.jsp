@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.fos.Startseite" %>
-<%@ page import="com.fos.tools.Helper" %>
 
 <%
     Startseite startseite = new Startseite(session, response);
@@ -30,7 +29,6 @@
     <c:forEach items="${actualPage.items}" var="conf">  <%--hier muss der get anfang von der Methode weggelassen werden--%>
         <p>Id:${conf.id} Wert: ${conf.value}</p>
     </c:forEach>
-    
 </div>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>

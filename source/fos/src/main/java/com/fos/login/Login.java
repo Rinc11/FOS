@@ -15,11 +15,10 @@ import java.io.IOException;
 public class Login extends HttpServlet {
 
     /**
-     * Empfängt den Post Requst des Anmelde Formulares
+     * Empfängt den Post Requst des Anmelde Formulares.
+     * Bei Erfolgreichem Anmelden wird man zur Startseite weitergeleitet.
      * @param request Daten des Anmelde Formulares
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param response Antwort nach dem Anmelden
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("userName");
@@ -28,12 +27,17 @@ public class Login extends HttpServlet {
         if(userName.equals("reto") && pass.equals("bla")){
             HttpSession session = request.getSession();
             session.setAttribute("userName", userName);
-            response.sendRedirect("startPage.jsp");
+            response.sendRedirect("home.jsp");
         }else{
             response.sendRedirect("login.jsp");
         }
     }
 
+    /**
+     * eine Test Methode wird gelöscht sobald mehr Methoden hier sind um zu testen
+     * @return den String "test"
+     */
+    @Deprecated
     public String aTest(){
         return "test";
     }
