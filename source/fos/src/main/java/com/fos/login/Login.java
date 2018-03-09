@@ -24,6 +24,6 @@ public class Login extends HttpServlet {
     }
 
     public String aTest(){
-        return "";
+        return "test";
     }
 }

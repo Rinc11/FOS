@@ -9,6 +9,6 @@ public class RunTest {
     @Test
     public void RunTest(){
         Login lo = new Login();
-        assertTrue(lo.aTest() == "");
+        assertTrue(lo.aTest() == "test");
     }
 }
