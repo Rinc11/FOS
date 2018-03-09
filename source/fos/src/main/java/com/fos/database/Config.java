@@ -20,7 +20,6 @@ public class Config {
      * gibt alle Konfig Einträge zurück
      * @param conn Die Connection zur Datenbank
      * @return Eine Liste von Konfig einträge
-     * @throws SQLException bei Datenbankfehler wird diese Exeption geworfen
      */
     public static List<Config> getAllConfig(Connection conn) throws SQLException {
         List<Config> result = new ArrayList<>();

@@ -8,9 +8,11 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
-import java.sql.SQLException;
 
 
+/**
+ * wird gestartet wenn der Tomcat Server started.
+ */
 public class OnStartup implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 
@@ -25,53 +27,38 @@ public class OnStartup implements ServletContextListener,
 
     }
 
-    // -------------------------------------------------------
-    // ServletContextListener implementation
-    // -------------------------------------------------------
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
-      /* This method is called when the servlet context is
-         initialized(when the Web application is deployed). 
-         You can initialize servlet context related data here.
-      */
+
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {
-      /* This method is invoked when the Servlet Context 
-         (the Web application) is undeployed or 
-         Application Server shuts down.
-      */
+
     }
 
-    // -------------------------------------------------------
-    // HttpSessionListener implementation
-    // -------------------------------------------------------
+    @Override
+    public void attributeAdded(HttpSessionBindingEvent se) {
+
+    }
+
+    @Override
+    public void attributeRemoved(HttpSessionBindingEvent se) {
+
+    }
+
+    @Override
+    public void attributeReplaced(HttpSessionBindingEvent se) {
+
+    }
+
+    @Override
     public void sessionCreated(HttpSessionEvent se) {
-        /* Session is created. */
+
     }
 
+    @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        /* Session is destroyed. */
-    }
 
-    // -------------------------------------------------------
-    // HttpSessionAttributeListener implementation
-    // -------------------------------------------------------
-
-    public void attributeAdded(HttpSessionBindingEvent sbe) {
-      /* This method is called when an attribute 
-         is added to a session.
-      */
-    }
-
-    public void attributeRemoved(HttpSessionBindingEvent sbe) {
-      /* This method is called when an attribute
-         is removed from a session.
-      */
-    }
-
-    public void attributeReplaced(HttpSessionBindingEvent sbe) {
-      /* This method is invoked when an attibute
-         is replaced in a session.
-      */
     }
 }

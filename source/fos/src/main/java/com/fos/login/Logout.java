@@ -8,8 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Logout Servlet; logt den aktuellen Benutzer aus.
+ */
 @WebServlet(name = "/Logout", value = "/Logout")
 public class Logout extends HttpServlet {
+
+    /**
+     * Empfängt die Anfrage für das Ausloggen.
+     * @param request Aktueller request wird benötigt um auf die session zuzugreifen
+     * @param response die Antwort des Logouts. Leitet auf die Anmeldemaske weiter
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("userName");
