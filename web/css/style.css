@@ -38,6 +38,10 @@
   color: rgb(64, 99, 180) !important;
 }
 
+#navbar > ul > .active > a > strong{
+	color: rgb(64, 99, 180) !important;
+}
+
 .container-fluid {
   background-color: rgb(64, 99, 180);
   border-style-top: none;
