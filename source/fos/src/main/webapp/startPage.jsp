@@ -30,10 +30,7 @@
     <c:forEach items="${actualPage.items}" var="conf">  <%--hier muss der get anfang von der Methode weggelassen werden--%>
         <p>Id:${conf.id} Wert: ${conf.value}</p>
     </c:forEach>
-
-    <form action="Logout">
-        <input type="submit" value="Logout">
-    </form>
+    
 </div>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>
