@@ -1,9 +1,6 @@
 package com.fos.dataBaseUpdater;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,12 +8,19 @@ import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * Updated die Datenbank auf die neusete Version.
+ */
 public class SqlUpdate {
 
     private HashMap<Integer, String> commands = new HashMap<>();
+    private int lastCommandId = -1;
 
-    public SqlUpdate() throws Exception {
+    /**
+     * erstellt eine Liste aller befehle in dataBaseUpdateSkript.sql
+     * @throws IOException beim lesen von dataBaseUpdateSkript.sql
+     */
+    public SqlUpdate() throws IOException {
         InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
         BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
         String line;
@@ -42,27 +46,40 @@ public class SqlUpdate {
         }
     }
 
-    private int lastCommandId = -1;
-    private void addCommand(int id, String command) throws Exception {
+    /**
+     * Fügt ein sql Befehl zur Liste hinzu
+     * @param id die Id des Befehles
+     * @param command der eigentliche Befehl
+     */
+    private void addCommand(int id, String command) {
         if(commands.containsKey(id)){
             System.out.println("key already exists");
-            throw new Exception("key already exists");
+            throw new RuntimeException("key already exists");
         }else {
             if(lastCommandId<id){
                 commands.put(id,command );
             }else{
                 System.out.println("id is smaller then last");
-                throw new Exception("id is smaller then last");
+                throw new RuntimeException("id is smaller then last");
             }
         }
     }
 
+    /**
+     * gibt die letzte Befehls id zurück welche im sql skript vorhanden ist
+     * @return letze id im sql Skript(aktuellster befehl)
+     */
     private int getLastCommandId(){
         return commands.keySet().stream()
                 .max(Integer::compareTo)
                 .orElse(-1);
     }
 
+    /***
+     * gibt eine Liste von Befehlen welche eine grössere id haben als der parameter
+     * @param afterId alle Befehle mit einer Id grösser als diese Nummer werden zurückgegeben
+     * @return eine Liste von entryies mit der id und dem Befehl der Id
+     */
     private List<Map.Entry> getCommandsAfter(int afterId){
         return commands.entrySet().stream()
                 .filter(f -> f.getKey()> afterId)
@@ -70,6 +87,12 @@ public class SqlUpdate {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * started das Update der Datenbank. Es werden nur befehle ausgeführt welche noch nicht
+     * auf der Datenbank vorhanden sind. Dafür wird die Tabelle "fosConfig" verwendet
+     * @param conn die verbindung zur Datenbank
+     * @throws SQLException wird geworfen wenn es ein Fehler mit der Datenkbank gibt.
+     */
     public void UpdateDatabase(Connection conn) throws SQLException {
         int dbVersion = -1;
         try {

@@ -3,7 +3,15 @@ package com.fos.dataBaseUpdater;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/***
+ * Diese Klasse started den Update Prozess der Datenbank.
+ */
 public class DataBaseUpdater {
+
+    /***
+     * main Methode. Start Methode des Konsolenanwendung
+     * @param args Argumente werden keine benötigt. Macht nichts
+     */
     public static void main (String [] args){
         System.out.println("start database update");
 
@@ -14,6 +22,11 @@ public class DataBaseUpdater {
         }
     }
 
+    /***
+     * ruft die SqlUpdate.UpdateDatabase Methode auf - der eigentliche Update Befehl
+     * @param url
+     * @throws Exception
+     */
     public DataBaseUpdater(String url) throws Exception {
         Connection conn = DriverManager.getConnection(url);
         conn.setSchema("fos");
