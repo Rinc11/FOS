@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSessionBindingEvent;
 public class OnStartup implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 
-    // Public constructor is required by servlet spec
+    /***
+     * wird ausgeführt wenn der Server started
+     */
     public OnStartup() {
 
         try {
