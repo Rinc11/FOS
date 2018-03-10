@@ -1,6 +1,8 @@
 package com.fos.tools;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -69,7 +71,8 @@ public class Helper {
     }
 
     /***
-     * fügt eine Fehlermeldung hinzu, welche der Benutzer sehen wird.
+     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
+     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
      * @param request der request wo die fehlermeldung angezeigt werden soll
      * @param errorMessage die Fehlermelung
      * @param e Exeption welche geloggt wird.
@@ -80,7 +83,8 @@ public class Helper {
     }
 
     /***
-     * fügt eine Fehlermeldung hinzu, welche der Benutzer sehen wird.
+     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
+     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
      * @param request der request wo die fehlermeldung angezeigt werden soll
      * @param errorMessage die Fehlermelung
      */
@@ -93,8 +97,33 @@ public class Helper {
         errorMessages.add(errorMessage);
     }
 
+    /**
+     * schreibt eine Fehlermeldung in die Konsole
+     * @param e Exeption welche gedruckt wird
+     */
     public static void logExeption(Exception e){
         System.out.println(e.getMessage());
         e.printStackTrace();
+    }
+
+    /**
+     * erstellt einen hash(SHA-256) von einem Text z.B. Passwort
+     * @param password Text der gehashed werden soll.
+     * @return SHA-256 Hash als String
+     */
+    public static String getHash(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] bytes = md.digest(password.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for(byte b : bytes){
+            String hexByte = Integer.toHexString(b & 0xff);
+            if(hexByte.length() ==1){
+                hexByte = '0'+ hexByte;
+            }else if(hexByte.length() != 2){
+                throw new RuntimeException();
+            }
+            sb.append(hexByte);
+        }
+        return sb.toString();
     }
 }
