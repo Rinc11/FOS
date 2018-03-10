@@ -26,29 +26,34 @@ public class SqlUpdate {
      * erstellt eine Liste aller befehle in dataBaseUpdateSkript.sql
      * @throws IOException beim lesen von dataBaseUpdateSkript.sql
      */
-    public SqlUpdate() throws IOException {
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
-        String line;
-        StringBuilder sb = new StringBuilder();
-        int commandNumber = -1;
-        while ((line = reader.readLine()) != null){
-            if(line.startsWith("--#")){
-                if(commandNumber != -1){
-                    addCommand(commandNumber, sb.toString());
-                    sb = new StringBuilder();
+    public SqlUpdate() {
+        try {
+            InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            int commandNumber = -1;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("--#")) {
+                    if (commandNumber != -1) {
+                        addCommand(commandNumber, sb.toString());
+                        sb = new StringBuilder();
+                    }
+                    String numberStr = line.substring("--#".length(), line.indexOf(":"));
+                    commandNumber = Integer.parseInt(numberStr);
+                    continue;
+                } else {
+                    sb.append(line);
+                    sb.append("\n");
                 }
-                String numberStr = line.substring("--#".length(), line.indexOf(":"));
-                commandNumber = Integer.parseInt(numberStr);
-                continue;
-            }else{
-                sb.append(line);
-                sb.append("\n");
             }
-        }
 
-        if(commandNumber != -1){
-            addCommand(commandNumber, sb.toString());
+            if (commandNumber != -1) {
+                addCommand(commandNumber, sb.toString());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -99,43 +104,48 @@ public class SqlUpdate {
      * @param conn die verbindung zur Datenbank
      * @throws SQLException wird geworfen wenn es ein Fehler mit der Datenkbank gibt.
      */
-    public void UpdateDatabase(Connection conn) throws SQLException {
-        int dbVersion = -1;
+    public void UpdateDatabase(Connection conn) {
         try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT ConfigValue FROM FosConfig WHERE ConfigId='dbVersion'");
-            resultSet.next();
-            dbVersion = Integer.parseInt(resultSet.getString(1));
-        }catch(SQLException e) {
-            Statement statement = conn.createStatement();
-            statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
-            statement.execute(""+
-                    "CREATE TABLE FosConfig (\n" +
-                    "  ConfigId TEXT NOT NULL\n" +
-                    "    CONSTRAINT FosConfig_pkey\n" +
-                    "    PRIMARY KEY,\n" +
-                    "  ConfigValue TEXT\n" +
-                    ");\n");
-            statement.execute("INSERT INTO FosConfig (ConfigId, ConfigValue) VALUES ('dbVersion', '0');");
-        }
-
-        conn.setAutoCommit(false);
-        if(dbVersion < getLastCommandId()){
-            List<Map.Entry> commands = getCommandsAfter(dbVersion);
-            for(Map.Entry<Integer, String> command : commands){
-                try {
-                    conn.createStatement().execute(command.getValue());
-                    conn.createStatement().execute("UPDATE FosConfig set ConfigValue = '" + command.getKey() + "' WHERE ConfigId = 'dbVersion'");
-                    conn.commit();
-                    System.out.println("command " + command.getKey() + " executed");
-                }catch (SQLException e){
-                    System.out.println("error by command " + command.getKey());
-                    throw e;
-                }
+            int dbVersion = -1;
+            try {
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT ConfigValue FROM FosConfig WHERE ConfigId='dbVersion'");
+                resultSet.next();
+                dbVersion = Integer.parseInt(resultSet.getString(1));
+            } catch (SQLException e) {
+                Statement statement = conn.createStatement();
+                statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
+                statement.execute("" +
+                        "CREATE TABLE FosConfig (\n" +
+                        "  ConfigId TEXT NOT NULL\n" +
+                        "    CONSTRAINT FosConfig_pkey\n" +
+                        "    PRIMARY KEY,\n" +
+                        "  ConfigValue TEXT\n" +
+                        ");\n");
+                statement.execute("INSERT INTO FosConfig (ConfigId, ConfigValue) VALUES ('dbVersion', '0');");
             }
-            System.out.println(commands.size() + " commands executed");
-        }else{
-            System.out.println("database is up to date");
+
+            conn.setAutoCommit(false);
+            if (dbVersion < getLastCommandId()) {
+                List<Map.Entry> commands = getCommandsAfter(dbVersion);
+                for (Map.Entry<Integer, String> command : commands) {
+                    try {
+                        conn.createStatement().execute(command.getValue());
+                        conn.createStatement().execute("UPDATE FosConfig set ConfigValue = '" + command.getKey() + "' WHERE ConfigId = 'dbVersion'");
+                        conn.commit();
+                        System.out.println("command " + command.getKey() + " executed");
+                    } catch (SQLException e) {
+                        System.out.println("error by command " + command.getKey());
+                        throw e;
+                    }
+                }
+                System.out.println(commands.size() + " commands executed");
+            } else {
+                System.out.println("database is up to date");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

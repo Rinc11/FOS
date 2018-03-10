@@ -13,8 +13,13 @@ public class Login {
 
     private Connection conn;
     private String formularUserName;
-    public Login(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
-        conn = Helper.getConnection();
+    public Login(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            conn = Helper.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Helper.addError(request, "Datenbank fehler",e);
+        }
         formularUserName = request.getParameter("userName");
         String pass = request.getParameter("pass");
 
@@ -22,9 +27,14 @@ public class Login {
             if (formularUserName.equals("reto") && pass.equals("bla")) {
                 HttpSession session = request.getSession();
                 session.setAttribute("userName", formularUserName);
-                response.sendRedirect("home.jsp");
+                try {
+                    response.sendRedirect("home.jsp");
+
+                } catch (IOException e) {
+                    Helper.addError(request, "Fehler beim weiterleiten zur Startseite",e);
+                }
             }else{
-                request.setAttribute("errorReason", "Falsches Passwort oder Benutzername");
+                Helper.addError(request, "Falsches Passwort oder Benutzername");
             }
         }
     }

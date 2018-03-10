@@ -6,6 +6,7 @@
 
 <%
     Login login = new Login(request, response);
+    request.setAttribute("actualPage", login);
 %>
 <!DOCTYPE html>
 <html lang="de">
@@ -25,8 +26,10 @@
                 <hr style="border-color:#777; border-width:2px;">
                 Melden Sie sich an:
             </h2>
+            <jsp:include page="jspTemplates/showErrorMessage.jsp"/>
             <form class="form-signin" action="login.jsp" method="post">
-                <input type="text" name="userName" class="form-control" placeholder="Benutzername" required autofocus>
+                <input type="text" name="userName" class="form-control" placeholder="Benutzername" required autofocus
+                       value="${actualPage.formularUserName}">
                 <input type="password" name="pass" class="form-control" placeholder="Passwort" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Anmelden

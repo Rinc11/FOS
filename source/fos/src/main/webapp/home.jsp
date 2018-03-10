@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.Startseite" %>
+<%@ page import="com.fos.HomePage" %>
 
 <%
-    Startseite startseite = new Startseite(session, response);
+    HomePage startseite = new HomePage(request, response);
     request.setAttribute("actualPage", startseite);
 %>
 
@@ -16,6 +16,7 @@
 <c:set var="navSelection" value="Startseite" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
 <jsp:include page="jspTemplates/navigation.jsp"/>
 <div class="container">
+    <jsp:include page="jspTemplates/showErrorMessage.jsp"/>
     <div class="title">
         <h1>Startseite</h1>
         <p>Ihre persönliche Startseite</p>

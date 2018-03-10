@@ -1,10 +1,15 @@
 package com.fos.tools;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * allgemeine Helfer Methoden
@@ -61,5 +66,35 @@ public class Helper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /***
+     * fügt eine Fehlermeldung hinzu, welche der Benutzer sehen wird.
+     * @param request der request wo die fehlermeldung angezeigt werden soll
+     * @param errorMessage die Fehlermelung
+     * @param e Exeption welche geloggt wird.
+     */
+    public static void addError(HttpServletRequest request, String errorMessage, Exception e){
+        logExeption(e);
+        addError(request, errorMessage);
+    }
+
+    /***
+     * fügt eine Fehlermeldung hinzu, welche der Benutzer sehen wird.
+     * @param request der request wo die fehlermeldung angezeigt werden soll
+     * @param errorMessage die Fehlermelung
+     */
+    public static void addError(HttpServletRequest request, String errorMessage){
+        List<String> errorMessages = (List<String>) request.getAttribute("errorMessage");
+        if(errorMessages == null){
+            errorMessages = new ArrayList<>();
+            request.setAttribute("errorMessage", errorMessages);
+        }
+        errorMessages.add(errorMessage);
+    }
+
+    public static void logExeption(Exception e){
+        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
 }

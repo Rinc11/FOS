@@ -22,6 +22,12 @@
     overflow-y: auto;
 }
 
+.errorText {
+    color: #be0012;
+    font-size: 16px !important;
+    font-weight: 400;
+}
+
 .navbar-default .navbar-nav>li>a {
   color: #ffffff !important;
 }

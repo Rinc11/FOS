@@ -23,6 +23,7 @@ public class OnStartup implements ServletContextListener,
             new SqlUpdate().UpdateDatabase(Helper.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }

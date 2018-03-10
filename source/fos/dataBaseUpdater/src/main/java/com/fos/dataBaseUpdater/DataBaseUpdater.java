@@ -1,5 +1,6 @@
 package com.fos.dataBaseUpdater;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -19,6 +20,7 @@ public class DataBaseUpdater {
             new DataBaseUpdater("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false");
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -27,9 +29,16 @@ public class DataBaseUpdater {
      * @param url
      * @throws Exception
      */
-    public DataBaseUpdater(String url) throws Exception {
-        Connection conn = DriverManager.getConnection(url);
+    public DataBaseUpdater(String url) {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+
         conn.setSchema("fos");
         new SqlUpdate().UpdateDatabase(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 }

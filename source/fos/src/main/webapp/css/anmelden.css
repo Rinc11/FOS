@@ -36,18 +36,16 @@
     font-weight: 400;
 }
 
+.errorText {
+    text-align: center;
+}
+
 .jumbotron img {
     width: 80%;
     height: 80%;
     display: block;
     margin: auto auto auto auto;
     padding-top: 25px;
-}
-
-.login-title {
-    color: #555;
-    font-size: 18px;
-    font-weight: 400;
 }
 
 .container {
