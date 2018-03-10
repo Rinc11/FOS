@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../startPage.jsp"><img src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" style="width:70px; margin-top:-12px;" /></a>
+            <a class="navbar-brand" href="../home.jsp"><img src="../img/FOS_weiss.png" alt="Fahrzeug Organisations-System" style="width:70px; margin-top:-12px;" /></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -19,7 +19,7 @@
                 <li <c:if  test="${navSelection=='Auswertung'}"> class="active" </c:if>><a href="../auswertung.jsp"><strong>Auswertung</strong></a></li>
                 <li <c:if  test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../benutzer.jsp"><strong>Muster AG</strong>
                     <img src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px; margin-right:0px;" /></a></li>
-                <li><a href="Logout" class="menu" style="margin-left:-15px;"><strong>Abmelden</strong></a></li>
+                <li><a href="logout" class="menu" style="margin-left:-15px;"><strong>Abmelden</strong></a></li>
             </ul>
         </div>
     </div>

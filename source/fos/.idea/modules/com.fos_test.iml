@@ -19,13 +19,17 @@
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-servlet-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.postgresql:postgresql:42.2.1" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Gradle: org.mockito:mockito-core:2.15.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-util:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-annotations-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jni:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:8.5.28" level="project" />
-    <orderEntry type="module" module-name="dataBaseUpdater_main" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.7.9" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.7.9" level="project" />
+    <orderEntry type="module" module-name="dataBaseUpdater_main" />
+    <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-el-api:8.5.28" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="com.fos_main" />

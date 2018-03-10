@@ -7,7 +7,7 @@
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="de">
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>

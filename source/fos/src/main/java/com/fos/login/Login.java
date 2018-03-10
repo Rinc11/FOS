@@ -1,36 +1,36 @@
 package com.fos.login;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import com.fos.tools.Helper;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-/***
- * Login servlet; empfängt das Anmelde Formular und überprüft den Login
- */
-@WebServlet(name = "/Login", value = "/Login")
-public class Login extends HttpServlet {
+public class Login {
 
-    /**
-     * Empfängt den Post Requst des Anmelde Formulares.
-     * Bei Erfolgreichem Anmelden wird man zur Startseite weitergeleitet.
-     * @param request Daten des Anmelde Formulares
-     * @param response Antwort nach dem Anmelden
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getParameter("userName");
+    private Connection conn;
+    private String formularUserName;
+    public Login(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        conn = Helper.getConnection();
+        formularUserName = request.getParameter("userName");
         String pass = request.getParameter("pass");
 
-        if(userName.equals("reto") && pass.equals("bla")){
-            HttpSession session = request.getSession();
-            session.setAttribute("userName", userName);
-            response.sendRedirect("home.jsp");
-        }else{
-            response.sendRedirect("login.jsp");
+        if(formularUserName != null || pass != null) {
+            if (formularUserName.equals("reto") && pass.equals("bla")) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userName", formularUserName);
+                response.sendRedirect("home.jsp");
+            }else{
+                request.setAttribute("errorReason", "Falsches Passwort oder Benutzername");
+            }
         }
+    }
+
+    public String getFormularUserName() {
+        return formularUserName;
     }
 
     /**

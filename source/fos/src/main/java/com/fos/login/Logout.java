@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Logout Servlet; logt den aktuellen Benutzer aus.
  */
-@WebServlet(name = "/Logout", value = "/Logout")
+@WebServlet(name = "/logout", value = "/logout")
 public class Logout extends HttpServlet {
 
     /**

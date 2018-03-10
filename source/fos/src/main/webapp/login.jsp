@@ -1,20 +1,40 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: retom
-  Date: 18.02.2018
-  Time: 22:14
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ page import="java.util.Map" %>
+<%@ page import="com.fos.login.Login" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<%
+    Login login = new Login(request, response);
+%>
+<!DOCTYPE html>
+<html lang="de">
 <head>
-    <title>FOS Login</title>
+    <title>FOS</title>
+    <jsp:include page="jspTemplates/importHead.jsp"/>
+    <link rel="stylesheet" type="text/css" href="css/anmelden.css">
 </head>
 <body>
-    <form action="Login" method="post">
-        Benutzer: <input type="text" name="userName"><br>
-        Passwort: <input type="password" name="pass"><br>
-        <input type="submit" value="login">
-    </form>
+
+<div class="container welcome">
+    <div class="jumbotron">
+        <img src="img/FOS.png" id="FOSmaske" alt="Fahrzeug Organisations-System"/>
+        <div class="account-wall">
+            <h2 class="text-center login-title" style="float:left; line-height:1.4;">Herzlich willkommen bei FOS, dem
+                Fahrzeug Organisations-System!<br>
+                <hr style="border-color:#777; border-width:2px;">
+                Melden Sie sich an:
+            </h2>
+            <form class="form-signin" action="login.jsp" method="post">
+                <input type="text" name="userName" class="form-control" placeholder="Benutzername" required autofocus>
+                <input type="password" name="pass" class="form-control" placeholder="Passwort" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Anmelden
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<jsp:include page="jspTemplates/footer.jsp"/>
 </body>
 </html>
