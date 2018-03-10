@@ -1,5 +1,6 @@
 package com.fos.login;
 
+import com.fos.database.Person;
 import javafx.beans.binding.When;
 import org.apache.catalina.connector.Request;
 import org.junit.Test;
@@ -20,7 +21,11 @@ import static org.mockito.Mockito.*;
 
 public class RunTest {
 
+    /**
+     * einen test für einen Testfall
+     */
     @Test
+    @Deprecated
     public void runTest() throws IOException, SQLException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -29,19 +34,25 @@ public class RunTest {
         assertTrue(lo.aTest() == "test");
     }
 
+    /**
+     * Tested das Anmelden für den Benutzer 'mayerret'
+     */
     @Test
     public void testLogin() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getParameter("userName")).thenReturn("reto");
-        when(request.getParameter("pass")).thenReturn("bla");
+        when(request.getParameter("userName")).thenReturn("mayerret");
+        when(request.getParameter("pass")).thenReturn("1234");
 
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
 
         HttpServletResponse response = mock(HttpServletResponse.class);
 
+
         Login lo = new Login(request, response);
-        verify(session).setAttribute("userName", "reto");
+        ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+        verify(session).setAttribute(eq ("userLoggedIn"), argument.capture());
+        assertEquals("mayerret", argument.getValue().getUserName());
         verify(response).sendRedirect("home.jsp");
     }
 }

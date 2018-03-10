@@ -1,5 +1,7 @@
 package com.fos.tools;
 
+import com.fos.database.Person;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,13 +27,15 @@ public abstract class FosUserPage {
      * @param needsAdminRight Angabe, ob Administratorenrechte für diese Seite benötigt werden.
      */
     public FosUserPage(HttpServletRequest request, HttpServletResponse response, Boolean needsAdminRight) {
+        this.request = request;
         try {
             conn = Helper.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             addError("Datenbank Verbindungsfehler",e);
         }
-        if (request.getSession().getAttribute("userName") == null) {
+        Person user = getUser();
+        if (user == null || (needsAdminRight && user.getUserType() != Person.PersonUserType.ADMIN)) {
             try {
                 response.sendRedirect("login.jsp");
             } catch (IOException e) {
@@ -39,13 +43,31 @@ public abstract class FosUserPage {
                 addError("Ladefehler mit einer Datei", e);
             }
         }
-        this.request = request;
     }
 
+    /**
+     * gibt den angemeldeten Benutzer zurück
+     * @return angemeldeter Benutzer
+     */
+    public Person getUser(){
+        return (Person) request.getSession().getAttribute("userLoggedIn");
+    }
+
+    /**
+     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
+     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
+     * @param errorMessage Fehlermeldung
+     * @param e Exeption welche auch geloggt wird
+     */
     public void addError(String errorMessage, Exception e){
         Helper.addError(request, errorMessage, e);
     }
 
+    /**
+     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
+     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
+     * @param errorMessage Fehlermeldung
+     */
     public void addError(String errorMessage){
         Helper.addError(request, errorMessage);
     }

@@ -1,3 +1,9 @@
+<%--
+Naviationsleiste oben.
+Um das richtige Element zu selektieren muss vor dem aufruf das Element angegeben werden.
+z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
+--%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <nav class="navbar navbar-default">
