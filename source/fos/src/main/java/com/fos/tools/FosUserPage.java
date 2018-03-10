@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * Logik die für alle Seiten des fos Projektes gilt
  */
-public abstract class FosPage {
+public abstract class FosUserPage {
 
     /**
      * Datenbank Verbindung
@@ -22,7 +22,7 @@ public abstract class FosPage {
      * @param response die Aktuelle respone, um den Benutzer auf eine andere Seite weiterzuleiten
      * @param needsAdminRight Angabe, ob Administratorenrechte für diese Seite benötigt werden.
      */
-    public FosPage(HttpSession session, HttpServletResponse response, Boolean needsAdminRight) throws SQLException, IOException {
+    public FosUserPage(HttpSession session, HttpServletResponse response, Boolean needsAdminRight) throws SQLException, IOException {
         conn = Helper.getConnection();
         if (session.getAttribute("userName") == null) {
             response.sendRedirect("login.jsp");
