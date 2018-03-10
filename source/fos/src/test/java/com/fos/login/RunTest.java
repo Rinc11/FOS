@@ -30,7 +30,7 @@ public class RunTest {
     }
 
     @Test
-    public void testLogin() throws IOException, SQLException {
+    public void testLogin() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getParameter("userName")).thenReturn("reto");
         when(request.getParameter("pass")).thenReturn("bla");
