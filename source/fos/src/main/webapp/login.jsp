@@ -4,7 +4,6 @@ Anmeldemaske
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="java.util.Map" %>
 <%@ page import="com.fos.login.Login" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
