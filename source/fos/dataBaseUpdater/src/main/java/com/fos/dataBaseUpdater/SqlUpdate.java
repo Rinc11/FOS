@@ -136,6 +136,8 @@ public class SqlUpdate {
                         System.out.println("command " + command.getKey() + " executed");
                     } catch (SQLException e) {
                         System.out.println("error by command " + command.getKey());
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
                         throw e;
                     }
                 }

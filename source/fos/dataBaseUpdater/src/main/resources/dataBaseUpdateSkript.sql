@@ -83,5 +83,13 @@ INSERT INTO fos."Trip" ("VehicleID", "TripID", "StartTime", "EndTime", "PlaceSta
 INSERT INTO fos."Trip" ("VehicleID", "TripID", "StartTime", "EndTime", "PlaceStart", "PlaceEnd", "Start_km", "End_km", "Type", "Username") VALUES (1001, 10001, '2018-03-08 13:04:03.614000', '2018-03-09 13:04:10.340000', 'Frauenfeld', 'Winterthur', 100, 130, 'geschäftlich', 'wipffab');
 INSERT INTO fos."Trip" ("VehicleID", "TripID", "StartTime", "EndTime", "PlaceStart", "PlaceEnd", "Start_km", "End_km", "Type", "Username") VALUES (1004, 10002, '2018-03-08 13:04:03.614000', '2018-03-09 13:04:10.340000', 'Frauenfeld', 'Winterthur', 100, 130, 'privat', 'mayeret');
 
+--#2:
+ALTER TABLE fos."Trip" DROP CONSTRAINT "FK_TRIP_PERSON";
+UPDATE fos."Person" SET "Username" = 'mayerret' WHERE "Username" = 'mayeret';
+UPDATE fos."Trip" SET "Username" = 'mayerret' WHERE "Username" = 'mayeret';
+
+ALTER TABLE fos."Trip"
+  ADD CONSTRAINT "FK_TRIP_PERSON"
+FOREIGN KEY ("Username") REFERENCES fos."Person";
 
 
