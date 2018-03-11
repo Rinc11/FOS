@@ -23,7 +23,7 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                 <li <c:if  test="${navSelection=='Fahrt'}"> class="active" </c:if>><a href="../fahrt.jsp"><strong>Fahrten</strong></a></li>
                 <li <c:if  test="${navSelection=='Fahrzeug'}"> class="active" </c:if>><a href="../fahrzeug.jsp"><strong>Fahrzeuge</strong></a></li>
                 <li <c:if  test="${navSelection=='Auswertung'}"> class="active" </c:if>><a href="../auswertung.jsp"><strong>Auswertung</strong></a></li>
-                <li <c:if  test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../benutzer.jsp"><strong>Muster AG</strong>
+                <li <c:if  test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../benutzer.jsp"><strong>${userLoggedIn.userName}</strong>
                     <img src="../img/pawn.png" alt="Benutzer" style="width:20px; margin-top:-3px; margin-left:15px; margin-right:0px;" /></a></li>
                 <li><a href="logout" class="menu" style="margin-left:-15px;"><strong>Abmelden</strong></a></li>
             </ul>

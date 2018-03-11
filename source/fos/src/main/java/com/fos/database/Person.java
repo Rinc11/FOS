@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stellte ein Person Datensatz dar
@@ -41,6 +43,34 @@ public class Person {
                     resultSet.getBoolean("Deleted_YN"));
         }
 
+        return result;
+    }
+
+    public static List<Person> getAllPersons(Connection conn) throws SQLException {
+        List<Person> result = new ArrayList<Person>();
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
+                        " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
+                        " \"Deleted_YN\" FROM fos.\"Person\";"
+        );
+        while (resultSet.next()){
+            result.add(
+                    new Person(
+                            resultSet.getString("Username"),
+                            resultSet.getString("Firstname"),
+                            resultSet.getString("Lastname"),
+                            resultSet.getString("AHV"),
+                            resultSet.getString("Street"),
+                            resultSet.getString("Place"),
+                            resultSet.getString("Email"),
+                            resultSet.getString("Password"),
+                            resultSet.getString("PasswordHint"),
+                            resultSet.getBoolean("Locked_YN"),
+                            resultSet.getInt("LoginTry"),
+                            PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()),
+                            resultSet.getBoolean("Deleted_YN")));
+        }
         return result;
     }
 
