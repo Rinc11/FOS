@@ -31,13 +31,13 @@ Bentutzerverwaltungseite
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="fahrzeug">Name</label>
+                    <label>Name</label>
                     <input type="text" class="form-control" placeholder="Name">
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="fahrer">Vorname</label>
+                    <label>Vorname</label>
                     <input type="text" class="form-control" placeholder="Vorname">
                 </div>
             </div>
@@ -56,7 +56,6 @@ Bentutzerverwaltungseite
                     <thead>
                     <tr>
                         <th>Benutzername</th>
-                        <th>Passwort</th>
                         <th>Name</th>
                         <th>Vorname</th>
                         <th>Rechte</th>
@@ -68,7 +67,6 @@ Bentutzerverwaltungseite
                                var="person">
                         <tr>
                             <td>${person.userName}</td>
-                            <td>${person.passwordHash}</td>
                             <td>${person.lastName}</td>
                             <td>${person.firstName}</td>
                             <td>${person.userType}</td>
