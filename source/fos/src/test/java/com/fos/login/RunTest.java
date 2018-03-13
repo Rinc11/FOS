@@ -23,20 +23,7 @@ import static org.mockito.Mockito.when;
 public class RunTest {
 
     /**
-     * einen test für einen Testfall
-     */
-    @Test
-    @Deprecated
-    public void runTest() throws IOException, SQLException {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        Login lo = new Login(request, response);
-        assertTrue(lo.aTest().equals("test"));
-    }
-
-    /**
-     * Tested das Anmelden für den Benutzer 'mayerret'
+     * Tested das Anmelden für den Benutzer 'testUser'
      */
     @Test
     public void testLogin() throws IOException, NotLoadedExeption {

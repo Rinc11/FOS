@@ -72,14 +72,4 @@ public class Login {
     public String getFormularUserName() {
         return formularUserName;
     }
-
-    /**
-     * eine Test Methode wird gelöscht sobald mehr Methoden hier sind um zu testen
-     *
-     * @return den String "test"
-     */
-    @Deprecated
-    public String aTest() {
-        return "test";
-    }
 }
