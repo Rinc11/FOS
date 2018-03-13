@@ -1,8 +1,10 @@
 package com.fos.login;
 
+import com.fos.database.NotLoadedExeption;
 import com.fos.database.Person;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +28,14 @@ public class RunTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         Login lo = new Login(request, response);
-        assertTrue(lo.aTest() == "test");
+        assertTrue(lo.aTest().equals("test"));
     }
 
     /**
      * Tested das Anmelden für den Benutzer 'mayerret'
      */
     @Test
-    public void testLogin() throws IOException {
+    public void testLogin() throws IOException, NotLoadedExeption {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getParameter("userName")).thenReturn("mayerret");
         when(request.getParameter("pass")).thenReturn("1234");

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Stellte ein Person Datensatz dar
+ * stell eine Person auf der Datenbank dar.
  */
 public class Person {
 
@@ -44,141 +44,141 @@ public class Person {
         return result;
     }
 
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String ahv;
-    private String street;
-    private String place;
-    private String email;
-    private String passwordHash;
-    private String passwordHint;
-    private Boolean locked;
-    private Integer loginTry;
-    private PersonUserType userType;
-    private Boolean deleted;
+    private DbObject<String> userName = new DbObject<>();
+    private DbObject<String> firstName = new DbObject<>();
+    private DbObject<String> lastName = new DbObject<>();
+    private DbObject<String> ahv = new DbObject<>();
+    private DbObject<String> street = new DbObject<>();
+    private DbObject<String> place = new DbObject<>();
+    private DbObject<String> email = new DbObject<>();
+    private DbObject<String> passwordHash = new DbObject<>();
+    private DbObject<String> passwordHint = new DbObject<>();
+    private DbObject<Boolean> locked = new DbObject<>();
+    private DbObject<Integer> loginTry = new DbObject<>();
+    private DbObject<PersonUserType> userType = new DbObject<>();
+    private DbObject<Boolean> deleted = new DbObject<>();
 
     private Person(String userName, String firstName, String lastName, String ahv,
                    String street, String place, String email, String passwordHash,
                    String passwordHint, Boolean locked, Integer loginTry,
                    PersonUserType userType, Boolean deleted) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ahv = ahv;
-        this.street = street;
-        this.place = place;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.passwordHint = passwordHint;
-        this.locked = locked;
-        this.loginTry = loginTry;
-        this.userType = userType;
-        this.deleted = deleted;
+        this.userName.setValue(userName);
+        this.firstName.setValue(firstName);
+        this.lastName.setValue(lastName);
+        this.ahv.setValue(ahv);
+        this.street.setValue(street);
+        this.place.setValue(place);
+        this.email.setValue(email);
+        this.passwordHash.setValue(passwordHash);
+        this.passwordHint.setValue(passwordHint);
+        this.locked.setValue(locked);
+        this.loginTry.setValue(loginTry);
+        this.userType.setValue(userType);
+        this.deleted.setValue(deleted);
     }
 
     /**
      * gibt den Benutzername zurück
      * @return Benutzername
      */
-    public String getUserName() {
-        return userName;
+    public String getUserName() throws NotLoadedExeption {
+        return userName.getValue();
     }
 
     /**
      * gibt den Vorname zurück
      * @return Vorname
      */
-    public String getFirstName() {
-        return firstName;
+    public String getFirstName() throws NotLoadedExeption {
+        return firstName.getValue();
     }
 
     /**
      * gibt den Nachname zurück
      * @return Nachname
      */
-    public String getLastName() {
-        return lastName;
+    public String getLastName() throws NotLoadedExeption {
+        return lastName.getValue();
     }
 
     /**
      * gibt die AHV nummer als Text zurück
      * @return AHV nummer als Text
      */
-    public String getAhv() {
-        return ahv;
+    public String getAhv() throws NotLoadedExeption {
+        return ahv.getValue();
     }
 
     /**
      * gibt die Strasse zurück
      * @return Strassenname
      */
-    public String getStreet() {
-        return street;
+    public String getStreet() throws NotLoadedExeption {
+        return street.getValue();
     }
 
     /**
      * gibt den Wohnort zurück
      * @return Wohnort des Benutzers
      */
-    public String getPlace() {
-        return place;
+    public String getPlace() throws NotLoadedExeption {
+        return place.getValue();
     }
 
     /**
      * gibt die E-Mail Addresse zurück
      * @return E-Mail Addresse
      */
-    public String getEmail() {
-        return email;
+    public String getEmail() throws NotLoadedExeption {
+        return email.getValue();
     }
 
     /**
      * gibt das Passwort in gehashter Form zurück
      * @return Passwort als SHA-256
      */
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPasswordHash() throws NotLoadedExeption {
+        return passwordHash.getValue();
     }
 
     /**
      * gibt den Passwort Hinweis zurück
      * @return Passwort Hinweis
      */
-    public String getPasswordHint() {
-        return passwordHint;
+    public String getPasswordHint() throws NotLoadedExeption {
+        return passwordHint.getValue();
     }
 
     /**
      * gibt an ob der Benutzer gesperrt ist
      * @return ob Benutzer gesperrt ist
      */
-    public Boolean getLocked() {
-        return locked;
+    public Boolean getLocked() throws NotLoadedExeption {
+        return locked.getValue();
     }
 
     /**
      * Anzahl misslungenen Anmelde Versuche
      * @return Anzahl misslungenen Anmelde Versuche
      */
-    public Integer getLoginTry() {
-        return loginTry;
+    public Integer getLoginTry() throws NotLoadedExeption {
+        return loginTry.getValue();
     }
 
     /**
      * der Typ des Benutzers(z.B. Admin, Mitarbeiter)
      * @return Typ des Benutzers
      */
-    public PersonUserType getUserType() {
-        return userType;
+    public PersonUserType getUserType() throws NotLoadedExeption {
+        return userType.getValue();
     }
 
     /**
      * gibt an ob der Benutzer gesperrt ist.
      * @return ob der Benutzer gesperrt ist.
      */
-    public Boolean getDeleted() {
-        return deleted;
+    public Boolean getDeleted() throws NotLoadedExeption {
+        return deleted.getValue();
     }
 
     /**
@@ -187,12 +187,12 @@ public class Person {
      * @param conn Verbindung zur Datenbank
      * @throws SQLException
      */
-    public void setLoginTry(int loginTry, Connection conn) throws SQLException {
+    public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {
         conn.createStatement().execute("UPDATE fos.\"Person\" SET \"LoginTry\"=" + loginTry + " WHERE \"Username\" = '" + userName + "'");
-        if (loginTry > 10 && userType == PersonUserType.MITARBEITER) {
+        if (loginTry > 10 && userType.getValue() == PersonUserType.MITARBEITER) {
             conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\" = TRUE WHERE \"Username\" = '" + userName + "';");
         }
-        this.loginTry = loginTry;
+        this.loginTry.setValueOnLoadedObject(loginTry);
     }
 
     /**

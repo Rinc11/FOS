@@ -1,5 +1,6 @@
 package com.fos.login;
 
+import com.fos.database.NotLoadedExeption;
 import com.fos.database.Person;
 import com.fos.tools.Helper;
 
@@ -19,7 +20,8 @@ public class Login {
 
     /**
      * Merkt sich die Login Daten. Bei einem Erfolgreichen Login wird man zur Home Seite weitergeleitet
-     * @param request request von jsp
+     *
+     * @param request  request von jsp
      * @param response response von jsp
      */
     public Login(HttpServletRequest request, HttpServletResponse response) {
@@ -31,11 +33,11 @@ public class Login {
                 conn = Helper.getConnection();
 
                 Person user = Person.getPerson(formularUserName, conn);
-                if(user != null){
-                    if(!user.getLocked() && !user.getDeleted()){
+                if (user != null) {
+                    if (!user.getLocked() && !user.getDeleted()) {
                         String hash = Helper.getHash(pass);
-                        if(hash.equals(user.getPasswordHash())){
-                            if(user.getLoginTry() != 0){
+                        if (hash.equals(user.getPasswordHash())) {
+                            if (user.getLoginTry() != 0) {
                                 user.setLoginTry(0, conn);
                             }
                             request.getSession().setAttribute("userLoggedIn", user);
@@ -44,26 +46,29 @@ public class Login {
                             } catch (IOException e) {
                                 Helper.addError(request, "Fehler beim weiterleiten zur Startseite", e);
                             }
-                        }else{
-                            user.setLoginTry(user.getLoginTry()+1, conn);
-                            Helper.addError(request, "Passwort ist falsch<br>Hinweis: "+ user.getPasswordHint());
+                        } else {
+                            user.setLoginTry(user.getLoginTry() + 1, conn);
+                            Helper.addError(request, "Passwort ist falsch<br>Hinweis: " + user.getPasswordHint());
                         }
-                    }else{
+                    } else {
                         Helper.addError(request, "Benutzer ist gesperrt");
                     }
-                }else {
+                } else {
                     Helper.addError(request, "Falscher Benutzername");
                 }
             } catch (SQLException e) {
                 Helper.addError(request, "Datenbank Fehler", e);
             } catch (NoSuchAlgorithmException e) {
                 Helper.addError(request, "Server Fehler", e);
+            } catch (NotLoadedExeption e) {
+                Helper.addError(request, "Fehler auf der Seite", e);
             }
         }
     }
 
     /**
      * gibt den Benutzername des formulares zurück.
+     *
      * @return
      */
     public String getFormularUserName() {

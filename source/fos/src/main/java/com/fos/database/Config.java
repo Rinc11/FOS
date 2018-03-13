@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class Config {
     private Config(String value, String id){
-        this.id = id;
-        this.value = value;
+        this.id.setValue(id);
+        this.value.setValue(value);
     }
 
     /**
@@ -31,22 +31,22 @@ public class Config {
         return result;
     }
 
-    private String id;
-    private String value;
+    private DbObject<String> id = new DbObject<>();
+    private DbObject<String> value = new DbObject<>();
 
     /**
      * gibt den Schlüssel des Konfig Eintrages zurück
      * @return Schlüssel bei der Konfig Tabelle
      */
-    public String getId() {
-        return id;
+    public String getId() throws NotLoadedExeption {
+        return id.getValue();
     }
 
     /**
      * gibt den Inhalt des Konfig Eintrages zurück
      * @return Wert des Konfig Eintrages
      */
-    public String getValue() {
-        return value;
+    public String getValue() throws NotLoadedExeption {
+        return value.getValue();
     }
 }
