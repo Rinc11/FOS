@@ -6,9 +6,7 @@ import com.fos.tools.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -67,8 +65,7 @@ public class Login {
     }
 
     /**
-     * gibt den Benutzername des formulares zurück.
-     *
+     * gibt den Benutzername des Formulares zurück.
      * @return
      */
     public String getFormularUserName() {
