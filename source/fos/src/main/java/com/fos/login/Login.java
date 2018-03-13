@@ -66,6 +66,7 @@ public class Login {
 
     /**
      * gibt den Benutzername des Formulares zurück.
+     *
      * @return
      */
     public String getFormularUserName() {

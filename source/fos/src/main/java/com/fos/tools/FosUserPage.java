@@ -22,8 +22,9 @@ public abstract class FosUserPage {
 
     /**
      * Erstellt eine neue Fos Seite welche den Login überprüft
-     * @param request der request vom jsp
-     * @param response die aktuelle response, um den Benutzer auf eine andere Seite weiterzuleiten
+     *
+     * @param request         der request vom jsp
+     * @param response        die aktuelle response, um den Benutzer auf eine andere Seite weiterzuleiten
      * @param needsAdminRight Angabe, ob Administratorenrechte für diese Seite benötigt werden.
      */
     public FosUserPage(HttpServletRequest request, HttpServletResponse response, Boolean needsAdminRight) {
@@ -61,7 +62,7 @@ public abstract class FosUserPage {
      * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
      *
      * @param errorMessage Fehlermeldung
-     * @param e Exception welche auch geloggt wird
+     * @param e            Exception welche auch geloggt wird
      */
     public void addError(String errorMessage, Exception e) {
         Helper.addError(request, errorMessage, e);

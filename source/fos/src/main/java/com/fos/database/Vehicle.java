@@ -14,8 +14,9 @@ public class Vehicle {
 
     /**
      * gibt den Datensatz eines Fahrzeugs zurück
+     *
      * @param vehicleID angabe des Fahrzeugs
-     * @param conn Verbindung zur Datenbank
+     * @param conn      Verbindung zur Datenbank
      * @return einen Datenbank Datensatz
      */
     public static Vehicle getVehicle(int vehicleID, Connection conn) throws SQLException {
@@ -34,18 +35,23 @@ public class Vehicle {
                     resultSet.getInt("BuildYear"),
                     VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase()));
         }
-
         return result;
     }
 
+    /**
+     * gibt alle Fahrzeuge zurück in einer Liste
+     *
+     * @param conn die Verbindung zur Datenbank
+     * @return eine Liste mit allen Fahrzeugen auf der Datenbank
+     */
     public static List<Vehicle> getAllVehicles(Connection conn) throws SQLException {
-        List<Vehicle> result = new ArrayList<Vehicle>();
+        List<Vehicle> result = new ArrayList<>();
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
                         " FROM fos.\"Vehicles\";"
         );
-        while (resultSet.next()){
+        while (resultSet.next()) {
             result.add(
                     new Vehicle(
                             resultSet.getInt("VehicleID"),
@@ -77,6 +83,7 @@ public class Vehicle {
 
     /**
      * gibt die VehicleID zurück
+     *
      * @return VehicleID
      */
     public Integer getVehicleID() {
@@ -85,6 +92,7 @@ public class Vehicle {
 
     /**
      * gibt die Seriennummer zurück
+     *
      * @return Serialnumber
      */
     public Integer getSerialnumber() {
@@ -93,6 +101,7 @@ public class Vehicle {
 
     /**
      * gibt die Marke zurück
+     *
      * @return Brand
      */
     public String getBrand() {
@@ -101,6 +110,7 @@ public class Vehicle {
 
     /**
      * gibt den Fahrzeugtyp zurück
+     *
      * @return Type
      */
     public String getType() {
@@ -109,6 +119,7 @@ public class Vehicle {
 
     /**
      * gibt das Baujahr zurück
+     *
      * @return BuildYear
      */
     public Integer getBuildYear() {
@@ -117,6 +128,7 @@ public class Vehicle {
 
     /**
      * der Typ des Treibstoffs(z.B. Benzin, Diesel)
+     *
      * @return Typ des Treibstoffs
      */
     public VehicleFuelType getFuelType() {

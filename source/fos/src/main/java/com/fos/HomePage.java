@@ -16,7 +16,8 @@ public class HomePage extends FosUserPage {
 
     /**
      * Logic für die Startseite
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      */
     public HomePage(HttpServletRequest request, HttpServletResponse response) {
@@ -25,6 +26,7 @@ public class HomePage extends FosUserPage {
 
     /**
      * zum Test und zur Demonstration eine Liste von Konfig Eintägen
+     *
      * @return
      */
     @Deprecated
@@ -33,7 +35,7 @@ public class HomePage extends FosUserPage {
             return Config.getAllConfig(conn);
         } catch (SQLException e) {
             e.printStackTrace();
-            addError("Datenbank Fehler",e);
+            addError("Datenbank Fehler", e);
         }
         return new ArrayList<>();
     }

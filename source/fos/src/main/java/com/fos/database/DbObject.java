@@ -58,11 +58,12 @@ public class DbObject<T> {
     /**
      * setzt den Wert auf ein geladenes Feld.
      * Diese Methode sollte nur dann verwendet werden, wenn das Feld auf die Datenbank aktualisiert wird.
+     *
      * @param value den neune Wert, den man auch auf dei Datenbank geupdatet hat.
      * @throws NotLoadedExeption Fehler wenn das Objekt noch nicht geladen ist.
      */
     void setValueOnLoadedObject(T value) throws NotLoadedExeption {
-        if(!loaded){
+        if (!loaded) {
             throw new NotLoadedExeption("Database field is not loaded");
         }
         this.value = value;

@@ -76,17 +76,11 @@ Bentutzerverwaltungseite
                             </td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>

@@ -24,6 +24,7 @@ public class SqlUpdate {
 
     /**
      * erstellt eine Liste aller befehle in dataBaseUpdateSkript.sql
+     *
      * @throws IOException beim lesen von dataBaseUpdateSkript.sql
      */
     public SqlUpdate() {
@@ -51,7 +52,7 @@ public class SqlUpdate {
             if (commandNumber != -1) {
                 addCommand(commandNumber, sb.toString());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -59,17 +60,18 @@ public class SqlUpdate {
 
     /**
      * Fügt ein sql Befehl zur Liste hinzu
-     * @param id die Id des Befehles
+     *
+     * @param id      die Id des Befehles
      * @param command der eigentliche Befehl
      */
     private void addCommand(int id, String command) {
-        if(commands.containsKey(id)){
+        if (commands.containsKey(id)) {
             System.out.println("key already exists");
             throw new RuntimeException("key already exists");
-        }else {
-            if(lastCommandId<id){
-                commands.put(id,command );
-            }else{
+        } else {
+            if (lastCommandId < id) {
+                commands.put(id, command);
+            } else {
                 System.out.println("id is smaller then last");
                 throw new RuntimeException("id is smaller then last");
             }
@@ -78,9 +80,10 @@ public class SqlUpdate {
 
     /**
      * gibt die letzte Befehls id zurück welche im sql skript vorhanden ist
+     *
      * @return letze id im sql Skript(aktuellster befehl)
      */
-    private int getLastCommandId(){
+    private int getLastCommandId() {
         return commands.keySet().stream()
                 .max(Integer::compareTo)
                 .orElse(-1);
@@ -91,9 +94,9 @@ public class SqlUpdate {
      * @param afterId alle Befehle mit einer Id grösser als diese Nummer werden zurückgegeben
      * @return eine Liste von entryies mit der id und dem Befehl der Id
      */
-    private List<Map.Entry> getCommandsAfter(int afterId){
+    private List<Map.Entry> getCommandsAfter(int afterId) {
         return commands.entrySet().stream()
-                .filter(f -> f.getKey()> afterId)
+                .filter(f -> f.getKey() > afterId)
                 .sorted(Comparator.comparingInt(Map.Entry::getKey))
                 .collect(Collectors.toList());
     }
@@ -101,6 +104,7 @@ public class SqlUpdate {
     /**
      * started das Update der Datenbank. Es werden nur befehle ausgeführt welche noch nicht
      * auf der Datenbank vorhanden sind. Dafür wird die Tabelle "fosConfig" verwendet
+     *
      * @param conn die verbindung zur Datenbank
      * @throws SQLException wird geworfen wenn es ein Fehler mit der Datenkbank gibt.
      */
@@ -145,7 +149,7 @@ public class SqlUpdate {
             } else {
                 System.out.println("database is up to date");
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

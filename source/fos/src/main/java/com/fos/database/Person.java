@@ -14,8 +14,9 @@ public class Person {
 
     /**
      * gibt den Datensatz eines Users zurück
+     *
      * @param userName angabe des Users
-     * @param conn Verbindung zur Datenbank
+     * @param conn     Verbindung zur Datenbank
      * @return einen Datenbank Datensatz
      */
     public static Person getPerson(String userName, Connection conn) throws SQLException {
@@ -45,8 +46,10 @@ public class Person {
 
         return result;
     }
+
     /**
      * gibt alle Personen zurück
+     *
      * @param conn Die Connection zur Datenbank
      * @return Eine Liste von Personen
      */
@@ -58,7 +61,7 @@ public class Person {
                         " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
                         " \"Deleted_YN\" FROM fos.\"Person\";"
         );
-        while (resultSet.next()){
+        while (resultSet.next()) {
             result.add(
                     new Person(
                             resultSet.getString("Username"),
@@ -113,6 +116,7 @@ public class Person {
 
     /**
      * gibt den Benutzername zurück
+     *
      * @return Benutzername
      */
     public String getUserName() throws NotLoadedExeption {
@@ -121,6 +125,7 @@ public class Person {
 
     /**
      * gibt den Vorname zurück
+     *
      * @return Vorname
      */
     public String getFirstName() throws NotLoadedExeption {
@@ -129,6 +134,7 @@ public class Person {
 
     /**
      * gibt den Nachname zurück
+     *
      * @return Nachname
      */
     public String getLastName() throws NotLoadedExeption {
@@ -137,6 +143,7 @@ public class Person {
 
     /**
      * gibt die AHV nummer als Text zurück
+     *
      * @return AHV nummer als Text
      */
     public String getAhv() throws NotLoadedExeption {
@@ -145,6 +152,7 @@ public class Person {
 
     /**
      * gibt die Strasse zurück
+     *
      * @return Strassenname
      */
     public String getStreet() throws NotLoadedExeption {
@@ -153,6 +161,7 @@ public class Person {
 
     /**
      * gibt den Wohnort zurück
+     *
      * @return Wohnort des Benutzers
      */
     public String getPlace() throws NotLoadedExeption {
@@ -161,6 +170,7 @@ public class Person {
 
     /**
      * gibt die E-Mail Addresse zurück
+     *
      * @return E-Mail Addresse
      */
     public String getEmail() throws NotLoadedExeption {
@@ -169,6 +179,7 @@ public class Person {
 
     /**
      * gibt das Passwort in gehashter Form zurück
+     *
      * @return Passwort als SHA-256
      */
     public String getPasswordHash() throws NotLoadedExeption {
@@ -177,6 +188,7 @@ public class Person {
 
     /**
      * gibt den Passwort Hinweis zurück
+     *
      * @return Passwort Hinweis
      */
     public String getPasswordHint() throws NotLoadedExeption {
@@ -185,6 +197,7 @@ public class Person {
 
     /**
      * gibt an ob der Benutzer gesperrt ist
+     *
      * @return ob Benutzer gesperrt ist
      */
     public Boolean getLocked() throws NotLoadedExeption {
@@ -193,6 +206,7 @@ public class Person {
 
     /**
      * Anzahl misslungenen Anmelde Versuche
+     *
      * @return Anzahl misslungenen Anmelde Versuche
      */
     public Integer getLoginTry() throws NotLoadedExeption {
@@ -201,6 +215,7 @@ public class Person {
 
     /**
      * der Typ des Benutzers(z.B. Admin, Mitarbeiter)
+     *
      * @return Typ des Benutzers
      */
     public PersonUserType getUserType() throws NotLoadedExeption {
@@ -209,6 +224,7 @@ public class Person {
 
     /**
      * gibt an ob der Benutzer gesperrt ist.
+     *
      * @return ob der Benutzer gesperrt ist.
      */
     public Boolean getDeleted() throws NotLoadedExeption {
@@ -217,8 +233,9 @@ public class Person {
 
     /**
      * setzt den Login Zähler auf einen neuen Wert.
+     *
      * @param loginTry neuer Login Zähler Wert
-     * @param conn Verbindung zur Datenbank
+     * @param conn     Verbindung zur Datenbank
      * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {

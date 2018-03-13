@@ -17,7 +17,8 @@ public class UserPage extends FosUserPage {
 
     /**
      * Logic für die Userseite
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      */
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
@@ -26,13 +27,14 @@ public class UserPage extends FosUserPage {
 
     /**
      * zum Test und zur Demonstration eine Liste von Konfig Eintägen
+     *
      * @return
      */
     public List<Person> getItems() {
         try {
             return Person.getAllPersons(conn);
         } catch (SQLException e) {
-            addError("Datenbank Fehler",e);
+            addError("Datenbank Fehler", e);
         }
         return new ArrayList<>();
     }
