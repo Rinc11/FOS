@@ -28,12 +28,10 @@ public class UserPage extends FosUserPage {
      * zum Test und zur Demonstration eine Liste von Konfig Eintägen
      * @return
      */
-    @Deprecated
     public List<Person> getItems() {
         try {
             return Person.getAllPersons(conn);
         } catch (SQLException e) {
-            e.printStackTrace();
             addError("Datenbank Fehler",e);
         }
         return new ArrayList<>();

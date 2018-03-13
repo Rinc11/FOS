@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stellte ein Person Datensatz dar
+ * Stellt einen Datensatz einer Person dar
  */
 public class Person {
 
