@@ -29,10 +29,10 @@ import static org.mockito.Mockito.when;
 public class LoginTest {
 
 
-    @Before
     /**
      * setzt die Loginversuche zurück und entsperrt den testUser.
      */
+    @Before
     public void resetTestUser() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);

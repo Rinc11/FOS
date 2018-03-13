@@ -14,10 +14,10 @@ import java.sql.SQLException;
  */
 public class PersonTest {
 
-    @Test
     /**
      * tested den testUser ob alle Werte so dind wie in der Datenbank.
      */
+    @Test
     public void testIfTesUserExists() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
@@ -40,10 +40,10 @@ public class PersonTest {
         Assert.assertEquals(false, person.getDeleted());
     }
 
-    @Test
     /**
      * Tested ob das sperren und anmeldeverusch richtig funktionieren.
      */
+    @Test
     public void testSetLoginTry() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
