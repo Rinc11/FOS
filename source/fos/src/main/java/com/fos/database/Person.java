@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stellte ein Person Datensatz dar
+ * Stellt einen Datensatz einer Person dar
  */
 public class Person {
 
@@ -45,7 +45,11 @@ public class Person {
 
         return result;
     }
-
+    /**
+     * gibt alle Personen zurück
+     * @param conn Die Connection zur Datenbank
+     * @return Eine Liste von Personen
+     */
     public static List<Person> getAllPersons(Connection conn) throws SQLException {
         List<Person> result = new ArrayList<Person>();
         Statement statement = conn.createStatement();
