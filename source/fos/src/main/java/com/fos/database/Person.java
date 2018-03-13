@@ -239,11 +239,22 @@ public class Person {
      * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {
-        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"LoginTry\"=" + loginTry + " WHERE \"Username\" = '" + userName + "'");
+        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"LoginTry\"=" + loginTry + " WHERE \"Username\" = '" + userName.getValue() + "'");
         if (loginTry > 10 && userType.getValue() == PersonUserType.MITARBEITER) {
-            conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\" = TRUE WHERE \"Username\" = '" + userName + "';");
+            setLocked(true, conn);
         }
         this.loginTry.setValueOnLoadedObject(loginTry);
+    }
+
+    /**
+     * setzt ob der Benutzer gesperrt ist.
+     *
+     * @param locked ob er gesperrt ist
+     * @param conn Verbinung zu Datenbank
+     */
+    public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
+        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\"=" + locked + " WHERE \"Username\" = '" + userName.getValue() + "'");
+        this.locked.setValueOnLoadedObject(locked);
     }
 
     /**
