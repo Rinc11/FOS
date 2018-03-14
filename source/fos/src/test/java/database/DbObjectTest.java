@@ -10,6 +10,8 @@ import org.junit.Test;
  */
 public class DbObjectTest {
 
+    private Integer defaultTestInteger = 5;
+    private String defaultTestString = "blabla";
     /**
      * getValue auf nicht geladenes Objekt sollte eine Exeption werfen
      */
@@ -21,14 +23,15 @@ public class DbObjectTest {
     }
 
     /**
-     * prüft ob der angegebene Wert duch getValue wieder zurück kommt
+     * prüft ob ein im DbObject gesetzter Wert
+     * durch getValue wieder zurück gegeben wird
      */
     @Test
     public void testDbObject() throws NotLoadedExeption {
-        DbObject<Integer> testObject = new DbObject<>(5);
+        DbObject<Integer> testObject = new DbObject<>(defaultTestInteger);
         Assert.assertTrue( testObject.isLoaded());
         Integer testValue = testObject.getValue();
-        Assert.assertTrue(5 == testValue);
+        Assert.assertTrue(defaultTestInteger == testValue);
     }
 
     /**
@@ -38,20 +41,30 @@ public class DbObjectTest {
     @Test
     public void testSetValueOnNotLoadedObject() throws NotLoadedExeption {
         DbObject<Integer> testObject = new DbObject<>();
-        testObject.setValue(5);
+        testObject.setValue(defaultTestInteger);
         Assert.assertTrue(testObject.isLoaded());
-        Assert.assertTrue(5 == testObject.getValue());
+        Assert.assertTrue(defaultTestInteger == testObject.getValue());
     }
 
     /**
-     * prüft ob setValue eine Exception wirft, wenn das Objekt bereits geladen ist.
+     * prüft ob setValue eine Exception wirft, wenn das Objekt bereits geladen ist
+     * und versucht wird der gleiche Wert dem Objekt erneut zuzuweisen.
      */
     @Test(expected = RuntimeException.class)
     public void testSetValueOnObjectLoaded(){
-        DbObject<String> testObject = new DbObject<>("test");
-        testObject.setValue("blabla");
+        DbObject<String> testObject = new DbObject<>(defaultTestString);
+        testObject.setValue(defaultTestString);
     }
 
+    /**
+     * prüft ob setValue eine Exception wirft, wenn das Objekt bereits einen Value hat
+     * und ein neuer Wert versucht wird zu setzten.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testSetValueOnObjectLoadedDifferentValue(){
+        DbObject<String> testObject = new DbObject<>(defaultTestString);
+        testObject.setValue(defaultTestString + "NewOne");
+    }
     /**
      * prüft ob null zurückkommt auf ein nicht geladenes Objekt
      */
@@ -59,9 +72,9 @@ public class DbObjectTest {
     public void testGetValueOrNull(){
         DbObject<String> testObject = new DbObject<>();
         Assert.assertEquals(null, testObject.getValueOrNull());
-        testObject.setValue("test");
+        testObject.setValue(defaultTestString);
         Assert.assertTrue(!testObject.isNull());
-        Assert.assertEquals("test", testObject.getValueOrNull());
+        Assert.assertEquals(defaultTestString, testObject.getValueOrNull());
     }
 
     /**
