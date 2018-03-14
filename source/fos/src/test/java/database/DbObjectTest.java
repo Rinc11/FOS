@@ -32,7 +32,8 @@ public class DbObjectTest {
     }
 
     /**
-     * prüft ob man duch die Methode setValue den wert auf ein nicht geladenes Object setzten kann.
+     * prüft ob man durch die Methode setValue den Wert auf ein
+     * nicht geladenes Object setzten kann.
      */
     @Test
     public void testSetValueOnNotLoadedObject() throws NotLoadedExeption {
@@ -43,7 +44,7 @@ public class DbObjectTest {
     }
 
     /**
-     * prüft ob set Value eine Exeption wirft, wenn das Objekt bereits geladen ist.
+     * prüft ob setValue eine Exception wirft, wenn das Objekt bereits geladen ist.
      */
     @Test(expected = RuntimeException.class)
     public void testSetValueOnObjectLoaded(){
