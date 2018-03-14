@@ -17,7 +17,7 @@ public class Login {
     private String formularUserName;
 
     /**
-     * Merkt sich die Login Daten. Bei einem Erfolgreichen Login wird man zur Home Seite weitergeleitet
+     * Merkt sich die Login Daten. Bei einem Erfolgreichen Login wird zur Home Seite weitergeleitet
      *
      * @param request  request von jsp
      * @param response response von jsp

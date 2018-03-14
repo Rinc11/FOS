@@ -7,7 +7,7 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/../../src/main/webapp/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/../../src/main/webapp" relative="/" />
+          <root url="file://C:\Users\jonas\Documents\zhaw\semester2\PSIT\ps_17_gruppe16\source\fos\src\main\webapp" relative="/" />
         </webroots>
       </configuration>
     </facet>
