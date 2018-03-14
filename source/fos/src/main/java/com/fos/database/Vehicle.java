@@ -64,21 +64,21 @@ public class Vehicle {
         return result;
     }
 
-    private Integer vehicleID;
-    private Integer serialnumber;
-    private String brand;
-    private String type;
-    private Integer buildYear;
-    private VehicleFuelType fuelType;
+    private DbObject<Integer> vehicleID = new DbObject<>();
+    private DbObject<Integer> serialnumber = new DbObject<>();
+    private DbObject<String> brand = new DbObject<>();
+    private DbObject<String> type = new DbObject<>();
+    private DbObject<Integer> buildYear = new DbObject<>();
+    private DbObject<VehicleFuelType> fuelType = new DbObject<>();
 
     private Vehicle(Integer vehicleID, Integer serialnumber, String brand, String type,
                     Integer buildYear, VehicleFuelType fuelType) {
-        this.vehicleID = vehicleID;
-        this.serialnumber = serialnumber;
-        this.brand = brand;
-        this.type = type;
-        this.buildYear = buildYear;
-        this.fuelType = fuelType;
+        this.vehicleID.setValue(vehicleID);
+        this.serialnumber.setValue(serialnumber);
+        this.brand.setValue(brand);
+        this.type.setValue(type);
+        this.buildYear.setValue(buildYear);
+        this.fuelType.setValue(fuelType);
     }
 
     /**
@@ -86,8 +86,8 @@ public class Vehicle {
      *
      * @return VehicleID
      */
-    public Integer getVehicleID() {
-        return vehicleID;
+    public Integer getVehicleID() throws NotLoadedExeption {
+        return vehicleID.getValue();
     }
 
     /**
@@ -95,8 +95,8 @@ public class Vehicle {
      *
      * @return Serialnumber
      */
-    public Integer getSerialnumber() {
-        return serialnumber;
+    public Integer getSerialnumber() throws NotLoadedExeption {
+        return serialnumber.getValue();
     }
 
     /**
@@ -104,8 +104,8 @@ public class Vehicle {
      *
      * @return Brand
      */
-    public String getBrand() {
-        return brand;
+    public String getBrand() throws NotLoadedExeption {
+        return brand.getValue();
     }
 
     /**
@@ -113,8 +113,8 @@ public class Vehicle {
      *
      * @return Type
      */
-    public String getType() {
-        return type;
+    public String getType() throws NotLoadedExeption {
+        return type.getValue();
     }
 
     /**
@@ -122,8 +122,8 @@ public class Vehicle {
      *
      * @return BuildYear
      */
-    public Integer getBuildYear() {
-        return buildYear;
+    public Integer getBuildYear() throws NotLoadedExeption {
+        return buildYear.getValue();
     }
 
     /**
@@ -131,8 +131,8 @@ public class Vehicle {
      *
      * @return Typ des Treibstoffs
      */
-    public VehicleFuelType getFuelType() {
-        return fuelType;
+    public VehicleFuelType getFuelType() throws NotLoadedExeption {
+        return fuelType.getValue();
     }
 
 
