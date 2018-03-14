@@ -11,15 +11,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Tested ob die Klasse Peron sich richtig verhält
+ * Tested ob die Klasse Person sich richtig verhält
+ * Benötigt Datenbankseitig den TestUser Personen Datensatz
  */
 public class PersonTest {
 
     /**
-     * tested den testUser ob alle Werte so dind wie in der Datenbank.
+     * tested den testUser ob alle Werte so sind wie in der Datenbank.
+     * Voraussetzung für /F0001/ und /F0010/
      */
     @Test
-    public void testIfTesUserExists() throws SQLException, NotLoadedExeption {
+    public void testIfTestUserExists() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
 
@@ -33,7 +35,8 @@ public class PersonTest {
         Assert.assertEquals("Teststrasse 1", person.getStreet());
         Assert.assertEquals("Testdorf", person.getPlace());
         Assert.assertEquals("test.user@students.zhaw.ch", person.getEmail());
-        Assert.assertEquals("03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4", person.getPasswordHash());
+        Assert.assertEquals("03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+                            person.getPasswordHash());
         Assert.assertEquals("1234", person.getPasswordHint());
         Assert.assertEquals(false, person.getLocked());
         Assert.assertTrue(0 == person.getLoginTry());
@@ -42,7 +45,8 @@ public class PersonTest {
     }
 
     /**
-     * Tested ob das sperren und anmeldeverusch richtig funktionieren.
+     * Tested ob das Sperren^(1) und Anmeldeversuchsfunktion^(2) richtig funktionieren.
+     * (1) /F0040/ Zif 2),  (2) /F0010/ Zif. 3)
      */
     @Test
     public void testSetLoginTry() throws SQLException, NotLoadedExeption {
@@ -68,6 +72,7 @@ public class PersonTest {
 
     /**
      * Tested ob die Person testUser in der Liste von allen Personen ist.
+     * /F0090/
      */
     @Test
     public void getAllPersons() throws SQLException, NotLoadedExeption {
