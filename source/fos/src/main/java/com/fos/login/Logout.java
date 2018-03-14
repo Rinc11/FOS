@@ -16,7 +16,8 @@ public class Logout extends HttpServlet {
 
     /**
      * Empfängt die Anfrage für das Ausloggen.
-     * @param request Aktueller request wird benötigt um auf die session zuzugreifen
+     *
+     * @param request  Aktueller request wird benötigt um auf die session zuzugreifen
      * @param response die Antwort des Logouts. Leitet auf die Anmeldemaske weiter
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
- * allgemeine Helfer Methoden
+ * Klasse für allgemeine Helfer Methoden
  */
 public class Helper {
     private Helper() {
@@ -23,9 +22,10 @@ public class Helper {
     /**
      * gibt einem die Möglichkeit, wenn eine Methode null zurückgibt einen default wert zu setzen.
      * z.B. statt null eine leere Liste
-     * @param normalCall Aufruf der evt. null zurückgibt.
+     *
+     * @param normalCall    Aufruf der evt. null zurückgibt.
      * @param nullValueCall ist der Rückgabewert, wenn der normalCall null ist.
-     * @param <T> der Rückgabe typ von beiden Methoden
+     * @param <T>           der Rückgabe typ von beiden Methoden
      * @return gibt den Rückgabetyp von der 1. Methode zurück. Wenn diese null zurückgibt die 2. Methode.
      */
     public static <T> T nullValue(Supplier<T> normalCall, Supplier<T> nullValueCall) {
@@ -39,10 +39,11 @@ public class Helper {
     /**
      * sicheres aufrufen von Methoden eines Objektes, welches evt null sein kann.
      * Im null fall gibt die Methode auch null zurück.
-     * @param object Objekt das evt null ist.
+     *
+     * @param object   Objekt das evt null ist.
      * @param function Funktion die aufgerufen wird, wenn das Objekt nicht null ist.
-     * @param <T> typ des Objektes, welches evt. null sein kann.
-     * @param <R> Rückgabewert der Funktion welche man aufrufen will.
+     * @param <T>      Typ des Objektes, welches evt. null sein kann.
+     * @param <R>      Rückgabewert der Funktion welche man aufrufen will.
      * @return
      */
     public static <T, R> R nullCheck(T object, Function<T, R> function) {
@@ -53,7 +54,8 @@ public class Helper {
     }
 
     /**
-     * gibt die Connection zurück.
+     * Erstellt nach Möglichkeit eine SQL Datenbank Connection
+     *
      * @return eine Connection für die Datenbank
      */
     public static Connection getConnection() throws SQLException {
@@ -77,7 +79,7 @@ public class Helper {
      * @param errorMessage die Fehlermelung
      * @param e Exeption welche geloggt wird.
      */
-    public static void addError(HttpServletRequest request, String errorMessage, Exception e){
+    public static void addError(HttpServletRequest request, String errorMessage, Exception e) {
         logExeption(e);
         addError(request, errorMessage);
     }
@@ -88,9 +90,9 @@ public class Helper {
      * @param request der request wo die fehlermeldung angezeigt werden soll
      * @param errorMessage die Fehlermelung
      */
-    public static void addError(HttpServletRequest request, String errorMessage){
+    public static void addError(HttpServletRequest request, String errorMessage) {
         List<String> errorMessages = (List<String>) request.getAttribute("errorMessage");
-        if(errorMessages == null){
+        if (errorMessages == null) {
             errorMessages = new ArrayList<>();
             request.setAttribute("errorMessage", errorMessages);
         }
@@ -99,15 +101,17 @@ public class Helper {
 
     /**
      * schreibt eine Fehlermeldung in die Konsole
+     *
      * @param e Exeption welche gedruckt wird
      */
-    public static void logExeption(Exception e){
+    public static void logExeption(Exception e) {
         System.out.println(e.getMessage());
         e.printStackTrace();
     }
 
     /**
      * erstellt einen hash(SHA-256) von einem Text z.B. Passwort
+     *
      * @param password Text der gehashed werden soll.
      * @return SHA-256 Hash als String
      */
@@ -115,11 +119,11 @@ public class Helper {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] bytes = md.digest(password.getBytes());
         StringBuilder sb = new StringBuilder();
-        for(byte b : bytes){
+        for (byte b : bytes) {
             String hexByte = Integer.toHexString(b & 0xff);
-            if(hexByte.length() ==1){
-                hexByte = '0'+ hexByte;
-            }else if(hexByte.length() != 2){
+            if (hexByte.length() == 1) {
+                hexByte = '0' + hexByte;
+            } else if (hexByte.length() != 2) {
                 throw new RuntimeException();
             }
             sb.append(hexByte);

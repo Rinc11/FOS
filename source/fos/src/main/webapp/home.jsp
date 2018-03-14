@@ -33,7 +33,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
      --%>
 
     <c:forEach items="${actualPage.items}"
-               var="conf">  <%--hier muss der get anfang von der Methode weggelassen werden--%>
+               var="conf">  <%--hier muss der get Anfang von der Methode weggelassen werden--%>
         <p>Id:${conf.id} Wert: ${conf.value}</p>
     </c:forEach>
 </div>
