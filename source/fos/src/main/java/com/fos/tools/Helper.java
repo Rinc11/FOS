@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 
 /**
- * allgemeine Helfer Methoden
+ * Klasse für allgemeine Helfer Methoden
  */
 public class Helper {
     private Helper() {
@@ -42,7 +42,7 @@ public class Helper {
      *
      * @param object   Objekt das evt null ist.
      * @param function Funktion die aufgerufen wird, wenn das Objekt nicht null ist.
-     * @param <T>      typ des Objektes, welches evt. null sein kann.
+     * @param <T>      Typ des Objektes, welches evt. null sein kann.
      * @param <R>      Rückgabewert der Funktion welche man aufrufen will.
      * @return
      */
@@ -54,7 +54,7 @@ public class Helper {
     }
 
     /**
-     * gibt die Connection zurück.
+     * Erstellt nach Möglichkeit eine SQL Datenbank Connection
      *
      * @return eine Connection für die Datenbank
      */
