@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Tested ob die Klasse Peron sich richtig verhält
@@ -63,5 +64,22 @@ public class PersonTest {
 
         person.setLoginTry(0, conn);
         Assert.assertTrue(0 == person.getLoginTry());
+    }
+
+    /**
+     * Tested ob die Person testUser in der Liste von allen Personen ist.
+     */
+    @Test
+    public void getAllPersons() throws SQLException, NotLoadedExeption {
+        Connection conn = Helper.getConnection();
+        List<Person> persons = Person.getAllPersons(conn);
+        Assert.assertEquals("testUser", persons.stream().filter(f -> {
+            try {
+                return f.getUserName().equals("testUser");
+            } catch (NotLoadedExeption notLoadedExeption) {
+                notLoadedExeption.printStackTrace();
+            }
+            return false;
+        }).findAny().get().getUserName());
     }
 }
