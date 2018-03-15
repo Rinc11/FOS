@@ -26,7 +26,7 @@ public class VehicleTest {
         Vehicle vehicle = Vehicle.getVehicle(6, conn);
 
         Assert.assertEquals(Integer.valueOf(6), vehicle.getVehicleID());
-        Assert.assertEquals(Integer.valueOf(1057), vehicle.getSerialnumber());
+        Assert.assertEquals("1057", vehicle.getSerialnumber());
         Assert.assertEquals("OPEL", vehicle.getBrand());
         Assert.assertEquals("Astra", vehicle.getType());
         Assert.assertEquals(Integer.valueOf(2014), vehicle.getBuildYear());
@@ -37,7 +37,7 @@ public class VehicleTest {
      * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
      */
     @Test
-    public void getAllVehicles() throws SQLException, NotLoadedExeption {
+    public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
         Assert.assertEquals(Integer.valueOf(6), vehicles.stream().filter(f -> {

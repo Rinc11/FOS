@@ -29,7 +29,7 @@ public class Vehicle {
         if (resultSet.next()) {
             result = new Vehicle(
                     resultSet.getInt("VehicleID"),
-                    resultSet.getInt("Serialnumber"),
+                    resultSet.getString("Serialnumber"),
                     resultSet.getString("Brand"),
                     resultSet.getString("Type"),
                     resultSet.getInt("BuildYear"),
@@ -55,7 +55,7 @@ public class Vehicle {
             result.add(
                     new Vehicle(
                             resultSet.getInt("VehicleID"),
-                            resultSet.getInt("Serialnumber"),
+                            resultSet.getString("Serialnumber"),
                             resultSet.getString("Brand"),
                             resultSet.getString("Type"),
                             resultSet.getInt("BuildYear"),
@@ -65,13 +65,13 @@ public class Vehicle {
     }
 
     private DbObject<Integer> vehicleID = new DbObject<>();
-    private DbObject<Integer> serialnumber = new DbObject<>();
+    private DbObject<String> serialnumber = new DbObject<>();
     private DbObject<String> brand = new DbObject<>();
     private DbObject<String> type = new DbObject<>();
     private DbObject<Integer> buildYear = new DbObject<>();
     private DbObject<VehicleFuelType> fuelType = new DbObject<>();
 
-    private Vehicle(Integer vehicleID, Integer serialnumber, String brand, String type,
+    private Vehicle(Integer vehicleID, String serialnumber, String brand, String type,
                     Integer buildYear, VehicleFuelType fuelType) {
         this.vehicleID.setValue(vehicleID);
         this.serialnumber.setValue(serialnumber);
@@ -95,7 +95,7 @@ public class Vehicle {
      *
      * @return Serialnumber
      */
-    public Integer getSerialnumber() throws NotLoadedExeption {
+    public String getSerialnumber() throws NotLoadedExeption {
         return serialnumber.getValue();
     }
 
