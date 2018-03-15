@@ -4,8 +4,12 @@ package tools;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Test;
+import static com.fos.tools.Helper.nullCheck;
+import static com.fos.tools.Helper.nullValue;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Testet die Klasse Helper
@@ -16,6 +20,7 @@ public class HelperTest {
     /**
      * testet ob die Methode getHash() die richtigen Hashes erstellt
      */
+    private final String TESTSTRING = "5. Item";
 
     @Test
     public void shouldCreateTheCorrectHash() throws NoSuchAlgorithmException {
@@ -41,5 +46,47 @@ public class HelperTest {
     @Test(expected = NullPointerException.class)
     public void shouldFailToCreateAHashWithNULL() throws NoSuchAlgorithmException {
         Assert.assertEquals(Helper.getHash(null), "");
+    }
+
+
+    /**
+     * Tested ob die nullValue Methode funktioniert.
+     */
+    @Test
+    public void testNullValue(){
+        String[] array = new String[10];
+        array[4] = TESTSTRING;
+        Assert.assertEquals(TESTSTRING, array[4]);
+        Assert.assertTrue(null == array[1]);
+        String nullCheckValue1 = nullValue(() -> array[1], () -> "");
+        String nullCheckValue4 = nullValue(() -> array[4], () -> "");
+        Assert.assertEquals("", nullCheckValue1);
+        Assert.assertEquals(TESTSTRING, nullCheckValue4);
+    }
+
+    /**
+     * Tested ob die nullCheck Methode funktioniert.
+     */
+    @Test
+    public void testNullCheck(){
+        String test = null;
+        Integer lengthNull = nullCheck(test, t -> t.length());
+        //verhindert den Absturz der null Pointer Exeption
+        Assert.assertTrue(null == lengthNull);
+
+        test = TESTSTRING;
+        Integer lengthTest = nullCheck(test, t -> t.length());
+        Assert.assertTrue(7 == lengthTest);
+    }
+
+    /**
+     * tested eine nützliche Kombination von nullValue und nullCheck
+     */
+    @Test
+    public void testNullCheckNullValue(){
+        String[] array = new String[10];
+        array[4] = TESTSTRING;
+        Assert.assertTrue( 0 == nullValue(() ->  nullCheck(array[1], a-> a.length()), () -> 0));
+        Assert.assertTrue( 7 == nullValue(() ->  nullCheck(array[4], a-> a.length()), () -> 0));
     }
 }
