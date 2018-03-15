@@ -38,4 +38,15 @@ public class UserPage extends FosUserPage {
         }
         return new ArrayList<>();
     }
+
+    public void removeItem(String username){
+
+
+        try {
+            Person.removePerson(username, conn);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
+
+    }
 }
