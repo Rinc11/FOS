@@ -25,11 +25,11 @@ public class VehicleTest {
         Connection conn = Helper.getConnection();
         Vehicle vehicle = Vehicle.getVehicle(6, conn);
 
-        Assert.assertEquals("6", vehicle.getVehicleID());
-        Assert.assertEquals("1057", vehicle.getSerialnumber());
+        Assert.assertEquals(Integer.valueOf(6), vehicle.getVehicleID());
+        Assert.assertEquals(Integer.valueOf(1057), vehicle.getSerialnumber());
         Assert.assertEquals("OPEL", vehicle.getBrand());
         Assert.assertEquals("Astra", vehicle.getType());
-        Assert.assertEquals("2014", vehicle.getBuildYear());
+        Assert.assertEquals(Integer.valueOf(2014), vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
     }
 
@@ -40,9 +40,9 @@ public class VehicleTest {
     public void getAllVehicles() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
-        Assert.assertEquals("6", vehicles.stream().filter(f -> {
+        Assert.assertEquals(Integer.valueOf(6), vehicles.stream().filter(f -> {
             try {
-                return f.getVehicleID().equals("6");
+                return f.getVehicleID().equals(6);
             } catch (NotLoadedExeption notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
