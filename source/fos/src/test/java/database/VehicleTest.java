@@ -23,9 +23,9 @@ public class VehicleTest {
     @Test
     public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
-        Vehicle vehicle = Vehicle.getVehicle("testVehicle", conn);
+        Vehicle vehicle = Vehicle.getVehicle(1234567, conn);
 
-        Assert.assertEquals("1234567", Vehicle.getVehicleID());
+        Assert.assertEquals("1234567", vehicle.getVehicleID());
         Assert.assertEquals("7777777", vehicle.getSerialnumber());
         Assert.assertEquals("Audi", vehicle.getBrand());
         Assert.assertEquals("LKW", vehicle.getType());
@@ -36,7 +36,7 @@ public class VehicleTest {
     /**
      * Tested ob das Sperren^(1) und Anmeldeversuchsfunktion^(2) richtig funktionieren.
      * (1) /F0040/ Zif 2),  (2) /F0010/ Zif. 3)
-     *
+     */
     @Test
     public void testSetLoginTry() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
@@ -62,7 +62,7 @@ public class VehicleTest {
     /**
      * Tested ob die Person testUser in der Liste von allen Personen ist.
      * /F0090/
-     *
+     */
     @Test
     public void getAllPersons() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
