@@ -23,57 +23,32 @@ public class VehicleTest {
     @Test
     public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
-        Vehicle vehicle = Vehicle.getVehicle(1234567, conn);
+        Vehicle vehicle = Vehicle.getVehicle(6, conn);
 
-        Assert.assertEquals("1234567", vehicle.getVehicleID());
-        Assert.assertEquals("7777777", vehicle.getSerialnumber());
-        Assert.assertEquals("Audi", vehicle.getBrand());
-        Assert.assertEquals("LKW", vehicle.getType());
-        Assert.assertEquals("2000", vehicle.getBuildYear());
+        Assert.assertEquals("6", vehicle.getVehicleID());
+        Assert.assertEquals("1057", vehicle.getSerialnumber());
+        Assert.assertEquals("OPEL", vehicle.getBrand());
+        Assert.assertEquals("Astra", vehicle.getType());
+        Assert.assertEquals("2014", vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
     }
 
     /**
-     * Tested ob das Sperren^(1) und Anmeldeversuchsfunktion^(2) richtig funktionieren.
-     * (1) /F0040/ Zif 2),  (2) /F0010/ Zif. 3)
+     * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
      */
     @Test
-    public void testSetLoginTry() throws SQLException, NotLoadedExeption {
+    public void getAllVehicles() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
-        Person person = Person.getPerson("testUser", conn);
-        person.setLocked(false, conn);
-        Assert.assertEquals(false, person.getLocked());
-
-
-        person.setLoginTry(5, conn);
-        Assert.assertTrue(5 == person.getLoginTry());
-
-        person.setLoginTry(11, conn);
-        Assert.assertTrue(11 == person.getLoginTry());
-        Assert.assertEquals(true, person.getLocked());
-
-        person.setLocked(false, conn);
-        Assert.assertTrue(!person.getLocked());
-
-        person.setLoginTry(0, conn);
-        Assert.assertTrue(0 == person.getLoginTry());
-    }
-
-    /**
-     * Tested ob die Person testUser in der Liste von allen Personen ist.
-     * /F0090/
-     */
-    @Test
-    public void getAllPersons() throws SQLException, NotLoadedExeption {
-        Connection conn = Helper.getConnection();
-        List<Person> persons = Person.getAllPersons(conn);
-        Assert.assertEquals("testUser", persons.stream().filter(f -> {
+        List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
+        Assert.assertEquals("6", vehicles.stream().filter(f -> {
             try {
-                return f.getUserName().equals("testUser");
+                return f.getVehicleID().equals("6");
             } catch (NotLoadedExeption notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
-        }).findAny().get().getUserName());
+
+
+        }).findAny().get().getVehicleID());
     }
 }
