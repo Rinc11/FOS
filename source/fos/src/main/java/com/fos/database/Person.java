@@ -59,7 +59,7 @@ public class Person {
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
                         " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
-                        " \"Deleted_YN\" FROM fos.\"Person\";"
+                        " \"Deleted_YN\" FROM fos.\"Person\" WHERE \"Deleted_YN\" = FALSE ;"
         );
         while (resultSet.next()) {
             result.add(
@@ -255,6 +255,11 @@ public class Person {
     public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
         conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\"=" + locked + " WHERE \"Username\" = '" + userName.getValue() + "'");
         this.locked.setValueOnLoadedObject(locked);
+    }
+
+    public static void removePerson(String username, Connection conn) throws SQLException {
+        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = '" + username + "'");
+
     }
 
     /**

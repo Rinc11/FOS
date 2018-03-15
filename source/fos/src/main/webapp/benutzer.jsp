@@ -71,8 +71,8 @@ Bentutzerverwaltungseite
                             <td>${person.firstName}</td>
                             <td>${person.userType}</td>
                             <td>
-                                <a class="btn btn-default" href="benutzerFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="benutzerFormularNeu.jsp"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="deleteUser.jsp?username=${person.userName}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
                     </c:forEach>
