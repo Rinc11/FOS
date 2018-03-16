@@ -1,4 +1,4 @@
-package com.fos;
+package com.fos.user;
 
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
@@ -37,5 +37,16 @@ public class UserPage extends FosUserPage {
             addError("Datenbank Fehler", e);
         }
         return new ArrayList<>();
+    }
+
+    public void removeItem(String username){
+
+
+        try {
+            Person.removePerson(username, conn);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
+
     }
 }

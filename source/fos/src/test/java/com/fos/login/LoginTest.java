@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 
 /**
- * Tested die Logik der Login Seite
+ * Tested die Logik der Login Seite (Login und Logout)
  */
 public class LoginTest {
 
@@ -51,6 +52,7 @@ public class LoginTest {
         when(request.getSession()).thenReturn(session);
 
         HttpServletResponse response = mock(HttpServletResponse.class);
+
         Login login = new Login(request, response);
         ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
         verify(session).setAttribute(eq("userLoggedIn"), argument.capture());
@@ -79,7 +81,7 @@ public class LoginTest {
      * Tested das Verhalten wenn das Passwort mehrmals falsch ist.
      */
     @Test
-    public void testLoginWronUser() throws IOException, NotLoadedExeption {
+    public void testLoginWrongPasswordMultipleTimes() throws IOException, NotLoadedExeption {
         for(int i = 0; i<=10;i++) {
             HttpServletRequest request = createRequest("testUser","falsch" );
             HttpServletResponse response = mock(HttpServletResponse.class);
@@ -98,6 +100,24 @@ public class LoginTest {
         errorListArgument.getValue();
         assertEquals(1, errorListArgument.getValue().size());
         assertEquals("Benutzer ist gesperrt", errorListArgument.getValue().get(0));
+    }
+
+    @Test
+    /**
+     * tested ob der Logout geht
+     */
+    public void TestLogout() throws ServletException, IOException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpSession session = mock(HttpSession.class);
+        when(request.getSession()).thenReturn(session);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        Logout logout = new Logout();
+        logout.doGet(request, response);
+
+        verify(session).removeAttribute("userName");
+        verify(session).invalidate();
+        verify(response).sendRedirect("login.jsp");
     }
 
 

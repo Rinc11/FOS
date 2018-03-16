@@ -1,21 +1,25 @@
 /**
- * Tests zur PrÃ¼fung der Module und deren Zusammenspiel
+ * Tests zur Prüfung der Module und deren Zusammenspiel
+ * Alles was nicht in eigenen Test getestet wird und mehrere Module betrifft
+ * wäre hier gut aufgehoben
  */
-public class IntegrationTest {
 
     /**
      * Loginseite
      * * Anmeldung
      * * Abmeldung
+     * Abgedeckt durch: FosUserPageTest
      */
 
     /**
      * Benutzer erstellen
      * Benutzer anpassen
-     * Benutzer lÃ¶schen / sperren
+     * Benutzer löschen / sperren
      */
+
+
     /**
-     * Passwort Ã¤ndern
+     * Passwort ändern
      */
 
     /**
@@ -23,8 +27,9 @@ public class IntegrationTest {
      */
 
     /**
-     * Ãœbersicht aller Fahrzeuge
+     * Übersicht aller Fahrzeuge
      */
+
     /**
      * Fahrzeug ertellen
      */
@@ -32,7 +37,7 @@ public class IntegrationTest {
      * Fahrzeug bearbeiten
      */
     /**
-     * Fahrzeug lÃ¶schen
+     * Fahrzeug löschen
      */
 
     /**
@@ -51,4 +56,4 @@ public class IntegrationTest {
     /**
      * Export als CSV
      */
-}
+

@@ -3,7 +3,7 @@ Bentutzerverwaltungseite
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.UserPage" %>
+<%@ page import="com.fos.user.UserPage" %>
 <%
     UserPage userpage = new UserPage(request, response);
     request.setAttribute("actualPage", userpage);
@@ -70,14 +70,35 @@ Bentutzerverwaltungseite
                             <td>${person.lastName}</td>
                             <td>${person.firstName}</td>
                             <td>${person.userType}</td>
+
                             <td>
-                                <a class="btn btn-default" href="benutzerFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a class="btn btn-default" href="benutzerFormularNeu.jsp"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a onclick="saveDeleteUsernam('${person.userName}')" class="btn btn-default" data-toggle="modal" data-target="#myModal" > <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
                     </c:forEach>
+
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Löschen</h4>
+            </div>
+            <div class="modal-body">
+                Wollen sie den Benutzer wirklich löschen
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nein</button>
+                <a class="btn btn-primary" id="deleteUserYesButton" href="#">Ja</a>
             </div>
         </div>
     </div>

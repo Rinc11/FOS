@@ -59,7 +59,7 @@ public class Person {
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
                         " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
-                        " \"Deleted_YN\" FROM fos.\"Person\";"
+                        " \"Deleted_YN\" FROM fos.\"Person\" WHERE \"Deleted_YN\" = FALSE ;"
         );
         while (resultSet.next()) {
             result.add(
@@ -79,6 +79,11 @@ public class Person {
                             resultSet.getBoolean("Deleted_YN")));
         }
         return result;
+    }
+
+    public static void removePerson(String username, Connection conn) throws SQLException {
+        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = '" + username + "'");
+
     }
 
     private DbObject<String> userName = new DbObject<>();

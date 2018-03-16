@@ -1,4 +1,4 @@
-package com.fos.login;
+package com.fos.user;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,20 +11,19 @@ import java.io.IOException;
 /**
  * Logout Servlet; logt den aktuellen Benutzer aus.
  */
-@WebServlet(name = "/logout", value = "/logout")
-public class Logout extends HttpServlet {
+@WebServlet(name = "/deleteUser", value = "/deleteUser")
+public class DeleteUser extends HttpServlet {
 
     /**
-     * Empfängt die Anfrage für das Ausloggen.
+     * Empfängt die Benutzer löschen Anfrage.
      *
      * @param request  Aktueller request wird benötigt um auf die session zuzugreifen
-     * @param response die Antwort des Logouts. Leitet auf die Anmeldemaske weiter
+     * @param response die Antwort. Leitet auf die UserPage weiter
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("userName");
-        session.invalidate();
-        response.sendRedirect("login.jsp");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserPage userpage = new UserPage(request, response);
+        userpage.removeItem(request.getParameter("username"));
+        response.sendRedirect("benutzer.jsp");
     }
 
     @Override
