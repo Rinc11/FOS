@@ -6,6 +6,8 @@ import org.junit.Test;
 
 /**
  * Tests zur Prüfung der Module und deren Zusammenspiel
+ * Alles was nicht in eigenen Test getestet wird und mehrere Module betrifft
+ * wäre hier gut aufgehoben
  */
 public class IntegrationTest {
 
@@ -13,6 +15,7 @@ public class IntegrationTest {
      * Loginseite
      * * Anmeldung
      * * Abmeldung
+     * Abgedeckt durch: FosUserPageTest
      */
 
     /**
@@ -20,6 +23,8 @@ public class IntegrationTest {
      * Benutzer anpassen
      * Benutzer löschen / sperren
      */
+
+
     /**
      * Passwort ändern
      */
@@ -31,6 +36,7 @@ public class IntegrationTest {
     /**
      * Übersicht aller Fahrzeuge
      */
+
     /**
      * Fahrzeug ertellen
      */
