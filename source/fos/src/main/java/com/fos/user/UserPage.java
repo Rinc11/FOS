@@ -1,4 +1,4 @@
-package com.fos;
+package com.fos.user;
 
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
