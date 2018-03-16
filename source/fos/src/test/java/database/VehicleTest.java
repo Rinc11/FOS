@@ -1,7 +1,6 @@
 package database;
 
 import com.fos.database.NotLoadedExeption;
-import com.fos.database.Person;
 import com.fos.database.Vehicle;
 import com.fos.tools.Helper;
 import org.junit.Assert;
