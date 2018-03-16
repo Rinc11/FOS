@@ -17,15 +17,17 @@ import java.util.List;
  */
 public class VehicleTest {
 
+    private Integer defaultTestVehicleID = 6;
+
     /**
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
      */
     @Test
     public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
-        Vehicle vehicle = Vehicle.getVehicle(6, conn);
+        Vehicle vehicle = Vehicle.getVehicle(defaultTestVehicleID, conn);
 
-        Assert.assertEquals(Integer.valueOf(6), vehicle.getVehicleID());
+        Assert.assertEquals(Integer.valueOf(defaultTestVehicleID), vehicle.getVehicleID());
         Assert.assertEquals("1057", vehicle.getSerialnumber());
         Assert.assertEquals("OPEL", vehicle.getBrand());
         Assert.assertEquals("Astra", vehicle.getType());

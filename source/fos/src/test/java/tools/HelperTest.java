@@ -26,12 +26,13 @@ import java.util.List;
 
 public class HelperTest {
 
-    /**
-     * testet ob die Methode getHash() die richtigen Hashes erstellt
-     */
     private final String TESTSTRING = "5. Item";
     private final String TESTSTRING2 = "anderes Item";
 
+    /**
+     * testet ob die Methode getHash() die richtigen Hashes erstellt
+     * Testhashes voraus berechnet
+     */
     @Test
     public void shouldCreateTheCorrectHash() throws NoSuchAlgorithmException {
         Assert.assertEquals(Helper.getHash("1234"), "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4");
@@ -43,7 +44,6 @@ public class HelperTest {
     /**
      * testet ob die Methode getHash() bei einem leeren String den richtigen Hash erzeugt
      */
-
     @Test
     public void shouldCreateTheCorrectHashWithEmptyValue() throws NoSuchAlgorithmException {
         Assert.assertEquals(Helper.getHash(""), "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
@@ -52,7 +52,6 @@ public class HelperTest {
     /**
      * testet die Methode getHash() mit NULL
      */
-
     @Test(expected = NullPointerException.class)
     public void shouldFailToCreateAHashWithNULL() throws NoSuchAlgorithmException {
         Assert.assertEquals(Helper.getHash(null), "");
