@@ -73,7 +73,7 @@ Bentutzerverwaltungseite
 
                             <td>
                                 <a class="btn btn-default" href="benutzerFormularNeu.jsp"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                <a onclick="saveDeleteUsernam('${person.userName}')" class="btn btn-default" data-toggle="modal" data-target="#myModal" > <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a onclick="saveDeleteUsername('${person.userName}')" class="btn btn-default" data-toggle="modal" data-target="#myModal" > <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
                         </tr>
                     </c:forEach>
