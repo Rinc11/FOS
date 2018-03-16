@@ -37,7 +37,7 @@ public class FosUserPageTest {
     }
 
     /**
-     * Tested ob ein angemeldeter Miterbeiter auf der Seite bleiben kann.
+     * Tested ob ein angemeldeter Mitarbeiter auf der Seite bleiben kann.
      */
     @Test
     public void testEmployeeLoggedIn() throws IOException, NotLoadedExeption {
@@ -50,7 +50,7 @@ public class FosUserPageTest {
 
 
     /**
-     * Tested ob ein angemeldeter Admin auf einer normale Seite bleiben kann.
+     * Tested ob ein angemeldeter Admin auf einer normalen Seite bleiben kann.
      */
     @Test
     public void testAdminLoggedInOnNormalPage() throws IOException, NotLoadedExeption {
@@ -63,7 +63,7 @@ public class FosUserPageTest {
 
 
     /**
-     * Tested ob ein angemeldeter Mitarbeiter welcher eine Admins Seite aufrufen will
+     * Tested ob ein angemeldeter Mitarbeiter welcher eine Admin Seite aufrufen will
      * zur Startseite weitergeleitet wird.
      */
     @Test
@@ -76,7 +76,7 @@ public class FosUserPageTest {
     }
 
     /**
-     * Tested ob ein angemeldeter Admin auf einer normale Seite bleiben kann.
+     * Tested ob ein angemeldeter Admin auf einer admin Seite bleiben kann.
      */
     @Test
     public void testAdminLoggedInOnAdminPage() throws IOException, NotLoadedExeption {
@@ -88,7 +88,7 @@ public class FosUserPageTest {
     }
 
     /**
-     * Tested ob getUser den erwarteten Benutzer zurückgibt.
+     * Testet ob getUser den erwarteten Benutzer zurückgibt.
      */
     @Test
     public void testGetUser() throws NotLoadedExeption {

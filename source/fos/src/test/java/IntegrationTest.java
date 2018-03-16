@@ -1,3 +1,9 @@
+
+import com.fos.database.DbObject;
+import com.fos.database.NotLoadedExeption;
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * Tests zur Prüfung der Module und deren Zusammenspiel
  */
