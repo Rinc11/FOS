@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 
 /**
- * Tested die Logik der Login Seite
+ * Tested die Logik der Login Seite (Login und Logout)
  */
 public class LoginTest {
 
