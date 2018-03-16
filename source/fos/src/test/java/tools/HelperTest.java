@@ -4,8 +4,16 @@ package tools;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import javax.servlet.http.HttpServletRequest;
+
 import static com.fos.tools.Helper.nullCheck;
 import static com.fos.tools.Helper.nullValue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -21,6 +29,7 @@ public class HelperTest {
      * testet ob die Methode getHash() die richtigen Hashes erstellt
      */
     private final String TESTSTRING = "5. Item";
+    private final String TESTSTRING2 = "anderes Item";
 
     @Test
     public void shouldCreateTheCorrectHash() throws NoSuchAlgorithmException {
@@ -53,7 +62,7 @@ public class HelperTest {
      * Tested ob die nullValue Methode funktioniert.
      */
     @Test
-    public void testNullValue(){
+    public void testNullValue() {
         String[] array = new String[10];
         array[4] = TESTSTRING;
         Assert.assertEquals(TESTSTRING, array[4]);
@@ -68,7 +77,7 @@ public class HelperTest {
      * Tested ob die nullCheck Methode funktioniert.
      */
     @Test
-    public void testNullCheck(){
+    public void testNullCheck() {
         String test = null;
         Integer lengthNull = nullCheck(test, t -> t.length());
         //verhindert den Absturz der null Pointer Exeption
@@ -83,10 +92,40 @@ public class HelperTest {
      * tested eine nützliche Kombination von nullValue und nullCheck
      */
     @Test
-    public void testNullCheckNullValue(){
+    public void testNullCheckNullValue() {
         String[] array = new String[10];
         array[4] = TESTSTRING;
-        Assert.assertTrue( 0 == nullValue(() ->  nullCheck(array[1], a-> a.length()), () -> 0));
-        Assert.assertTrue( 7 == nullValue(() ->  nullCheck(array[4], a-> a.length()), () -> 0));
+        Assert.assertTrue(0 == nullValue(() -> nullCheck(array[1], a -> a.length()), () -> 0));
+        Assert.assertTrue(7 == nullValue(() -> nullCheck(array[4], a -> a.length()), () -> 0));
     }
+
+    /**
+     * tested wenn der erste Fehler hinzugefügt wird.
+     */
+    @Test
+    public void testAddFirstError() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getAttribute("errorMessage")).thenReturn(null);
+
+        Helper.addError(request, TESTSTRING);
+        ArgumentCaptor<List<String>> argument = ArgumentCaptor.forClass(List.class);
+        verify(request).setAttribute(eq("errorMessage"), argument.capture());
+        Assert.assertTrue(argument.getValue().contains(TESTSTRING));
+    }
+
+
+    /**
+     * tested wenn ein weiterer Fehler hinzugefügt wird.
+     */
+    @Test
+    public void testAddSecondError() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        List<String> errorList = new ArrayList<>();
+        errorList.add(TESTSTRING);
+        when(request.getAttribute("errorMessage")).thenReturn(errorList);
+        Helper.addError(request, TESTSTRING2);
+        Assert.assertTrue(errorList.contains(TESTSTRING));
+        Assert.assertTrue(errorList.contains(TESTSTRING2));
+    }
+
 }
