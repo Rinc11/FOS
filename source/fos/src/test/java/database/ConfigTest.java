@@ -15,12 +15,14 @@ import java.util.List;
  */
 public class ConfigTest {
 
-    private Integer defaultConfigTestInteger = 3;
-    private String defaultConfigTestString = "dbVersion";
-
-
     /**
      * Testet die testConfig ob alle Werte so sind wie in der Datenbank.
      */
-    
+    @Test
+    public void testIfTestConfigExists() throws SQLException, NotLoadedExeption {
+        Connection conn = Helper.getConnection();
+        List<Config> config = Config.getAllConfig(conn);
+
+        Assert.assertTrue(0 <= Integer.parseInt(config.get(0).getValue()));
+    }
 }
