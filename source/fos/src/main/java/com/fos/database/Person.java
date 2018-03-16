@@ -81,6 +81,11 @@ public class Person {
         return result;
     }
 
+    public static void removePerson(String username, Connection conn) throws SQLException {
+        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = '" + username + "'");
+
+    }
+
     private DbObject<String> userName = new DbObject<>();
     private DbObject<String> firstName = new DbObject<>();
     private DbObject<String> lastName = new DbObject<>();
@@ -255,11 +260,6 @@ public class Person {
     public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
         conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\"=" + locked + " WHERE \"Username\" = '" + userName.getValue() + "'");
         this.locked.setValueOnLoadedObject(locked);
-    }
-
-    public static void removePerson(String username, Connection conn) throws SQLException {
-        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = '" + username + "'");
-
     }
 
     /**
