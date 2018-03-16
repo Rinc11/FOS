@@ -75,7 +75,7 @@ public class PersonTest {
      * /F0090/
      */
     @Test
-    public void getAllPersons() throws SQLException, NotLoadedExeption {
+    public void testGetAllPersons() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         List<Person> persons = Person.getAllPersons(conn);
         Assert.assertEquals("testUser", persons.stream().filter(f -> {

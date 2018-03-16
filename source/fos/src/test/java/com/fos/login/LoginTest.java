@@ -81,7 +81,7 @@ public class LoginTest {
      * Tested das Verhalten wenn das Passwort mehrmals falsch ist.
      */
     @Test
-    public void testLoginWronUser() throws IOException, NotLoadedExeption {
+    public void testLoginWrongPasswordMultipleTimes() throws IOException, NotLoadedExeption {
         for(int i = 0; i<=10;i++) {
             HttpServletRequest request = createRequest("testUser","falsch" );
             HttpServletResponse response = mock(HttpServletResponse.class);

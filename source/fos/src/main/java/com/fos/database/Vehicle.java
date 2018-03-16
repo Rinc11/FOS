@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Stellte einen Fahrzeug Datensatz dar
+ * Stellte Funktionen für den Zugriff auf die Fahrzeugdaten aus der Datenbank bereit,
+ * Sowie den Typ Vehicle auf welchen programmintern zugegriffen werden kann
  */
 public class Vehicle {
 
@@ -17,7 +18,7 @@ public class Vehicle {
      *
      * @param vehicleID angabe des Fahrzeugs
      * @param conn      Verbindung zur Datenbank
-     * @return einen Datenbank Datensatz
+     * @return Vehicle Datensatz des angefragten Fahrzeuges aus der übergebenen Datenbank
      */
     public static Vehicle getVehicle(int vehicleID, Connection conn) throws SQLException {
         Vehicle result = null;
@@ -29,7 +30,7 @@ public class Vehicle {
         if (resultSet.next()) {
             result = new Vehicle(
                     resultSet.getInt("VehicleID"),
-                    resultSet.getInt("Serialnumber"),
+                    resultSet.getString("Serialnumber"),
                     resultSet.getString("Brand"),
                     resultSet.getString("Type"),
                     resultSet.getInt("BuildYear"),
@@ -42,7 +43,7 @@ public class Vehicle {
      * gibt alle Fahrzeuge zurück in einer Liste
      *
      * @param conn die Verbindung zur Datenbank
-     * @return eine Liste mit allen Fahrzeugen auf der Datenbank
+     * @return eine Liste mit allen Fahrzeugen aus der Datenbank zu der die Verbindung übergeben wurde
      */
     public static List<Vehicle> getAllVehicles(Connection conn) throws SQLException {
         List<Vehicle> result = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Vehicle {
             result.add(
                     new Vehicle(
                             resultSet.getInt("VehicleID"),
-                            resultSet.getInt("Serialnumber"),
+                            resultSet.getString("Serialnumber"),
                             resultSet.getString("Brand"),
                             resultSet.getString("Type"),
                             resultSet.getInt("BuildYear"),
@@ -65,13 +66,13 @@ public class Vehicle {
     }
 
     private DbObject<Integer> vehicleID = new DbObject<>();
-    private DbObject<Integer> serialnumber = new DbObject<>();
+    private DbObject<String> serialnumber = new DbObject<>();
     private DbObject<String> brand = new DbObject<>();
     private DbObject<String> type = new DbObject<>();
     private DbObject<Integer> buildYear = new DbObject<>();
     private DbObject<VehicleFuelType> fuelType = new DbObject<>();
 
-    private Vehicle(Integer vehicleID, Integer serialnumber, String brand, String type,
+    private Vehicle(Integer vehicleID, String serialnumber, String brand, String type,
                     Integer buildYear, VehicleFuelType fuelType) {
         this.vehicleID.setValue(vehicleID);
         this.serialnumber.setValue(serialnumber);
@@ -95,7 +96,7 @@ public class Vehicle {
      *
      * @return Serialnumber
      */
-    public Integer getSerialnumber() throws NotLoadedExeption {
+    public String getSerialnumber() throws NotLoadedExeption {
         return serialnumber.getValue();
     }
 
@@ -127,7 +128,7 @@ public class Vehicle {
     }
 
     /**
-     * der Typ des Treibstoffs(z.B. Benzin, Diesel)
+     * der Typ des Treibstoffs (z.B. Benzin, Diesel, Strom, siehe enum VehicleFuelType)
      *
      * @return Typ des Treibstoffs
      */
