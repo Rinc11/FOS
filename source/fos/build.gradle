@@ -1,4 +1,4 @@
-import jdk.internal.dynalink.linker.LinkerServices
+import java.awt.Desktop
 
 version '1.0'
 
@@ -11,6 +11,20 @@ repositories {
     mavenCentral()
     jcenter()
 }
+
+task openTestHtml{
+    Desktop desktop = Desktop.getDesktop();
+    desktop.open(new File("build/reports/tests/test/index.html"));
+}
+
+
+test {
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+test.finalizedBy(openTestHtml)
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
