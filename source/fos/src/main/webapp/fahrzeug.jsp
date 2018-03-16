@@ -4,10 +4,10 @@ Startseite welche nach dem einlogen aufgerufen wird.
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.fos.HomePage" %>
+<%@ page import="com.fos.tools.Helper" %>
 
 <%
-//    HomePage startseite = new HomePage(request, response);
-//    request.setAttribute("actualPage", startseite);
+    Helper.addError(request, "statische Daten");
 %>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
@@ -15,19 +15,9 @@ Startseite welche nach dem einlogen aufgerufen wird.
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
-    <script>
-        function toggle() {
-            var x = document.getElementById("filteroptionen");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-    </script>
 </head>
 <body>
-<c:set var="navSelection" value="Startseite" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
+<c:set var="navSelection" value="Fahrzeug" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
 <jsp:include page="jspTemplates/navigation.jsp"/>
 <div class="container">
     <jsp:include page="jspTemplates/showErrorMessage.jsp"/>
