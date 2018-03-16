@@ -16,6 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +126,14 @@ public class HelperTest {
         Helper.addError(request, TESTSTRING2);
         Assert.assertTrue(errorList.contains(TESTSTRING));
         Assert.assertTrue(errorList.contains(TESTSTRING2));
+    }
+
+    /**
+     * testet die Methode getConnection ob das richtige Schema gesetzt wird.
+     */
+    @Test
+    public void testGetConnection() throws SQLException {
+        Assert.assertEquals("fos", Helper.getConnection().getSchema());
     }
 
 }

@@ -2,14 +2,13 @@
  * Test des gesamten Systems mit UseCase Szenarien, die Alle /F* Requirements abdecken
  * ev. Manuell anstatt automatisiert
  */
-public class SystemTest {
     /**
      * Szenario /F01**
      * * Anmeldung
      * * Benutzer erstellen
-     * * Passwort Ã¤ndern
+     * * Passwort ändern
      * * Benutzer anpassen
-     * * Benutzer lÃ¶schen
+     * * Benutzer löschen
      * * Benutzer sperren
      * * Benutzerverwaltungsseite
      * * Abmeldung
@@ -19,8 +18,8 @@ public class SystemTest {
      * Szenario /F02**
      * * Fahrzeug ertellen
      * * Fahrzeug bearbeiten
-     * * Fahrzeug lÃ¶schen
-     * * Ãœbersicht aller Fahrzeuge
+     * * Fahrzeug löschen
+     * * Übersicht aller Fahrzeuge
      */
 
     /**
@@ -35,4 +34,3 @@ public class SystemTest {
      * * Gesamtauswertung
      * * Export als CSV
      */
-}

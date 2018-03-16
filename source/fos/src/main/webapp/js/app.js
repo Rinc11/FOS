@@ -9,7 +9,7 @@ function toggle() {
 }
 
 
-function saveDeleteUsernam(username){
+function saveDeleteUsername(username){
     this.redirectPath = "deleteUser?username=" + username;
     console.log(username);
     document.getElementById("deleteUserYesButton").setAttribute("href", this.redirectPath);

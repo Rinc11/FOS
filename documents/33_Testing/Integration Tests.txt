@@ -1,15 +1,8 @@
-
-import com.fos.database.DbObject;
-import com.fos.database.NotLoadedExeption;
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
- * Tests zur PrÃ¼fung der Module und deren Zusammenspiel
+ * Tests zur Prüfung der Module und deren Zusammenspiel
  * Alles was nicht in eigenen Test getestet wird und mehrere Module betrifft
- * wÃ¤re hier gut aufgehoben
+ * wäre hier gut aufgehoben
  */
-public class IntegrationTest {
 
     /**
      * Loginseite
@@ -21,12 +14,12 @@ public class IntegrationTest {
     /**
      * Benutzer erstellen
      * Benutzer anpassen
-     * Benutzer lÃ¶schen / sperren
+     * Benutzer löschen / sperren
      */
 
 
     /**
-     * Passwort Ã¤ndern
+     * Passwort ändern
      */
 
     /**
@@ -34,7 +27,7 @@ public class IntegrationTest {
      */
 
     /**
-     * Ãœbersicht aller Fahrzeuge
+     * Übersicht aller Fahrzeuge
      */
 
     /**
@@ -44,7 +37,7 @@ public class IntegrationTest {
      * Fahrzeug bearbeiten
      */
     /**
-     * Fahrzeug lÃ¶schen
+     * Fahrzeug löschen
      */
 
     /**
@@ -63,4 +56,4 @@ public class IntegrationTest {
     /**
      * Export als CSV
      */
-}
+
