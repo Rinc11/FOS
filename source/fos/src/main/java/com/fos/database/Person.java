@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,11 @@ public class Person {
      */
     public static Person getPerson(String userName, Connection conn) throws SQLException {
         Person result = null;
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery(
-                "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
-                        " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
-                        " \"Deleted_YN\" FROM fos.\"Person\" WHERE \"Username\" = '" + userName + "';"
-        );
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT \"Username\", \"Firstname\", " +
+                "\"Lastname\", \"AHV\", \"Street\", \"Place\",\"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\"," +
+                " \"LoginTry\", \"Usertype\",\"Deleted_YN\" FROM fos.\"Person\" WHERE \"Username\" = ?;");
+        preparedStatement.setString(1, userName);
+        ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             result = new Person(
                     resultSet.getString("Username"),
@@ -82,7 +82,9 @@ public class Person {
     }
 
     public static void removePerson(String username, Connection conn) throws SQLException {
-        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = '" + username + "'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = ?");
+        preparedStatement.setString(1, username);
+        preparedStatement.execute();
 
     }
 
@@ -244,7 +246,10 @@ public class Person {
      * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {
-        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"LoginTry\"=" + loginTry + " WHERE \"Username\" = '" + userName.getValue() + "'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"LoginTry\"= ? WHERE \"Username\" = ?;");
+        preparedStatement.setInt(1, loginTry);
+        preparedStatement.setString(2, userName.getValue());
+        preparedStatement.execute();
         if (loginTry > 10 && userType.getValue() == PersonUserType.MITARBEITER) {
             setLocked(true, conn);
         }
@@ -258,7 +263,10 @@ public class Person {
      * @param conn Verbinung zu Datenbank
      */
     public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
-        conn.createStatement().execute("UPDATE fos.\"Person\" SET \"Locked_YN\"=" + locked + " WHERE \"Username\" = '" + userName.getValue() + "'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Locked_YN\"= ? WHERE \"Username\" = ?");
+        preparedStatement.setBoolean(1, locked);
+        preparedStatement.setString(2, userName.getValue());
+        preparedStatement.execute();
         this.locked.setValueOnLoadedObject(locked);
     }
 
