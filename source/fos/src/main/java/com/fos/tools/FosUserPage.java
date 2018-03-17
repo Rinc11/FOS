@@ -5,6 +5,7 @@ import com.fos.database.Person;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -14,6 +15,13 @@ import java.sql.SQLException;
  * Logik die für alle Seiten des fos Projektes gilt
  */
 public abstract class FosUserPage {
+
+
+    public static void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("userName");
+        session.invalidate();
+    }
 
     public abstract String getJspPath();
 
@@ -33,19 +41,21 @@ public abstract class FosUserPage {
     public FosUserPage(HttpServletRequest request, Boolean needsAdminRight) {
         this.request = request;
         this.needsAdminRight = needsAdminRight;
+        try {
+            conn = Helper.getConnection();
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
     }
 
     public Boolean loginValid() {
         try {
-            conn = Helper.getConnection();
 
             tryLogIn(request);
             Person user = getUser();
             if (user != null && (!needsAdminRight || user.getUserType() == Person.PersonUserType.ADMIN)) {
                 return true;
             }
-        } catch (SQLException e) {
-            addError("Datenbank Verbindungsfehler", e);
         } catch (NotLoadedExeption e) {
             addError("Fehler auf der Seite", e);
         }

@@ -93,7 +93,7 @@ Bentutzerverwaltungseite
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Nein</button>
-                <a class="btn btn-primary" id="deleteUserYesButton" href="#">Ja</a>
+                <a class="btn btn-primary" id="deleteUserYesButton" href="#" onclick="deleteUser()">Ja</a>
             </div>
         </div>
     </div>

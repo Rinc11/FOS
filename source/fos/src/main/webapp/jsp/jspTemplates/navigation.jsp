@@ -25,11 +25,11 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                 <li <c:if test="${navSelection=='Startseite'}"> class="active" </c:if>><a href="/"><strong>Home</strong></a>
                 </li>
                 <li <c:if test="${navSelection=='Fahrt'}"> class="active" </c:if>><a
-                        href="../fahrt.jsp"><strong>Fahrten</strong></a></li>
+                        href="/fahrt"><strong>Fahrten</strong></a></li>
                 <li <c:if test="${navSelection=='Fahrzeug'}"> class="active" </c:if>><a href="/fahrzeug"><strong>Fahrzeuge</strong></a>
                 </li>
                 <li <c:if test="${navSelection=='Auswertung'}"> class="active" </c:if>><a
-                        href="../auswertung.jsp"><strong>Auswertung</strong></a></li>
+                        href="/auswertung"><strong>Auswertung</strong></a></li>
                 <li <c:if test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="/benutzer">
                     <strong>
                         <c:choose>
@@ -43,7 +43,7 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                     </strong>
                     <img src="/jsp/img/pawn.png" alt="Benutzer"
                          style="width:20px; margin-top:-3px; margin-left:15px;"/></a></li>
-                <li><a href="/logout" class="menu"><strong>Abmelden</strong></a></li>
+                <li><a onclick="logout('${pageContext.request.requestURI}')" href="#" class="menu"><strong>Abmelden</strong></a></li>
             </ul>
         </div>
     </div>

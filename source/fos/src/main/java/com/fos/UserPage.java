@@ -1,4 +1,4 @@
-package com.fos.user;
+package com.fos;
 
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
@@ -14,6 +14,7 @@ import java.util.List;
  * Logik für die Userseite
  */
 public class UserPage extends FosUserPage {
+    private static final String REMOVEUSERTAG = "removeUser:";
 
     /**
      * Logic für die Userseite
@@ -23,6 +24,12 @@ public class UserPage extends FosUserPage {
      */
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, false);
+        String command = request.getParameter("command");
+        if(command != null){
+            if(command.startsWith(REMOVEUSERTAG)){
+                removeItem(command.substring(REMOVEUSERTAG.length()));
+            }
+        }
     }
 
     /**
@@ -40,8 +47,6 @@ public class UserPage extends FosUserPage {
     }
 
     public void removeItem(String username){
-
-
         try {
             Person.removePerson(username, conn);
         } catch (SQLException e) {

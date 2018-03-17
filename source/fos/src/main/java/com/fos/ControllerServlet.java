@@ -2,9 +2,7 @@ package com.fos;
 
 import com.fos.homepage.HomePage;
 import com.fos.tools.FosUserPage;
-import com.fos.user.UserPage;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet({"", "/benutzer", "/fahrzeug"})
-public class FosServlet extends HttpServlet {
+public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,6 +22,10 @@ public class FosServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        String command = request.getParameter("command");
+        if(command != null && command.equals("logout")){
+            FosUserPage.logout(request);
+        }
         FosUserPage fosUserPage = null;
         String staticPage = "";
         switch (request.getRequestURI()) {
@@ -42,8 +44,7 @@ public class FosServlet extends HttpServlet {
         }
         if (fosUserPage != null && fosUserPage.loginValid()) {
             request.setAttribute("actualPage", fosUserPage);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(fosUserPage.getJspPath());
-            dispatcher.include(request, response);
+            request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
         } else if (staticPage != "") {
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {

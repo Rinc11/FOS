@@ -10,7 +10,35 @@ function toggle() {
 
 
 function saveDeleteUsername(username){
-    this.redirectPath = "deleteUser?username=" + username;
-    console.log(username);
-    document.getElementById("deleteUserYesButton").setAttribute("href", this.redirectPath);
+    this.userToDelete = username;
+}
+
+function deleteUser() {
+    post("/benutzer", {command: "removeUser:"+ this.userToDelete})
+}
+
+function logout(uri) {
+    post(uri, {command: "logout"})
+}
+
+//https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
+function post(path, params) {
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+    document.body.appendChild(form);
+    form.submit();
 }
