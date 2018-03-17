@@ -23,7 +23,7 @@ public class DeleteUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserPage userpage = new UserPage(request, response);
         userpage.removeItem(request.getParameter("username"));
-        response.sendRedirect("benutzer.jsp");
+        response.sendRedirect("user.jsp");
     }
 
     @Override

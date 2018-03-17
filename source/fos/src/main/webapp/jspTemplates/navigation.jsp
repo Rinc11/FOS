@@ -26,11 +26,11 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                 </li>
                 <li <c:if test="${navSelection=='Fahrt'}"> class="active" </c:if>><a
                         href="../fahrt.jsp"><strong>Fahrten</strong></a></li>
-                <li <c:if test="${navSelection=='Fahrzeug'}"> class="active" </c:if>><a href="../fahrzeug.jsp"><strong>Fahrzeuge</strong></a>
+                <li <c:if test="${navSelection=='Fahrzeug'}"> class="active" </c:if>><a href="../vehicle.jsp"><strong>Fahrzeuge</strong></a>
                 </li>
                 <li <c:if test="${navSelection=='Auswertung'}"> class="active" </c:if>><a
                         href="../auswertung.jsp"><strong>Auswertung</strong></a></li>
-                <li <c:if test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../benutzer.jsp">
+                <li <c:if test="${navSelection=='Benutzer'}"> class="active" </c:if>><a href="../user.jsp">
                     <strong>
                         <c:choose>
                             <c:when test="${userLoggedIn.userType == 'ADMIN'}">
