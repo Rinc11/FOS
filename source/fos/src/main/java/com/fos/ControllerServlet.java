@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({"", "/benutzer", "/fahrzeug"})
+@WebServlet({"", "/benutzer", "/fahrzeug", "/benutzerFormular"})
 public class ControllerServlet extends HttpServlet {
 
     @Override
@@ -32,8 +32,10 @@ public class ControllerServlet extends HttpServlet {
             case "/benutzer":
                 fosUserPage = new UserPage(request, response);
                 break;
+            case "/benutzerFormular":
+                fosUserPage = new UserPage(request, response, "/jsp/userForm.jsp");
             case "/fahrzeug":
-                staticPage = "jsp/fahrzeug.jsp";
+                staticPage = "jsp/vehicle.jsp";
                 break;
             case "/":
                 fosUserPage = new HomePage(request, response);

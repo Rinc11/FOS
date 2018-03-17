@@ -2,10 +2,12 @@ package com.fos;
 
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +17,31 @@ import java.util.List;
  */
 public class UserPage extends FosUserPage {
     private static final String REMOVEUSERTAG = "removeUser:";
+    private String jspFile = "/jsp/user.jsp";
 
-    /**
-     * Logic für die Userseite
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     */
+    public UserPage(HttpServletRequest request, HttpServletResponse response, String jspFile) {
+        this(request, response);
+        this.jspFile = jspFile;
+    }
+
+
+        /**
+         * Logic für die Userseite
+         *
+         * @param request  servlet request
+         * @param response servlet response
+         */
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, false);
         String command = request.getParameter("command");
         if(command != null){
             if(command.startsWith(REMOVEUSERTAG)){
                 removeItem(command.substring(REMOVEUSERTAG.length()));
+            }else if(command.equals("addUser")){
+                addNewItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
+                        , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
+                        , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
+                        , request.getParameter("usertype"));
             }
         }
     }
@@ -57,6 +71,18 @@ public class UserPage extends FosUserPage {
 
     @Override
     public String getJspPath() {
-        return "/jsp/benutzer.jsp";
+        return jspFile;
+    }
+
+    public void addNewItem(String username, String firstname, String lastname, String ahv, String street, String place
+            , String email, String password, String passwordHint, String userType) {
+        try {
+            password = Helper.getHash(password);
+            Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
+        } catch (NoSuchAlgorithmException e) {
+            addError("Server Fehler", e);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
     }
 }

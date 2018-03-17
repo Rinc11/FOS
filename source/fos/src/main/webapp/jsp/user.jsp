@@ -21,7 +21,7 @@ Bentutzerverwaltungseite
     </div>
 
 
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button></legend>
     <fieldset id="filteroptionen">
         <div class="row">
             <div class="col-lg-6">
@@ -44,7 +44,7 @@ Bentutzerverwaltungseite
         <div class="panel-heading">Liste
         </div>
         <div class="panel-body">
-            <a class="btn btn-default" href="benutzerFormularNeu.html" style="color: rgb(64, 99, 180);">Benutzer hinzufügen</a>
+            <a class="btn btn-default" href="/benutzerFormular" style="color: rgb(64, 99, 180);"><span class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a>
             <br><br>
             <div class="scrollme">
                 <table class="table table-responsive">
