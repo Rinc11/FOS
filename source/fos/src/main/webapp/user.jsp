@@ -26,7 +26,7 @@ Bentutzerverwaltungseite
     </div>
 
 
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button></legend>
     <fieldset id="filteroptionen">
         <div class="row">
             <div class="col-lg-6">

@@ -53,6 +53,8 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         <label>Name</label>
                         <input class="form-control" name="lastname" type="text" placeholder="Name" required>
                     </div>
+                    <legend style="color: rgb(64, 99, 180);"><a class="btn btn-sm btn-primary" onclick="toggle('optionalFieldsUser')">Optionale Felder <span class="glyphicon glyphicon-plus"></a></legend>
+                    <fieldset id="optionalFieldsUser" style="display: none">
                     <div class="form-group">
                         <label>AHV</label>
                         <input class="form-control" name="ahv" type="text" placeholder="AHV">
@@ -73,6 +75,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         <label>Passwort Hinweis</label>
                         <input class="form-control" name="passwordHint" type="text" placeholder="Passwort Hinweis">
                     </div>
+                    </fieldset>
                     <div class="form-group">
                         <label>Rechte</label>
                         <select class="form-control" name="usertype">

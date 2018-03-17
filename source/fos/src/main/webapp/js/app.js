@@ -1,6 +1,7 @@
 
-function toggle() {
-    var x = document.getElementById("filteroptionen");
+function toggle(fieldset) {
+    var x = document.getElementById(fieldset);
+
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {

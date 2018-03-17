@@ -25,7 +25,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <h1>Fahrzeuge</h1>
         <p>Hier können Sie bereits eingetragene Fahrzeuge einsehen, editieren und neue hinzufügen.</p>
     </div>
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button></legend>
     <fieldset id="filteroptionen" style="display: none">
         <div class="row">
             <div class="col-lg-6">
