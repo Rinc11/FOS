@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Logout Servlet; logt den aktuellen Benutzer aus.
  */
-@WebServlet(name = "/logout", value = "/logout")
+@WebServlet(value = "/logout")
 public class Logout extends HttpServlet {
 
     /**
@@ -24,7 +24,7 @@ public class Logout extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("userName");
         session.invalidate();
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("/");
     }
 
     @Override

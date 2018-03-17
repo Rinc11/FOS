@@ -3,11 +3,6 @@ Bentutzerverwaltungseite
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.user.UserPage" %>
-<%
-    UserPage userpage = new UserPage(request, response);
-    request.setAttribute("actualPage", userpage);
-%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="de">

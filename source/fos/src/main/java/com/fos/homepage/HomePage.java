@@ -1,4 +1,4 @@
-package com.fos;
+package com.fos.homepage;
 
 import com.fos.database.Config;
 import com.fos.tools.FosUserPage;
@@ -13,7 +13,6 @@ import java.util.List;
  * Logik für die Startseite
  */
 public class HomePage extends FosUserPage {
-
     /**
      * Logic für die Startseite
      *
@@ -21,7 +20,7 @@ public class HomePage extends FosUserPage {
      * @param response servlet response
      */
     public HomePage(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response, false);
+        super(request, false);
     }
 
     /**
@@ -38,5 +37,10 @@ public class HomePage extends FosUserPage {
             addError("Datenbank Fehler", e);
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public String getJspPath() {
+        return "/jsp/home.jsp";
     }
 }

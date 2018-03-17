@@ -3,7 +3,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.HomePage" %>
+<%@ page import="com.fos.homepage.HomePage" %>
 <%@ page import="com.fos.tools.Helper" %>
 
 <%
@@ -17,7 +17,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
     <jsp:include page="jspTemplates/importHead.jsp"/>
 </head>
 <body>
-<c:set var="navSelection" value="Fahrzeug" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
+<c:set var="navSelection" value="Fahrzeug" scope="request"/>
 <jsp:include page="jspTemplates/navigation.jsp"/>
 <div class="container">
     <jsp:include page="jspTemplates/showErrorMessage.jsp"/>

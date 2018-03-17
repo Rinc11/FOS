@@ -22,7 +22,7 @@ public class UserPage extends FosUserPage {
      * @param response servlet response
      */
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response, false);
+        super(request, false);
     }
 
     /**
@@ -48,5 +48,10 @@ public class UserPage extends FosUserPage {
             addError("Datenbank Fehler", e);
         }
 
+    }
+
+    @Override
+    public String getJspPath() {
+        return "/jsp/benutzer.jsp";
     }
 }
