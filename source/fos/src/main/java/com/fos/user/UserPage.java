@@ -2,10 +2,12 @@ package com.fos.user;
 
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +43,24 @@ public class UserPage extends FosUserPage {
 
     public void removeItem(String username){
 
-
         try {
             Person.removePerson(username, conn);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
+
+    }
+
+    public void addNewItem(String username, String firstname, String lastname, String ahv, String street, String place
+            , String email, String password, String passwordHint, String userType) {
+
+        try {
+            password = Helper.getHash(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
         } catch (SQLException e) {
             addError("Datenbank Fehler", e);
         }

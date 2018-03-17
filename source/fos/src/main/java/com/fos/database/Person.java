@@ -83,7 +83,7 @@ public class Person {
 
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException{
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, firstname);
         preparedStatement.setString(3, lastname);
@@ -93,7 +93,7 @@ public class Person {
         preparedStatement.setString(7, email);
         preparedStatement.setString(8, password);
         preparedStatement.setString(9, passwordHint);
-        preparedStatement.setString(10, userType);
+        preparedStatement.execute();
     }
 
     public static void removePerson(String username, Connection conn) throws SQLException {
