@@ -19,7 +19,7 @@ public class DbObjectTest {
     public void testDbObjectNotLoaded() throws NotLoadedExeption {
         DbObject<Integer> testObject = new DbObject<>();
         Assert.assertEquals(false, testObject.isLoaded());
-        Integer testValue = testObject.getValue();
+        testObject.getValue();
     }
 
     /**

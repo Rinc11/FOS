@@ -35,7 +35,7 @@ public class DbObject<T> {
      * @throws NotLoadedExeption wenn das Feld noch nicht geladen ist wird diese Exeption geworfen.
      */
     public T getValue() throws NotLoadedExeption {
-        if (loaded == false) {
+        if (!loaded) {
             throw new NotLoadedExeption("Database field is not loaded");
         }
         return value;

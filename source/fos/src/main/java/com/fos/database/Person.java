@@ -1,5 +1,6 @@
 package com.fos.database;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Stellt einen Datensatz einer Person dar
  */
-public class Person {
+public class Person implements Serializable{
 
     /**
      * gibt den Datensatz eines Users zurück

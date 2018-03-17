@@ -108,7 +108,7 @@ public class SqlUpdate {
      * @param conn die verbindung zur Datenbank
      * @throws SQLException wird geworfen wenn es ein Fehler mit der Datenkbank gibt.
      */
-    public void UpdateDatabase(Connection conn) {
+    public void UpdateDatabase(Connection conn) {//kürzer und weniger try catch
         try {
             int dbVersion = -1;
             try {
@@ -131,8 +131,8 @@ public class SqlUpdate {
 
             conn.setAutoCommit(false);
             if (dbVersion < getLastCommandId()) {
-                List<Map.Entry> commands = getCommandsAfter(dbVersion);
-                for (Map.Entry<Integer, String> command : commands) {
+                List<Map.Entry> commandsAfter= getCommandsAfter(dbVersion);
+                for (Map.Entry<Integer, String> command : commandsAfter) {
                     try {
                         conn.createStatement().execute(command.getValue());
                         conn.createStatement().execute("UPDATE FosConfig set ConfigValue = '" + command.getKey() + "' WHERE ConfigId = 'dbVersion'");
@@ -145,7 +145,7 @@ public class SqlUpdate {
                         throw e;
                     }
                 }
-                System.out.println(commands.size() + " commands executed");
+                System.out.println(commandsAfter.size() + " commands executed");
             } else {
                 System.out.println("database is up to date");
             }
