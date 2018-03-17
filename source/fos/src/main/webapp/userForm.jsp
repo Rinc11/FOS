@@ -30,54 +30,54 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
             Formular
         </div>
         <div class="panel-body">
-            <form action="fahrzeug.html">
+            <form action="addUser" method="post">
                 <fieldset>
                     <legend>Benutzer</legend>
                     <div class="form-group">
                         <label>Benutzername</label>
-                        <input type="text" class="form-control" placeholder="Benutzername" required>
+                        <input class="form-control" name="username" type="text" placeholder="Benutzername" required>
                     </div>
                     <div class="form-group">
                         <label>Passwort</label>
-                        <input type="password" class="form-control" placeholder="Passwort" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Ihr Passwort muss mind. 8 Zeichen lang sein, eine Zahl und einen Grossbuchstaben beinhalten" required>
+                        <input class="form-control" name="password" type="password" placeholder="Passwort" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Ihr Passwort muss mind. 8 Zeichen lang sein, eine Zahl und einen Grossbuchstaben beinhalten" required>
                     </div>
                     <div class="form-group">
                         <label>Passwort bestätigen</label>
-                        <input type="password" class="form-control" placeholder="Passwort bestätigen" id="password_confirm" required>
+                        <input class="form-control" name="passwordConfirm" type="password" placeholder="Passwort bestätigen" id="password_confirm" required>
                     </div>
                     <div class="form-group">
                         <label>Vorname</label>
-                        <input type="text" class="form-control" placeholder="Vorname" required>
+                        <input class="form-control" name="firstname" type="text" placeholder="Vorname" required>
                     </div>
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Name" required>
+                        <input class="form-control" name="lastname" type="text" placeholder="Name" required>
                     </div>
                     <div class="form-group">
                         <label>AHV</label>
-                        <input type="text" class="form-control" placeholder="AHV">
+                        <input class="form-control" name="ahv" type="text" placeholder="AHV">
                     </div>
                     <div class="form-group">
                         <label>Strasse</label>
-                        <input type="text" class="form-control" placeholder="Strasse">
+                        <input class="form-control" name="street" type="text" placeholder="Strasse">
                     </div>
                     <div class="form-group">
                         <label>Ort</label>
-                        <input type="text" class="form-control" placeholder="Ort">
+                        <input class="form-control" name="place" type="text" placeholder="Ort">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input class="form-control" name="email" type="email" placeholder="Email">
                     </div>
                     <div class="form-group">
                         <label>Passwort Hinweis</label>
-                        <input type="text" class="form-control" placeholder="Passwort Hinweis">
+                        <input class="form-control" name="passwordHint" type="text" placeholder="Passwort Hinweis">
                     </div>
                     <div class="form-group">
                         <label>Rechte</label>
-                        <select class="form-control">
-                            <option>ADMIN</option>
-                            <option>MITARBEITER</option>
+                        <select class="form-control" name="usertype">
+                            <option>Admin</option>
+                            <option>Mitarbeiter</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-default">Senden</button>
@@ -87,7 +87,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
     </div>
 
 </div>
-
+<br><br><br>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>
 </html>
