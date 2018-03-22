@@ -100,7 +100,7 @@ public class Person {
             , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn) throws SQLException {
 
         if (!password.equals("")) {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = ? WHERE \"Username\" = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '\"+userType+\"' WHERE \"Username\" = ?");
 
             preparedStatement.setString(1, firstname);
             preparedStatement.setString(2, lastname);
@@ -111,13 +111,12 @@ public class Person {
             preparedStatement.setString(7, password);
             preparedStatement.setString(8, passwordHint);
             preparedStatement.setBoolean(9, locked);
-            preparedStatement.setString(10, userType);
-            preparedStatement.setString(11, username);
+            preparedStatement.setString(10, username);
 
             System.out.println(preparedStatement);
             preparedStatement.execute();
         } else {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = ? WHERE \"Username\" = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '"+userType+"' WHERE \"Username\" = ?");
 
             preparedStatement.setString(1, firstname);
             preparedStatement.setString(2, lastname);
@@ -127,8 +126,7 @@ public class Person {
             preparedStatement.setString(6, email);
             preparedStatement.setString(7, passwordHint);
             preparedStatement.setBoolean(8, locked);
-            preparedStatement.setString(9, userType);
-            preparedStatement.setString(10, username);
+            preparedStatement.setString(9, username);
 
             System.out.println(preparedStatement);
             preparedStatement.execute();

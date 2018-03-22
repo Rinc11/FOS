@@ -1,6 +1,7 @@
 package com.fos.user;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -8,8 +9,8 @@ import java.io.IOException;
 /**
  * Logout Servlet; logt den aktuellen Benutzer aus.
  */
-@WebServlet(name = "/addUser", value = "/addUser")
-public class EditUser {
+@WebServlet(name = "/editUser", value = "/editUser")
+public class EditUser extends HttpServlet {
 
     /**
      * Empfängt die Benutzer löschen Anfrage.
@@ -26,5 +27,7 @@ public class EditUser {
                 , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
                 , Boolean.valueOf(request.getParameter("locked")), request.getParameter("usertype"));
         response.sendRedirect("user.jsp");
+        System.out.print("bool" + Boolean.valueOf(request.getParameter("locked")) +"ohne"+request.getParameter("locked"));
+
     }
 }
