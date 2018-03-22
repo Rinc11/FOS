@@ -49,7 +49,7 @@ Bentutzerverwaltungseite
         <div class="panel-heading">Liste
         </div>
         <div class="panel-body">
-            <a class="btn btn-default" href="userForm.jsp" style="color: rgb(64, 99, 180);"><span class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a>
+            <a class="btn btn-default" href="addUser.jsp" style="color: rgb(64, 99, 180);"><span class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a>
             <br><br>
             <div class="scrollme">
                 <table class="table table-responsive">
