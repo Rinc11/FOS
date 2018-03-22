@@ -97,23 +97,45 @@ public class Person {
     }
 
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn) throws SQLException{
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = ? WHERE \"Username\" = ?");
+            , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn) throws SQLException {
 
-        preparedStatement.setString(1, firstname);
-        preparedStatement.setString(2, lastname);
-        preparedStatement.setString(3, ahv);
-        preparedStatement.setString(4, street);
-        preparedStatement.setString(5, place);
-        preparedStatement.setString(6, email);
-        preparedStatement.setString(7, password);
-        preparedStatement.setString(8, passwordHint);
-        preparedStatement.setBoolean(9, locked);
-        preparedStatement.setString(10, userType);
-        preparedStatement.setString(11, username);
+        if (!password.equals("")) {
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = ? WHERE \"Username\" = ?");
 
-        System.out.println(preparedStatement);
-        preparedStatement.execute();
+            preparedStatement.setString(1, firstname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, ahv);
+            preparedStatement.setString(4, street);
+            preparedStatement.setString(5, place);
+            preparedStatement.setString(6, email);
+            preparedStatement.setString(7, password);
+            preparedStatement.setString(8, passwordHint);
+            preparedStatement.setBoolean(9, locked);
+            preparedStatement.setString(10, userType);
+            preparedStatement.setString(11, username);
+
+            System.out.println(preparedStatement);
+            preparedStatement.execute();
+        } else {
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = ? WHERE \"Username\" = ?");
+
+            preparedStatement.setString(1, firstname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, ahv);
+            preparedStatement.setString(4, street);
+            preparedStatement.setString(5, place);
+            preparedStatement.setString(6, email);
+            preparedStatement.setString(7, passwordHint);
+            preparedStatement.setBoolean(8, locked);
+            preparedStatement.setString(9, userType);
+            preparedStatement.setString(10, username);
+
+            System.out.println(preparedStatement);
+            preparedStatement.execute();
+
+
+        }
+
     }
 
     public static void removePerson(String username, Connection conn) throws SQLException {
