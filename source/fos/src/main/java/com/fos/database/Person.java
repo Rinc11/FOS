@@ -113,7 +113,6 @@ public class Person {
             preparedStatement.setBoolean(9, locked);
             preparedStatement.setString(10, username);
 
-            System.out.println(preparedStatement);
             preparedStatement.execute();
         } else {
             PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '"+userType+"' WHERE \"Username\" = ?");
@@ -127,8 +126,7 @@ public class Person {
             preparedStatement.setString(7, passwordHint);
             preparedStatement.setBoolean(8, locked);
             preparedStatement.setString(9, username);
-
-            System.out.println(preparedStatement);
+            
             preparedStatement.execute();
 
 
