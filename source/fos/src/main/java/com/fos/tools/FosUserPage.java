@@ -34,17 +34,14 @@ public abstract class FosUserPage {
 
             Person user = getUser();
             if (user == null || (needsAdminRight && user.getUserType() != Person.PersonUserType.ADMIN)) {
-                try {
-                    response.sendRedirect("login.jsp");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    addError("Ladefehler mit einer Datei", e);
-                }
+                response.sendRedirect("login.jsp");
             }
         } catch (SQLException e) {
             addError("Datenbank Verbindungsfehler", e);
         } catch (NotLoadedExeption e) {
             addError("Fehler auf der Seite", e);
+        } catch (IOException e) {
+            addError("Ladefehler mit einer Datei", e);
         }
     }
 
