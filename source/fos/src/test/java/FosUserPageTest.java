@@ -144,7 +144,12 @@ public class FosUserPageTest {
          * @param needsAdminRight ob admin rechte benötigt werden.
          */
         public TestFosPage(HttpServletRequest request, HttpServletResponse response, Boolean needsAdminRight) {
-            super(request, response, needsAdminRight);
+            super(request, needsAdminRight);
+        }
+
+        @Override
+        public String getJspPath() {
+            return "";
         }
     }
 }
