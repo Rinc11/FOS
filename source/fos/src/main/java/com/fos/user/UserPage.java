@@ -18,7 +18,7 @@ import java.util.List;
 public class UserPage extends FosUserPage {
 
     /**
-     * Logic für die Userseite
+     * Logik für die Userseite
      *
      * @param request  servlet request
      * @param response servlet response
@@ -64,6 +64,25 @@ public class UserPage extends FosUserPage {
         } catch (SQLException e) {
             addError("Datenbank Fehler", e);
         }
+
+    }
+
+    public void editItem(String username, String firstname, String lastname, String ahv, String street, String place
+            , String email, String password, String passwordHint, Boolean locked, String userType) {
+        if (!password.equals("")) {
+            try {
+                password = Helper.getHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Person.updatePerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, locked, userType, conn);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
+
+
 
     }
 }
