@@ -16,9 +16,9 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><img src="/jsp/img/FOS_weiss.png"
-                                                            alt="Fahrzeug Organisations-System"
-                                                            style="width:70px; margin-top:-12px;"/></a>
+            <a class="navbar-brand" href="/"><img src="/img/FOS_weiss.png"
+                                                  alt="Fahrzeug Organisations-System"
+                                                  style="width:70px; margin-top:-12px;"/></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -41,7 +41,7 @@ z.B. für home: <c:set var="navSelection" value="Startseite" scope="request"/>
                             </c:otherwise>
                         </c:choose>
                     </strong>
-                    <img src="/jsp/img/pawn.png" alt="Benutzer"
+                    <img src="/img/pawn.png" alt="Benutzer"
                          style="width:20px; margin-top:-3px; margin-left:15px;"/></a></li>
                 <li><a onclick="logout('${pageContext.request.requestURI}')" href="#" class="menu"><strong>Abmelden</strong></a></li>
             </ul>

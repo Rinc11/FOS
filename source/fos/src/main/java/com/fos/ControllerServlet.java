@@ -35,13 +35,13 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new UserPage(request, response);
                 break;
             case "/benutzerHinzufuegen":
-                fosUserPage = new UserPage(request, response, "/jsp/addUser.jsp");
+                fosUserPage = new UserPage(request, response, "/WEB-INF/jsp/addUser.jsp");
                 break;
             case "/benutzerAendern":
-                fosUserPage = new UserPage(request, response, "/jsp/editUser.jsp");
+                fosUserPage = new UserPage(request, response, "/WEB-INF/jsp/editUser.jsp");
                 break;
             case "/fahrzeug":
-                staticPage = "jsp/vehicle.jsp";
+                staticPage = "/WEB-INF/jsp/vehicle.jsp";
                 break;
             case "/":
                 fosUserPage = new HomePage(request, response);
@@ -56,7 +56,7 @@ public class ControllerServlet extends HttpServlet {
         } else if (staticPage != "") {
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {
-            request.getRequestDispatcher("/jsp/login.jsp").include(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);
         }
     }
 }

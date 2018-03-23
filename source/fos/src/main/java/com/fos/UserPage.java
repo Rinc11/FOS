@@ -18,7 +18,7 @@ import java.util.List;
 public class UserPage extends FosUserPage {
     private static final String REMOVEUSERTAG = "removeUser:";
     private static final String EDITUSERTAG = "editUser";
-    private String jspFile = "/jsp/user.jsp";
+    private String jspFile = "/WEB-INF/jsp/user.jsp";
 
 
     /**

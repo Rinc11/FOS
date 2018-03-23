@@ -10,13 +10,13 @@ Anmeldemaske
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
-    <link rel="stylesheet" type="text/css" href="/jsp/css/anmelden.css">
+    <link rel="stylesheet" type="text/css" href="/css/anmelden.css">
 </head>
 <body>
 
 <div class="container welcome">
     <div class="jumbotron">
-        <img src="/jsp/img/FOS.png" id="FOSmaske" alt="Fahrzeug Organisations-System"/>
+        <img src="/img/FOS.png" id="FOSmaske" alt="Fahrzeug Organisations-System"/>
         <div class="account-wall">
             <h2 class="text-center login-title" style="float:left; line-height:1.4;">Herzlich willkommen bei FOS, dem
                 Fahrzeug Organisations-System!<br>
