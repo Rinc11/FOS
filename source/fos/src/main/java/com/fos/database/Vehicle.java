@@ -28,13 +28,13 @@ public class Vehicle {
                         " FROM fos.\"Vehicles\" WHERE \"VehicleID\" = '" + vehicleID + "';"
         );
         if (resultSet.next()) {
-            result = new Vehicle(
-                    resultSet.getInt("VehicleID"),
-                    resultSet.getString("Serialnumber"),
-                    resultSet.getString("Brand"),
-                    resultSet.getString("Type"),
-                    resultSet.getInt("BuildYear"),
-                    VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase()));
+            Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
+            vehicle.serialnumber.setValue(resultSet.getString("Serialnumber"));
+            vehicle.brand.setValue(resultSet.getString("Brand"));
+            vehicle.type.setValue(resultSet.getString("Type"));
+            vehicle.buildYear.setValue(resultSet.getInt("BuildYear"));
+            vehicle.fuelType.setValue(VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase()));
+            result = vehicle;
         }
         return result;
     }
@@ -53,33 +53,26 @@ public class Vehicle {
                         " FROM fos.\"Vehicles\";"
         );
         while (resultSet.next()) {
-            result.add(
-                    new Vehicle(
-                            resultSet.getInt("VehicleID"),
-                            resultSet.getString("Serialnumber"),
-                            resultSet.getString("Brand"),
-                            resultSet.getString("Type"),
-                            resultSet.getInt("BuildYear"),
-                            VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase())));
+            Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
+            vehicle.serialnumber.setValue(resultSet.getString("Serialnumber"));
+            vehicle.brand.setValue(resultSet.getString("Brand"));
+            vehicle.type.setValue(resultSet.getString("Type"));
+            vehicle.buildYear.setValue(resultSet.getInt("BuildYear"));
+            vehicle.fuelType.setValue(VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase()));
+            result.add(vehicle);
         }
         return result;
     }
 
-    private DbObject<Integer> vehicleID = new DbObject<>();
-    private DbObject<String> serialnumber = new DbObject<>();
-    private DbObject<String> brand = new DbObject<>();
-    private DbObject<String> type = new DbObject<>();
-    private DbObject<Integer> buildYear = new DbObject<>();
-    private DbObject<VehicleFuelType> fuelType = new DbObject<>();
+    private final DbObject<Integer> vehicleID = new DbObject<>();
+    private final DbObject<String> serialnumber = new DbObject<>();
+    private final DbObject<String> brand = new DbObject<>();
+    private final DbObject<String> type = new DbObject<>();
+    private final DbObject<Integer> buildYear = new DbObject<>();
+    private final DbObject<VehicleFuelType> fuelType = new DbObject<>();
 
-    private Vehicle(Integer vehicleID, String serialnumber, String brand, String type,
-                    Integer buildYear, VehicleFuelType fuelType) {
+    private Vehicle(Integer vehicleID) {
         this.vehicleID.setValue(vehicleID);
-        this.serialnumber.setValue(serialnumber);
-        this.brand.setValue(brand);
-        this.type.setValue(type);
-        this.buildYear.setValue(buildYear);
-        this.fuelType.setValue(fuelType);
     }
 
     /**
