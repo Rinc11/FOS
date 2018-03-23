@@ -28,20 +28,21 @@ public class Person {
         preparedStatement.setString(1, userName);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            result = new Person(
-                    resultSet.getString("Username"),
-                    resultSet.getString("Firstname"),
-                    resultSet.getString("Lastname"),
-                    resultSet.getString("AHV"),
-                    resultSet.getString("Street"),
-                    resultSet.getString("Place"),
-                    resultSet.getString("Email"),
-                    resultSet.getString("Password"),
-                    resultSet.getString("PasswordHint"),
-                    resultSet.getBoolean("Locked_YN"),
-                    resultSet.getInt("LoginTry"),
-                    PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()),
-                    resultSet.getBoolean("Deleted_YN"));
+            Person person = new Person(resultSet.getString("Username"));
+            person.firstName.setValue(resultSet.getString("Firstname"));
+            person.lastName.setValue(resultSet.getString("Lastname"));
+            person.ahv.setValue(resultSet.getString("AHV"));
+            person.street.setValue(resultSet.getString("Street"));
+            person.place.setValue(resultSet.getString("Place"));
+            person.email.setValue(resultSet.getString("Email"));
+            person.passwordHash.setValue(resultSet.getString("Password"));
+            person.passwordHint.setValue(resultSet.getString("PasswordHint"));
+            person.locked.setValue(resultSet.getBoolean("Locked_YN"));
+            person.loginTry.setValue(resultSet.getInt("LoginTry"));
+            person.userType.setValue(PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()));
+            person.deleted.setValue(resultSet.getBoolean("Deleted_YN"));
+            result = person;
+
         }
 
         return result;
@@ -62,21 +63,22 @@ public class Person {
                         " \"Deleted_YN\" FROM fos.\"Person\" WHERE \"Deleted_YN\" = FALSE ;"
         );
         while (resultSet.next()) {
-            result.add(
-                    new Person(
-                            resultSet.getString("Username"),
-                            resultSet.getString("Firstname"),
-                            resultSet.getString("Lastname"),
-                            resultSet.getString("AHV"),
-                            resultSet.getString("Street"),
-                            resultSet.getString("Place"),
-                            resultSet.getString("Email"),
-                            resultSet.getString("Password"),
-                            resultSet.getString("PasswordHint"),
-                            resultSet.getBoolean("Locked_YN"),
-                            resultSet.getInt("LoginTry"),
-                            PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()),
-                            resultSet.getBoolean("Deleted_YN")));
+            Person person = new Person(resultSet.getString("Username"));
+            person.firstName.setValue(resultSet.getString("Firstname"));
+            person.lastName.setValue(resultSet.getString("Lastname"));
+            person.ahv.setValue(resultSet.getString("AHV"));
+            person.street.setValue(resultSet.getString("Street"));
+            person.place.setValue(resultSet.getString("Place"));
+            person.email.setValue(resultSet.getString("Email"));
+            person.passwordHash.setValue(resultSet.getString("Password"));
+            person.passwordHint.setValue(resultSet.getString("PasswordHint"));
+            person.locked.setValue(resultSet.getBoolean("Locked_YN"));
+            person.loginTry.setValue(resultSet.getInt("LoginTry"));
+            person.userType.setValue(PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()));
+            person.deleted.setValue(resultSet.getBoolean("Deleted_YN"));
+            result.add(person);
+
+
         }
         return result;
     }
@@ -141,37 +143,22 @@ public class Person {
 
     }
 
-    private DbObject<String> userName = new DbObject<>();
-    private DbObject<String> firstName = new DbObject<>();
-    private DbObject<String> lastName = new DbObject<>();
-    private DbObject<String> ahv = new DbObject<>();
-    private DbObject<String> street = new DbObject<>();
-    private DbObject<String> place = new DbObject<>();
-    private DbObject<String> email = new DbObject<>();
-    private DbObject<String> passwordHash = new DbObject<>();
-    private DbObject<String> passwordHint = new DbObject<>();
-    private DbObject<Boolean> locked = new DbObject<>();
-    private DbObject<Integer> loginTry = new DbObject<>();
-    private DbObject<PersonUserType> userType = new DbObject<>();
-    private DbObject<Boolean> deleted = new DbObject<>();
+    private final DbObject<String> userName = new DbObject<>();
+    private final DbObject<String> firstName = new DbObject<>();
+    private final DbObject<String> lastName = new DbObject<>();
+    private final DbObject<String> ahv = new DbObject<>();
+    private final DbObject<String> street = new DbObject<>();
+    private final DbObject<String> place = new DbObject<>();
+    private final DbObject<String> email = new DbObject<>();
+    private final DbObject<String> passwordHash = new DbObject<>();
+    private final DbObject<String> passwordHint = new DbObject<>();
+    private final DbObject<Boolean> locked = new DbObject<>();
+    private final DbObject<Integer> loginTry = new DbObject<>();
+    private final DbObject<PersonUserType> userType = new DbObject<>();
+    private final DbObject<Boolean> deleted = new DbObject<>();
 
-    private Person(String userName, String firstName, String lastName, String ahv,
-                   String street, String place, String email, String passwordHash,
-                   String passwordHint, Boolean locked, Integer loginTry,
-                   PersonUserType userType, Boolean deleted) {
+    private Person(String userName) {
         this.userName.setValue(userName);
-        this.firstName.setValue(firstName);
-        this.lastName.setValue(lastName);
-        this.ahv.setValue(ahv);
-        this.street.setValue(street);
-        this.place.setValue(place);
-        this.email.setValue(email);
-        this.passwordHash.setValue(passwordHash);
-        this.passwordHint.setValue(passwordHint);
-        this.locked.setValue(locked);
-        this.loginTry.setValue(loginTry);
-        this.userType.setValue(userType);
-        this.deleted.setValue(deleted);
     }
 
     /**
