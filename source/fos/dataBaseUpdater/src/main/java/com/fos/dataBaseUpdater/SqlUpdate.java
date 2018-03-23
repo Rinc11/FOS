@@ -31,7 +31,7 @@ public class SqlUpdate {
     public SqlUpdate() {
         try {
             InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream, "UTF-8"));
             String line;
             StringBuilder sb = new StringBuilder();
             int commandNumber = -1;
