@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class UserPage extends FosUserPage {
     private static final String REMOVEUSERTAG = "removeUser:";
+    private static final String EDITUSERTAG = "editUser";
     private String jspFile = "/jsp/user.jsp";
 
 
@@ -25,7 +26,7 @@ public class UserPage extends FosUserPage {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @param jspFile eine andere Seite welche geladen wird.
+     * @param jspFile  eine andere Seite welche geladen wird.
      */
     public UserPage(HttpServletRequest request, HttpServletResponse response, String jspFile) {
         this(request, response);
@@ -42,14 +43,19 @@ public class UserPage extends FosUserPage {
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, false);
         String command = request.getParameter("command");
-        if(command != null){
-            if(command.startsWith(REMOVEUSERTAG)){
+        if (command != null) {
+            if (command.startsWith(REMOVEUSERTAG)) {
                 removeItem(command.substring(REMOVEUSERTAG.length()));
-            }else if(command.equals("addUser")){
+            } else if (command.equals("addUser")) {
                 addNewItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
                         , request.getParameter("usertype"));
+            } else if (command.startsWith(EDITUSERTAG)) {
+                editItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
+                        , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
+                        , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
+                        , Boolean.valueOf(request.getParameter("locked")), request.getParameter("usertype"));
             }
         }
     }
@@ -68,7 +74,7 @@ public class UserPage extends FosUserPage {
         return new ArrayList<>();
     }
 
-    public void removeItem(String username){
+    public void removeItem(String username) {
         try {
             Person.removePerson(username, conn);
         } catch (SQLException e) {
@@ -109,5 +115,18 @@ public class UserPage extends FosUserPage {
         } catch (SQLException e) {
             addError("Datenbank Fehler", e);
         }
+    }
+
+    public Person getRequestPerson() {
+        String userName = request.getParameter("username");
+        Person result = null;
+        if (userName != null) {
+            try {
+                result = Person.getPerson(userName, conn);
+            } catch (SQLException e) {
+                addError("Datenbank Fehler", e);
+            }
+        }
+        return result;
     }
 }

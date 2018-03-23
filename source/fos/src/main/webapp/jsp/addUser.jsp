@@ -1,13 +1,8 @@
-<%@ page import="com.fos.UserPage" %><%--
+<%--
 Formular für einen neuen Benutzer oder zum einen Benutzer ändern
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    UserPage userpage = new UserPage(request, response);
-    request.setAttribute("actualPage", userpage);
-%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="de">
 <head>
@@ -29,7 +24,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
             Formular
         </div>
         <div class="panel-body">
-            <form action="addUser" method="post">
+            <form action="benutzer" method="post">
                 <fieldset>
                     <legend>Benutzer</legend>
                     <div class="form-group">
@@ -82,6 +77,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                             <option>Mitarbeiter</option>
                         </select>
                     </div>
+                    <input name="command" value="addUser" type="hidden">
                     <button type="submit" class="btn btn-default">Senden</button>
                 </fieldset>
             </form>

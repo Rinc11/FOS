@@ -58,8 +58,6 @@ public abstract class FosUserPage {
             }
         } catch (NotLoadedExeption e) {
             addError("Fehler auf der Seite", e);
-        } catch (IOException e) {
-            addError("Ladefehler mit einer Datei", e);
         }
         return false;
     }

@@ -3,7 +3,6 @@ Startseite welche nach dem einlogen aufgerufen wird.
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.homepage.HomePage" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="de">
 <head>
