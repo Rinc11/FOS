@@ -59,7 +59,7 @@ public class Helper {
      * @return eine Connection für die Datenbank
      */
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false";
+        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false&useUnicode=true&characterEncoding=utf-8";
         try {
             Class.forName("org.postgresql.Driver");
 

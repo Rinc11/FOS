@@ -17,7 +17,7 @@ public class DataBaseUpdater {
         System.out.println("start database update");
 
         try {
-            new DataBaseUpdater("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false");
+            new DataBaseUpdater("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false&useUnicode=true&characterEncoding=utf-8");
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -32,6 +32,7 @@ public class DataBaseUpdater {
     public DataBaseUpdater(String url) {
         Connection conn = null;
         try {
+            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url);
 
             conn.setSchema("fos");
