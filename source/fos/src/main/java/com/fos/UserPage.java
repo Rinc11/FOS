@@ -19,18 +19,26 @@ public class UserPage extends FosUserPage {
     private static final String REMOVEUSERTAG = "removeUser:";
     private String jspFile = "/jsp/user.jsp";
 
+
+    /**
+     * Logic für die Userseite mit einer anderen jsp Seite
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @param jspFile eine andere Seite welche geladen wird.
+     */
     public UserPage(HttpServletRequest request, HttpServletResponse response, String jspFile) {
         this(request, response);
         this.jspFile = jspFile;
     }
 
 
-        /**
-         * Logic für die Userseite
-         *
-         * @param request  servlet request
-         * @param response servlet response
-         */
+    /**
+     * Logic für die Userseite
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     */
     public UserPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, false);
         String command = request.getParameter("command");
@@ -81,6 +89,23 @@ public class UserPage extends FosUserPage {
             Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
         } catch (NoSuchAlgorithmException e) {
             addError("Server Fehler", e);
+        } catch (SQLException e) {
+            addError("Datenbank Fehler", e);
+        }
+    }
+
+    //@toDo ändern zu update item
+    public void editItem(String username, String firstname, String lastname, String ahv, String street, String place
+            , String email, String password, String passwordHint, Boolean locked, String userType) {
+        if (!password.equals("")) {
+            try {
+                password = Helper.getHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Person.updatePerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, locked, userType, conn);
         } catch (SQLException e) {
             addError("Datenbank Fehler", e);
         }

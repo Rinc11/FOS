@@ -35,7 +35,7 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new UserPage(request, response);
                 break;
             case "/benutzerFormular":
-                fosUserPage = new UserPage(request, response, "/jsp/userForm.jsp");
+                fosUserPage = new UserPage(request, response, "/jsp/benutzerFormularNeu.jsp");
                 break;
             case "/fahrzeug":
                 staticPage = "jsp/vehicle.jsp";

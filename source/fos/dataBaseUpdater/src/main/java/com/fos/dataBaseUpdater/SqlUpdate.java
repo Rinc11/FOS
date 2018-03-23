@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,8 +32,7 @@ public class SqlUpdate {
         try {
             InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
 
-            InputStreamReader inputStreamReader = new InputStreamReader(resourceAsStream, "UTF-8");
-            BufferedReader reader = new BufferedReader(inputStreamReader);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream, "UTF-8"));
             String line;
             StringBuilder sb = new StringBuilder();
             int commandNumber = -1;
@@ -44,13 +44,11 @@ public class SqlUpdate {
                     }
                     String numberStr = line.substring("--#".length(), line.indexOf(":"));
                     commandNumber = Integer.parseInt(numberStr);
-                    continue;
                 } else {
                     sb.append(line);
                     sb.append("\n");
                 }
             }
-
             if (commandNumber != -1) {
                 addCommand(commandNumber, sb.toString());
             }
@@ -112,24 +110,8 @@ public class SqlUpdate {
      */
     public void UpdateDatabase(Connection conn) {//kürzer und weniger try catch
         try {
-            int dbVersion = -1;
-            try {
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT ConfigValue FROM FosConfig WHERE ConfigId='dbVersion'");
-                resultSet.next();
-                dbVersion = Integer.parseInt(resultSet.getString(1));
-            } catch (SQLException e) {
-                Statement statement = conn.createStatement();
-                statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
-                statement.execute("" +
-                        "CREATE TABLE FosConfig (\n" +
-                        "  ConfigId TEXT NOT NULL\n" +
-                        "    CONSTRAINT FosConfig_pkey\n" +
-                        "    PRIMARY KEY,\n" +
-                        "  ConfigValue TEXT\n" +
-                        ");\n");
-                statement.execute("INSERT INTO FosConfig (ConfigId, ConfigValue) VALUES ('dbVersion', '0');");
-            }
+
+            int dbVersion = getLastDbVersionFromDb(conn);
 
             conn.setAutoCommit(false);
             if (dbVersion < getLastCommandId()) {
@@ -154,6 +136,45 @@ public class SqlUpdate {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * gibt die Version des Datenbankstandes zurück. wenn keine Datenbank vorhanden ist probiert es diese zu erstellen.
+     * @param conn Datenbnakverbindung
+     * @return Datenbankstand
+     */
+    private int getLastDbVersionFromDb(Connection conn) {
+        int dbVersion = -1;
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT ConfigValue FROM FosConfig WHERE ConfigId='dbVersion'");
+            resultSet.next();
+            dbVersion = Integer.parseInt(resultSet.getString(1));
+        } catch (SQLException e) {
+            createFosSchema(conn);
+        }
+        return dbVersion;
+    }
+
+    /**
+     * Erstellt eine neues Fos Schema.
+     * @param conn Datenbankverbindung
+     */
+    private void createFosSchema(Connection conn){
+        try {
+            Statement statement = conn.createStatement();
+            statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
+            statement.execute("" +
+                    "CREATE TABLE FosConfig (\n" +
+                    "  ConfigId TEXT NOT NULL\n" +
+                    "    CONSTRAINT FosConfig_pkey\n" +
+                    "    PRIMARY KEY,\n" +
+                    "  ConfigValue TEXT\n" +
+                    ");\n");
+            statement.execute("INSERT INTO FosConfig (ConfigId, ConfigValue) VALUES ('dbVersion', '0');");
+        } catch (SQLException e1) {
+            e1.printStackTrace();
         }
     }
 }
