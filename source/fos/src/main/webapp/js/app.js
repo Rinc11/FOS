@@ -62,6 +62,22 @@ $(document).ready(function()
     });
 });
 
+function password_generator(length) {
+    var string = "abcdefghijklmnopqrstuvwxyz"; //to upper
+    var stringUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var numeric = '0123456789';
+    var password = "";
+    var character = "";
+    while( password.length<(length-1) ) {
+        entity1 = Math.ceil(string.length * Math.random()*Math.random());
+        character += string.charAt( entity1 );
+        entity2 = Math.ceil(numeric.length * Math.random()*Math.random());
+        character += numeric.charAt( entity2 );
+        entity3 = Math.ceil(stringUpper.length * Math.random()*Math.random());
+        character += stringUpper.charAt( entity3 );
 
-
+        password = character;
+    }
+    return password;
+}
 
