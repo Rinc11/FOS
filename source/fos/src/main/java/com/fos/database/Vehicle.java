@@ -1,9 +1,6 @@
 package com.fos.database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +19,10 @@ public class Vehicle {
      */
     public static Vehicle getVehicle(int vehicleID, Connection conn) throws SQLException {
         Vehicle result = null;
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery(
-                "SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
-                        " FROM fos.\"Vehicles\" WHERE \"VehicleID\" = '" + vehicleID + "';"
-        );
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
+                " FROM fos.\"Vehicles\" WHERE \"VehicleID\" = ?;");
+        preparedStatement.setInt(1, vehicleID);
+        ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
             vehicle.serialnumber.setValue(resultSet.getString("Serialnumber"));
