@@ -52,7 +52,7 @@ public class UserPage extends FosUserPage {
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
                         , request.getParameter("usertype"));
             } else if (command.startsWith(EDITUSERTAG)) {
-                editItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
+                updateItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
                         , Boolean.valueOf(request.getParameter("locked")), request.getParameter("usertype"));
@@ -100,8 +100,7 @@ public class UserPage extends FosUserPage {
         }
     }
 
-    //@toDo ändern zu update item
-    public void editItem(String username, String firstname, String lastname, String ahv, String street, String place
+    public void updateItem(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, Boolean locked, String userType) {
         if (!password.equals("")) {
             try {
