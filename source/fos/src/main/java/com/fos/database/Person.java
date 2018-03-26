@@ -270,6 +270,10 @@ public class Person implements Serializable{
         return userType.getValue();
     }
 
+    public Boolean isAdmin() throws NotLoadedExeption {
+        return userType.getValue() ==  PersonUserType.ADMIN;
+    }
+
     /**
      * gibt an ob der Benutzer gesperrt ist.
      *
