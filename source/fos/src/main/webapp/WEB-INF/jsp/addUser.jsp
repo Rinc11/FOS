@@ -33,7 +33,12 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                     </div>
                     <div class="form-group">
                         <label>Passwort</label>
-                        <input class="form-control" name="password" type="password" placeholder="Passwort" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Ihr Passwort muss mind. 8 Zeichen lang sein, eine Zahl und einen Grossbuchstaben beinhalten" required>
+                        <div class="input-group">
+                            <input class="form-control" id="pwd" name="password" type="password" placeholder="Passwort"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Ihr Passwort muss mind. 8 Zeichen lang sein, eine Zahl und einen Grossbuchstaben beinhalten" >
+                            <span class="input-group-btn">
+                                 <a class="btn btn-default btn-md form-control" id="showhide" data-val='1'><span id='eye' class="glyphicon glyphicon-eye-open" style="color: rgb(64, 99, 180)"></span></a>
+                            </span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Passwort bestätigen</label>
