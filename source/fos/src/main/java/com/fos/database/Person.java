@@ -270,7 +270,7 @@ public class Person implements Serializable{
         return userType.getValue();
     }
 
-    public Boolean isAdmin() throws NotLoadedExeption {
+    public Boolean getIsAdmin() throws NotLoadedExeption {
         return userType.getValue() ==  PersonUserType.ADMIN;
     }
 

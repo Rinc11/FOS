@@ -1,6 +1,5 @@
 package com.fos;
 
-import com.fos.homepage.HomePage;
 import com.fos.tools.FosUserPage;
 
 import javax.servlet.ServletException;
