@@ -23,11 +23,8 @@ public class ControllerServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
+        checkLogout(request);
 
-        String command = request.getParameter("command");
-        if(command != null && command.equals("logout")){
-            FosUserPage.logout(request);
-        }
         FosUserPage fosUserPage = null;
         String staticPage = "";
         switch (request.getRequestURI()) {
@@ -57,6 +54,13 @@ public class ControllerServlet extends HttpServlet {
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);
+        }
+    }
+
+    private void checkLogout(HttpServletRequest request){
+        String command = request.getParameter("command");
+        if(command != null && command.equals("logout")){
+            FosUserPage.logout(request);
         }
     }
 }
