@@ -62,13 +62,13 @@ $(document).ready(function()
     });
 });
 
-function password_generator(length) {
+function password_generator(inputPWID, inputPWIDConfirm) {
     var string = "abcdefghijklmnopqrstuvwxyz"; //to upper
     var stringUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var numeric = '0123456789';
     var password = "";
     var character = "";
-    while( password.length<(length-1) ) {
+    while( password.length<7) {
         entity1 = Math.ceil(string.length * Math.random()*Math.random());
         character += string.charAt( entity1 );
         entity2 = Math.ceil(numeric.length * Math.random()*Math.random());
@@ -78,6 +78,9 @@ function password_generator(length) {
 
         password = character;
     }
-    return password;
+
+    document.getElementById(inputPWID).value = password;
+    document.getElementById(inputPWIDConfirm).value = password;
+    alert("Neues Passwort: " + password);
 }
 

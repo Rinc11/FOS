@@ -38,6 +38,9 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                             <span class="input-group-btn">
                                  <a class="btn btn-default btn-md form-control" id="showhide" data-val='1'><span id='eye' class="glyphicon glyphicon-eye-open" style="color: rgb(64, 99, 180)"></span></a>
                             </span>
+                            <span class="input-group-btn">
+                                 <a class="btn btn-default btn-md form-control" id="generatePW" onclick="password_generator('pwd', 'password_confirm');">automatisches Passwort</a>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">

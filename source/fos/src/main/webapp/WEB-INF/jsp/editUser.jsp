@@ -39,6 +39,9 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                             <span class="input-group-btn">
                                  <a class="btn btn-default btn-md form-control" id="showhide" data-val='1'><span id='eye' class="glyphicon glyphicon-eye-open" style="color: rgb(64, 99, 180)"></span></a>
                             </span>
+                            <span class="input-group-btn">
+                                 <a class="btn btn-default btn-md form-control" id="generatePW" onclick="password_generator('pwd', 'password_confirm');">automatisches Passwort</a>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -77,7 +80,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         </div>
                         <div class="form-group">
                             <label>Benutzer sperren</label>
-                            <input class="form-control" name="locked" <c:if test="${person.locked}">checked=checked</c:if>  type="checkbox"  >
+                            <input class="form-control" name="locked" <c:if test="${person.locked}"> checked="checked" </c:if>  type="checkbox"  >
                         </div>
                     </fieldset>
                     <div class="form-group">
