@@ -55,7 +55,7 @@ public class UserPage extends FosUserPage {
                 updateItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
-                        , Boolean.valueOf(request.getParameter("locked")), request.getParameter("usertype"));
+                        , (request.getParameter("locked") != null), request.getParameter("usertype"));
             }
         }
     }
