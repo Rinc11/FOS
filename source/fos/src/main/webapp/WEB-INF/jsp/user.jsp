@@ -46,9 +46,11 @@ Bentutzerverwaltungseite
         <div class="panel-heading">Liste
         </div>
         <div class="panel-body">
+            <c:if test="${userLoggedIn.isAdmin}">
             <a class="btn btn-default" href="/benutzerHinzufuegen" style="color: rgb(64, 99, 180);"><span
                     class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a>
             <br><br>
+            </c:if>
             <div class="scrollme">
                 <table class="table table-responsive">
                     <thead>
