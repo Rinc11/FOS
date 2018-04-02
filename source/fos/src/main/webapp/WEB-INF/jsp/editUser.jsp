@@ -37,6 +37,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         <label>Passwort ändern</label>
                         <div class="input-group">
                             <input class="form-control" id="pwd" name="password" type="password"
+                                   onchange="validatePassword()"
                                    placeholder="Passwort ändern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                    title="Ihr Passwort muss mind. 8 Zeichen lang sein, eine Zahl und einen Grossbuchstaben beinhalten">
                             <span class="input-group-btn">
@@ -52,7 +53,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                     </div>
                     <div class="form-group">
                         <label>Passwort bestätigen</label>
-                        <input class="form-control" name="passwordConfirm" type="password"
+                        <input class="form-control" name="passwordConfirm" type="password" onchange="validatePassword()"
                                placeholder="Passwort bestätigen" id="password_confirm">
                     </div>
                     <div class="form-group">

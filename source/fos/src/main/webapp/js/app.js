@@ -9,7 +9,6 @@ function toggle(fieldset) {
 }
 
 
-
 function saveDeleteUsername(username){
     this.userToDelete = username;
 }
@@ -61,6 +60,16 @@ $(document).ready(function()
         }
     });
 });
+
+
+function validatePassword(){
+    var pass2 = document.getElementById("pwd").value;
+    var pass1 = document.getElementById("password_confirm").value;
+    if(pass1 != pass2)
+        document.getElementById("password_confirm").setCustomValidity("Passwort stimmt nicht überein!");
+    else
+        document.getElementById("password_confirm").setCustomValidity('');
+}
 
 function password_generator(inputPWID, inputPWIDConfirm) {
     var string = "abcdefghijklmnopqrstuvwxyz"; //to upper
