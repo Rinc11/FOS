@@ -8,13 +8,12 @@ function toggle(fieldset) {
     }
 }
 
-
-function saveDeleteUsername(username){
+function saveDeleteUsername(username) {
     this.userToDelete = username;
 }
 
 function deleteUser() {
-    post("/benutzer", {command: "removeUser:"+ this.userToDelete})
+    post("/benutzer", {command: "removeUser:" + this.userToDelete})
 }
 
 function logout(uri) {
@@ -29,8 +28,8 @@ function post(path, params) {
     form.setAttribute("method", "post");
     form.setAttribute("action", path);
 
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
+    for (var key in params) {
+        if (params.hasOwnProperty(key)) {
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);
@@ -42,30 +41,27 @@ function post(path, params) {
     document.body.appendChild(form);
     form.submit();
 }
-$(document).ready(function()
-{
-    $("#showhide").click(function()
-    {
-        if ($(this).data('val') == "1")
-        {
-            $("#pwd").prop('type','text');
-            $("#eye").attr("class","glyphicon glyphicon-eye-close");
-            $(this).data('val','0');
+
+$(document).ready(function () {
+    $("#showhide").click(function () {
+        if ($(this).data('val') == "1") {
+            $("#pwd").prop('type', 'text');
+            $("#eye").attr("class", "glyphicon glyphicon-eye-close");
+            $(this).data('val', '0');
         }
-        else
-        {
+        else {
             $("#pwd").prop('type', 'password');
-            $("#eye").attr("class","glyphicon glyphicon-eye-open");
-            $(this).data('val','1');
+            $("#eye").attr("class", "glyphicon glyphicon-eye-open");
+            $(this).data('val', '1');
         }
     });
 });
 
 
-function validatePassword(){
+function validatePassword() {
     var pass2 = document.getElementById("pwd").value;
     var pass1 = document.getElementById("password_confirm").value;
-    if(pass1 != pass2)
+    if (pass1 != pass2)
         document.getElementById("password_confirm").setCustomValidity("Passwort stimmt nicht überein!");
     else
         document.getElementById("password_confirm").setCustomValidity('');
@@ -77,13 +73,13 @@ function password_generator(inputPWID, inputPWIDConfirm) {
     var numeric = '0123456789';
     var password = "";
     var character = "";
-    while( password.length<7) {
-        entity1 = Math.ceil(string.length * Math.random()*Math.random());
-        character += string.charAt( entity1 );
-        entity2 = Math.ceil(numeric.length * Math.random()*Math.random());
-        character += numeric.charAt( entity2 );
-        entity3 = Math.ceil(stringUpper.length * Math.random()*Math.random());
-        character += stringUpper.charAt( entity3 );
+    while (password.length < 7) {
+        entity1 = Math.ceil(string.length * Math.random() * Math.random());
+        character += string.charAt(entity1);
+        entity2 = Math.ceil(numeric.length * Math.random() * Math.random());
+        character += numeric.charAt(entity2);
+        entity3 = Math.ceil(stringUpper.length * Math.random() * Math.random());
+        character += stringUpper.charAt(entity3);
 
         password = character;
     }
