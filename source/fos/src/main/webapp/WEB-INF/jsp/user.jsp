@@ -47,7 +47,7 @@ Bentutzerverwaltungseite
         </div>
         <div class="panel-body">
             <a class="btn btn-default" href="/benutzerHinzufuegen" style="color: rgb(64, 99, 180);"><span
-                    class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a
+                    class="glyphicon glyphicon-plus"></span> Benutzer hinzufügen</a>
             <br><br>
             <div class="scrollme">
                 <table class="table table-responsive">
@@ -57,6 +57,9 @@ Bentutzerverwaltungseite
                         <th>Name</th>
                         <th>Vorname</th>
                         <th>Rechte</th>
+                        <c:if test="${userLoggedIn.isAdmin}">
+                            <th>gesperrt</th>
+                        </c:if>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -84,12 +87,19 @@ Bentutzerverwaltungseite
                                 <td>${person.lastName}</td>
                                 <td>${person.firstName}</td>
                                 <td>${person.userType}</td>
-
+                                <c:choose>
+                                    <c:when test="${person.locked == false}">
+                                        <td>nein</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>ja</td>
+                                    </c:otherwise>
+                                </c:choose>
                                 <td>
                                         <%--@toDo kann was passiert wenn der Benutzername geändert wird, (schäget update fehl?)--%>
                                     <a class="btn btn-default" href="/benutzerAendern?username=${person.userName}"><span
                                             class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                    <a onclick="saveDeleteUsername('${person.userName}')" class="btn btn-default"
+                                    <a onclick="saveDeleteUsername('${person.userName}')" class="btn btn-danger"
                                        data-toggle="modal" data-target="#myModal"> <span
                                             class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
