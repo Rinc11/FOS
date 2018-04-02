@@ -103,7 +103,7 @@ public class Person implements Serializable{
             , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn) throws SQLException {
 
         if (!password.equals("")) {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '\"+userType+\"' WHERE \"Username\" = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '"+ userType +"' WHERE \"Username\" = ?");
 
             preparedStatement.setString(1, firstname);
             preparedStatement.setString(2, lastname);
