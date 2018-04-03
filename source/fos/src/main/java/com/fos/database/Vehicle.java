@@ -1,6 +1,11 @@
 package com.fos.database;
 
-import java.sql.*;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +13,7 @@ import java.util.List;
  * Stellte Funktionen für den Zugriff auf die Fahrzeugdaten aus der Datenbank bereit,
  * Sowie den Typ Vehicle auf welchen programmintern zugegriffen werden kann
  */
-public class Vehicle {
+public class Vehicle implements Serializable {
 
     /**
      * gibt den Datensatz eines Fahrzeugs zurück
@@ -58,6 +63,51 @@ public class Vehicle {
             result.add(vehicle);
         }
         return result;
+    }
+
+    public static void addNewVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Vehicle\" (\"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"Fueltype\") VALUES (?, ?, ?, ?, ?, '" + fuelType + "')");
+        preparedStatement.setInt(1, vehicleID);
+        preparedStatement.setString(2, serialnumber);
+        preparedStatement.setString(3, brand);
+        preparedStatement.setString(4, type);
+        preparedStatement.setInt(5, buildYear);
+        preparedStatement.execute();
+    }
+
+    public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
+
+        if (!vehicleID.equals("")) {
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"Fueltype\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+
+            preparedStatement.setString(1, serialnumber);
+            preparedStatement.setString(2, brand);
+            preparedStatement.setString(3, type);
+            preparedStatement.setInt(4, buildYear);
+            preparedStatement.setInt(5, vehicleID);
+
+            preparedStatement.execute();
+        } else {
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"Fueltype\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+
+            preparedStatement.setString(1, serialnumber);
+            preparedStatement.setString(2, brand);
+            preparedStatement.setString(3, type);
+            preparedStatement.setInt(4, buildYear);
+            preparedStatement.setInt(5, vehicleID);
+
+            preparedStatement.execute();
+
+
+        }
+
+    }
+
+    public static void removeVehicle(Integer vehicleID, Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ?");
+        preparedStatement.setInt(1, vehicleID);
+        preparedStatement.execute();
+
     }
 
     private final DbObject<Integer> vehicleID = new DbObject<>();

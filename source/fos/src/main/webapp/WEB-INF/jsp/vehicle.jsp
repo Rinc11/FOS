@@ -1,135 +1,151 @@
 <%--
-Startseite welche nach dem einlogen aufgerufen wird.
+Bentutzerverwaltungseite
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.fos.tools.Helper" %>
 
-<%
-    Helper.addError(request, "statische Daten");
-%>
-
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="de">
 <head>
-    <title>FOS</title>
+    <title>Fahrzeugverwaltung</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
 </head>
 <body>
-<c:set var="navSelection" value="Fahrzeug" scope="request"/>
+<c:set var="navSelection" value="Fahrzeug" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
 <jsp:include page="jspTemplates/navigation.jsp"/>
 <div class="container">
     <jsp:include page="jspTemplates/showErrorMessage.jsp"/>
     <div class="title">
         <h1>Fahrzeuge</h1>
-        <p>Hier können Sie bereits eingetragene Fahrzeuge einsehen, editieren und neue hinzufügen.</p>
+        <p>Hier können Sie einige Änderungen bezüglich Ihren Fahrzeugen vornehmen.</p>
     </div>
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button></legend>
-    <fieldset id="filteroptionen" style="display: none">
+
+
+    <legend style="color: rgb(64, 99, 180);">
+        <button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button>
+    </legend>
+    <fieldset id="filteroptionen">
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Fahrzeug</label>
-                    <input type="text" class="form-control" placeholder="Fahrzeug">
+                    <label>ID</label>
+                    <input type="number" class="form-control" placeholder="12345678">
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Fahrer</label>
-                    <input type="text" class="form-control" placeholder="Fahrer">
+                    <label>Seriennummer</label>
+                    <input type="text" class="form-control" placeholder="Seriennummer">
                 </div>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Datum von</label>
-                    <input type="date" class="form-control">
+                    <label>Baujahr</label>
+                    <input type="number" class="form-control" placeholder="2018">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Datum bis</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Fahrttyp</label>
-                    <select class="form-control">
-                        <option>geschäftlich</option>
-                        <option>privat</option>
+                    <label>Treibstoff</label>
+                    <select class="form-control" name="fuelType">
+                        <option>Benzin</option>
+                        <option>Diesel</option>
+                        <option>Strom</option>
+                        <option>Erdgas</option>
                     </select>
                 </div>
             </div>
         </div>
+
+
     </fieldset>
     <div class="panel panel-default" id="tables">
         <div class="panel-heading">Liste
         </div>
         <div class="panel-body">
-            <a class="btn btn-default" href="fahrzeugFormularNeu.html" style="color: rgb(64, 99, 180);">Fahrzeug hinzufügen</a>
-            <br><br>
+            <c:if test="${userLoggedIn.isAdmin}">
+                <a class="btn btn-default" href="/fahrzeugHinzufuegen" style="color: rgb(64, 99, 180);"><span
+                        class="glyphicon glyphicon-plus"></span> Fahrzeug hinzufügen</a>
+                <br><br>
+            </c:if>
             <div class="scrollme">
                 <table class="table table-responsive">
                     <thead>
                     <tr>
+                        <th>FahrzeugID</th>
                         <th>Seriennummer</th>
-                        <th>Hersteller</th>
-                        <th>Typ</th>
                         <th>Baujahr</th>
-                        <th>Kraftstoff</th>
-                        <th>Actions</th>
+                        <th>Treibstoff</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1234kvee-a</td>
-                        <td>Opel</td>
-                        <td>Astra</td>
-                        <td>2009</td>
-                        <td>Diesel</td>
-                        <td>
-                            <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1234kvee-a</td>
-                        <td>Opel</td>
-                        <td>Astra</td>
-                        <td>2009</td>
-                        <td>Diesel</td>
-                        <td>
-                            <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1234kvee-a</td>
-                        <td>Opel</td>
-                        <td>Astra</td>
-                        <td>2009</td>
-                        <td>Diesel</td>
-                        <td>
-                            <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1234kvee-a</td>
-                        <td>Opel</td>
-                        <td>Astra</td>
-                        <td>2009</td>
-                        <td>Diesel</td>
-                        <td>
-                            <a class="btn btn-default" href="fahrzeugFormularNeu.html"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            <a class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </td>
-                    </tr>
+                    <c:if test="${userLoggedIn.isAdmin == false}">
+                        <tr>
+                            <td>${userLoggedIn.vehicleID}</td>
+                            <td>${userLoggedIn.serialnumber}</td>
+                            <td>${userLoggedIn.buildYear}</td>
+                            <td>${userLoggedIn.fuelType}</td>
+                            <td>
+                                    <%--@toDo kann was passiert wenn die VehicleID geändert wird, (schäget update fehl?)--%>
+                                <a class="btn btn-default"
+                                   href="/fahrzeugAendern?vehicleID=${vehicleLoggedIn.vehicleID}"><span
+                                        class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            </td>
+                        </tr>
+                    </c:if>
+
+                    <c:if test="${userLoggedIn.isAdmin}">
+                        <c:forEach items="${actualPage.items}"
+                                   var="vehicle">
+                            <tr>
+                                <td>${vehicle.vehicleID}</td>
+                                <td>${vehicle.serialnumber}</td>
+                                <td>${vehicle.buildYear}</td>
+                                <td>${vehicle.fuelType}</td>
+                                <c:choose>
+                                    <c:when test="${person.locked == false}">
+                                        <td>nein</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>ja</td>
+                                    </c:otherwise>
+                                </c:choose>
+                                <td>
+                                        <%--@toDo kann was passiert wenn die VehicleID geändert wird, (schäget update fehl?)--%>
+                                    <a class="btn btn-default"
+                                       href="/fahrzeugAendern?vehicleID=${vehicle.vehicleID}"><span
+                                            class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    <a onclick="saveDeleteVehicleID('${vehicle.vehicleID}')" class="btn btn-danger"
+                                       data-toggle="modal" data-target="#myModal"> <span
+                                            class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Löschen</h4>
+            </div>
+            <div class="modal-body">
+                Wollen sie das Fahrzeug wirklich löschen
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nein</button>
+                <a class="btn btn-primary" id="deleteVehicleYesButton" href="#" onclick="deleteVehicle()">Ja</a>
             </div>
         </div>
     </div>
