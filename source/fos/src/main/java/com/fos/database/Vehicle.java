@@ -51,7 +51,7 @@ public class Vehicle implements Serializable {
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
-                        " FROM fos.\"Vehicles\";"
+                        " FROM fos.\"Vehicles\" WHERE \"Active_YN\" = TRUE;"
         );
         while (resultSet.next()) {
             Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
@@ -104,7 +104,7 @@ public class Vehicle implements Serializable {
     }
 
     public static void removeVehicle(Integer vehicleID, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = ?");
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.execute();
 

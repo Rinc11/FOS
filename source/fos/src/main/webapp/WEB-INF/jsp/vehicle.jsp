@@ -94,7 +94,7 @@ Bentutzerverwaltungseite
                                     <a class="btn btn-default"
                                        href="/fahrzeugAendern?vehicleID=${vehicle.vehicleID}"><span
                                             class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                    <a onclick="saveDeleteVehicleID('${vehicle.vehicleID}')" class="btn btn-danger"
+                                    <a onclick="saveDeleteVehicle('${vehicle.vehicleID}')" class="btn btn-danger"
                                        data-toggle="modal" data-target="#myModal"> <span
                                             class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>

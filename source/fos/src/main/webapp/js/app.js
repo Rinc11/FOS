@@ -16,6 +16,14 @@ function deleteUser() {
     post("/benutzer", {command: "removeUser:" + this.userToDelete})
 }
 
+function saveDeleteVehicle(vehicleID) {
+    this.vehicleToDelete = vehicleID;
+}
+
+function deleteVehicle() {
+    post("/fahrzeug", {command: "removeVehicle:" + this.vehicleToDelete})
+}
+
 function logout(uri) {
     post(uri, {command: "logout"})
 }
