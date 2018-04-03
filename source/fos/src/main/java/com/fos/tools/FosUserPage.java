@@ -33,7 +33,7 @@ public abstract class FosUserPage {
     private Boolean needsAdminRight;
 
     /**
-     * Erstellt eine neue Fos Seite welche den Login überprüft
+     * Erstellt eine neue Fos Seite welche das Login überprüft
      *
      * @param request         der request vom jsp
      * @param needsAdminRight Angabe, ob Administratorenrechte für diese Seite benötigt werden.
