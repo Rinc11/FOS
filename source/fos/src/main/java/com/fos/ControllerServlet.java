@@ -43,7 +43,7 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/addVehicle.jsp");
                 break;
             case "/fahrzeugAendern":
-                fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/addVehicle.jsp");
+                fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/editVehicle.jsp");
                 break;
             case "/":
                 fosUserPage = new HomePage(request, response);
