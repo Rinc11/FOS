@@ -42,6 +42,9 @@ public class ControllerServlet extends HttpServlet {
             case "/fahrzeugHinzufuegen":
                 fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/addVehicle.jsp");
                 break;
+            case "/fahrzeugAendern":
+                fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/addVehicle.jsp");
+                break;
             case "/":
                 fosUserPage = new HomePage(request, response);
                 break;
@@ -59,9 +62,9 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void checkLogout(HttpServletRequest request){
+    private void checkLogout(HttpServletRequest request) {
         String command = request.getParameter("command");
-        if(command != null && command.equals("logout")){
+        if (command != null && command.equals("logout")) {
             FosUserPage.logout(request);
         }
     }
