@@ -48,10 +48,10 @@ public class VehiclePage extends FosUserPage {
                 removeItem(Integer.valueOf(command.substring(REMOVEVEHICLETAG.length())));
             } else if (command.equals("addVehicle")) {
                 addNewItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fueltype"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
             } else if (command.startsWith(EDITVEHICLETAG)) {
                 updateItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fueltype"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
             }
         }
     }

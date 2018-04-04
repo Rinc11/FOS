@@ -15,7 +15,7 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
 <div class="container">
     <jsp:include page="jspTemplates/showErrorMessage.jsp"/>
     <div class="title">
-        <h1>Fahrzeuge</h1>
+        <h1>Fahrzeug</h1>
         <p>Hier können Sie einige Änderungen bezüglich Ihren Fahrzeugen vornehmen.</p>
     </div>
 
@@ -24,31 +24,28 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
             Formular
         </div>
         <div class="panel-body">
-            <form action="fahrzeug" method="post">
+            <c:set var="vehicle" value="${actualPage.requestVehicle}"/>
+            <form action="/fahrzeug" method="post">
                 <fieldset>
                     <legend>Fahrzeug</legend>
                     <div class="form-group">
                         <label>FahrzeugID</label>
-                        <input class="form-control" name="vehicleID" type="number" placeholder="12345678" required>
+                        <input class="form-control" readonly name="vehicleID" type="number" placeholder="12345678"
+                               value="${vehicle.vehicleID}" required>
                     </div>
                     <div class="form-group">
                         <label>Seriennummer</label>
-                        <input class="form-control" name="serialnumber" type="text" placeholder="Seriennummer" required>
+                        <input class="form-control" name="serialnumber" type="text" placeholder="Seriennummer"
+                               value="${vehicle.serialnumber}" required>
                     </div>
                     <div class="form-group">
                         <label>Baujahr</label>
-                        <input class="form-control" name="buildYear" type="year" placeholder="2018" required>
+                        <input class="form-control" name="buildYear" type="year" placeholder="2018"
+                               value="${vehicle.buildYear}" required>
                     </div>
-                    <div class="form-group">
-                        <label>Treibstoff</label>
-                        <select class="form-control" name="fuelType">
-                            <option>Benzin</option>
-                            <option>Diesel</option>
-                            <option>Strom</option>
-                            <option>Erdgas</option>
-                        </select>
-                    </div>
-                    <legend style="color: rgb(64, 99, 180);"><a class="btn btn-sm btn-primary" onclick="toggle('optionalFieldsVehicle')">Optionale Felder
+                    <legend style="color: rgb(64, 99, 180);"><a class="btn btn-sm btn-primary"
+                                                                onclick="toggle('optionalFieldsVehicle')">Optionale
+                        Felder
                         </span class="glyphicon glyphicon-plus"></a></legend>
                     <fieldset id="optionalFieldsVehicle" style="display: none">
                         <div class="form-group">
@@ -60,9 +57,27 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
                             <input class="form-control" name="type" type="text" placeholder="Limousine">
                         </div>
                     </fieldset>
-                    <input name="command" value="addVehicle" type="hidden">
+                    <c:if test="${userLoggedIn.isAdmin}">
+                        <div class="form-group">
+                            <label>Treibstoff</label>
+                            <select class="form-control" name="fuelType">
+                                <option
+                                        <c:if test="${vehicle.fuelType == 'BENZIN'}">selected</c:if>>Benzin
+                                </option>
+                                <option
+                                        <c:if test="${vehicle.fuelType == 'DIESEL'}">selected</c:if>>Diesel
+                                </option>
+                                <option
+                                        <c:if test="${vehicle.fuelType == 'STROM'}">selected</c:if>>Strom
+                                </option>
+                                <option
+                                        <c:if test="${vehicle.fuelType == 'ERDGAS'}">selected</c:if>>Erdgas
+                                </option>
+                            </select>
+                        </div>
+                    </c:if>
+                    <input name="command" value="editVehicle" type="hidden">
                     <button type="submit" class="btn btn-default">Senden</button>
-                    </legend>
                 </fieldset>
             </form>
         </div>

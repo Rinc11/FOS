@@ -51,7 +51,7 @@ public class Vehicle implements Serializable {
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
-                        " FROM fos.\"Vehicles\";"
+                        " FROM fos.\"Vehicles\" WHERE \"Active_YN\" = TRUE;"
         );
         while (resultSet.next()) {
             Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
@@ -66,7 +66,7 @@ public class Vehicle implements Serializable {
     }
 
     public static void addNewVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Vehicle\" (\"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"Fueltype\") VALUES (?, ?, ?, ?, ?, '" + fuelType + "')");
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Vehicles\" (\"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\") VALUES (?, ?, ?, ?, ?, '" + fuelType + "')");
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.setString(2, serialnumber);
         preparedStatement.setString(3, brand);
@@ -78,7 +78,7 @@ public class Vehicle implements Serializable {
     public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
 
         if (!vehicleID.equals("")) {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"Fueltype\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
 
             preparedStatement.setString(1, serialnumber);
             preparedStatement.setString(2, brand);
@@ -88,7 +88,7 @@ public class Vehicle implements Serializable {
 
             preparedStatement.execute();
         } else {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"Fueltype\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
 
             preparedStatement.setString(1, serialnumber);
             preparedStatement.setString(2, brand);
@@ -104,7 +104,7 @@ public class Vehicle implements Serializable {
     }
 
     public static void removeVehicle(Integer vehicleID, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicle\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = ?");
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.execute();
 

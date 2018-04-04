@@ -81,49 +81,26 @@ Bentutzerverwaltungseite
                     </tr>
                     </thead>
                     <tbody>
-                    <c:if test="${userLoggedIn.isAdmin == false}">
+                    <c:forEach items="${actualPage.items}"
+                               var="vehicle">
                         <tr>
-                            <td>${userLoggedIn.vehicleID}</td>
-                            <td>${userLoggedIn.serialnumber}</td>
-                            <td>${userLoggedIn.buildYear}</td>
-                            <td>${userLoggedIn.fuelType}</td>
-                            <td>
-                                    <%--@toDo kann was passiert wenn die VehicleID geändert wird, (schäget update fehl?)--%>
-                                <a class="btn btn-default"
-                                   href="/fahrzeugAendern?vehicleID=${vehicleLoggedIn.vehicleID}"><span
-                                        class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            </td>
-                        </tr>
-                    </c:if>
-
-                    <c:if test="${userLoggedIn.isAdmin}">
-                        <c:forEach items="${actualPage.items}"
-                                   var="vehicle">
-                            <tr>
-                                <td>${vehicle.vehicleID}</td>
-                                <td>${vehicle.serialnumber}</td>
-                                <td>${vehicle.buildYear}</td>
-                                <td>${vehicle.fuelType}</td>
-                                <c:choose>
-                                    <c:when test="${person.locked == false}">
-                                        <td>nein</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>ja</td>
-                                    </c:otherwise>
-                                </c:choose>
+                            <td>${vehicle.vehicleID}</td>
+                            <td>${vehicle.serialnumber}</td>
+                            <td>${vehicle.buildYear}</td>
+                            <td>${vehicle.fuelType}</td>
+                            <c:if test="${userLoggedIn.isAdmin}">
                                 <td>
                                         <%--@toDo kann was passiert wenn die VehicleID geändert wird, (schäget update fehl?)--%>
                                     <a class="btn btn-default"
                                        href="/fahrzeugAendern?vehicleID=${vehicle.vehicleID}"><span
                                             class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                    <a onclick="saveDeleteVehicleID('${vehicle.vehicleID}')" class="btn btn-danger"
+                                    <a onclick="saveDeleteVehicle('${vehicle.vehicleID}')" class="btn btn-danger"
                                        data-toggle="modal" data-target="#myModal"> <span
                                             class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
+                            </c:if>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
