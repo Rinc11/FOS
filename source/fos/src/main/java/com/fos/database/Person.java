@@ -19,7 +19,7 @@ public class Person implements Serializable {
     /**
      * gibt den Datensatz eines Users zurück
      *
-     * @param userName angabe des Users
+     * @param userName Angabe des Users
      * @param conn     Verbindung zur Datenbank
      * @return einen Datenbank Datensatz
      */
@@ -45,9 +45,7 @@ public class Person implements Serializable {
             person.userType.setValue(PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()));
             person.deleted.setValue(resultSet.getBoolean("Deleted_YN"));
             result = person;
-
         }
-
         return result;
     }
 
@@ -80,12 +78,26 @@ public class Person implements Serializable {
             person.userType.setValue(PersonUserType.valueOf(resultSet.getString("Usertype").toUpperCase()));
             person.deleted.setValue(resultSet.getBoolean("Deleted_YN"));
             result.add(person);
-
-
         }
         return result;
     }
 
+    /**
+     * speichert eine neue Person in der Datenbank
+     *
+     * @param username
+     * @param firstname
+     * @param lastname
+     * @param ahv
+     * @param street
+     * @param place
+     * @param email
+     * @param password
+     * @param passwordHint
+     * @param userType
+     * @param conn Die Connection zur Datenbank
+     *
+     */
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
@@ -101,6 +113,24 @@ public class Person implements Serializable {
         preparedStatement.execute();
     }
 
+    /**
+     * datet eine Person in der Datenbank up
+     *
+     * @param username
+     * @param firstname
+     * @param lastname
+     * @param ahv
+     * @param street
+     * @param place
+     * @param email
+     * @param password
+     * @param passwordHint
+     * @param locked
+     * @param userType
+     * @param conn Die Connection zur Datenbank
+     * @param commandRunAsAdmin
+     *
+     */
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
 
@@ -116,20 +146,25 @@ public class Person implements Serializable {
         command.addStringValue("Email", email);
         command.addStringValue("PasswordHint", passwordHint);
 
-        if(commandRunAsAdmin) {
+        if (commandRunAsAdmin) {
             command.addBooleanValue("Locked_YN", locked);
             command.addStringValue("Usertype", userType);
         }
-
         Statement statement = conn.createStatement();
         statement.execute(command.toString());
     }
 
+    /**
+     * löscht eine Person in der Datenbank
+     *
+     * @param username
+     * @param conn Die Connection zur Datenbank
+     *
+     */
     public static void removePerson(String username, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = ?");
         preparedStatement.setString(1, username);
         preparedStatement.execute();
-
     }
 
     private final DbObject<String> userName = new DbObject<>();
