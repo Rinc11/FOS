@@ -77,8 +77,12 @@ public class UserPage extends FosUserPage {
 
     public void removeItem(String username) {
         try {
-            Person.removePerson(username, conn);
-        } catch (SQLException e) {
+            if(getUser().getIsAdmin()) {
+                Person.removePerson(username, conn);
+            }else{
+                addError("fehlende Rechte");
+            }
+        } catch (NotLoadedExeption | SQLException e) {
             addError("Datenbank Fehler", e);
         }
 
