@@ -1,5 +1,7 @@
 package com.fos.database;
 
+import com.fos.tools.SqlUpdateCommand;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.List;
 /**
  * Stellt einen Datensatz einer Person dar
  */
-public class Person implements Serializable{
+public class Person implements Serializable {
 
     /**
      * gibt den Datensatz eines Users zurück
@@ -85,7 +87,7 @@ public class Person implements Serializable{
     }
 
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException{
+            , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, firstname);
@@ -100,41 +102,27 @@ public class Person implements Serializable{
     }
 
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn) throws SQLException {
+            , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
 
+        SqlUpdateCommand command = new SqlUpdateCommand("Person", "\"Username\" = '" + username + "'");
         if (!password.equals("")) {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"Password\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '"+ userType +"' WHERE \"Username\" = ?");
+            command.addStringValue("Password", password);
+        }
+        command.addStringValue("Firstname", firstname);
+        command.addStringValue("Lastname", lastname);
+        command.addStringValue("AHV", ahv);
+        command.addStringValue("Street", street);
+        command.addStringValue("Place", place);
+        command.addStringValue("Email", email);
+        command.addStringValue("PasswordHint", passwordHint);
 
-            preparedStatement.setString(1, firstname);
-            preparedStatement.setString(2, lastname);
-            preparedStatement.setString(3, ahv);
-            preparedStatement.setString(4, street);
-            preparedStatement.setString(5, place);
-            preparedStatement.setString(6, email);
-            preparedStatement.setString(7, password);
-            preparedStatement.setString(8, passwordHint);
-            preparedStatement.setBoolean(9, locked);
-            preparedStatement.setString(10, username);
-
-            preparedStatement.execute();
-        } else {
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET  \"Firstname\" = ?, \"Lastname\" = ?, \"AHV\" = ?, \"Street\" = ?, \"Place\" = ?, \"Email\" = ?, \"PasswordHint\" = ?, \"Locked_YN\" = ?, \"Usertype\" = '"+userType+"' WHERE \"Username\" = ?");
-
-            preparedStatement.setString(1, firstname);
-            preparedStatement.setString(2, lastname);
-            preparedStatement.setString(3, ahv);
-            preparedStatement.setString(4, street);
-            preparedStatement.setString(5, place);
-            preparedStatement.setString(6, email);
-            preparedStatement.setString(7, passwordHint);
-            preparedStatement.setBoolean(8, locked);
-            preparedStatement.setString(9, username);
-            
-            preparedStatement.execute();
-
-
+        if(commandRunAsAdmin) {
+            command.addBooleanValue("Locked_YN", locked);
+            command.addStringValue("Usertype", userType);
         }
 
+        Statement statement = conn.createStatement();
+        statement.execute(command.toString());
     }
 
     public static void removePerson(String username, Connection conn) throws SQLException {
@@ -271,7 +259,7 @@ public class Person implements Serializable{
     }
 
     public Boolean getIsAdmin() throws NotLoadedExeption {
-        return userType.getValue() ==  PersonUserType.ADMIN;
+        return userType.getValue() == PersonUserType.ADMIN;
     }
 
     /**
@@ -305,7 +293,7 @@ public class Person implements Serializable{
      * setzt ob der Benutzer gesperrt ist.
      *
      * @param locked ob er gesperrt ist
-     * @param conn Verbinung zu Datenbank
+     * @param conn   Verbinung zu Datenbank
      */
     public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
         PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Locked_YN\"= ? WHERE \"Username\" = ?");

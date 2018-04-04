@@ -1,5 +1,6 @@
 package com.fos;
 
+import com.fos.database.NotLoadedExeption;
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
 import com.fos.tools.Helper;
@@ -85,17 +86,28 @@ public class UserPage extends FosUserPage {
 
     @Override
     public String getJspPath() {
-        return jspFile;
+        try {
+            if (getUser().getIsAdmin()) {
+                return jspFile;
+            }
+        } catch (NotLoadedExeption notLoadedExeption) {
+            notLoadedExeption.printStackTrace();
+        }
+        return "/WEB-INF/jsp/editUser.jsp";
     }
 
     public void addNewItem(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, String userType) {
         try {
-            password = Helper.getHash(password);
-            Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
+            if (getUser().getIsAdmin()) {
+                password = Helper.getHash(password);
+                Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
+            } else {
+                addError("fehlende Rechte");
+            }
         } catch (NoSuchAlgorithmException e) {
             addError("Server Fehler", e);
-        } catch (SQLException e) {
+        } catch (NotLoadedExeption | SQLException e) {
             addError("Datenbank Fehler", e);
         }
     }
@@ -106,12 +118,19 @@ public class UserPage extends FosUserPage {
             try {
                 password = Helper.getHash(password);
             } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+                addError("Server Fehler", e);
             }
         }
         try {
-            Person.updatePerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, locked, userType, conn);
-        } catch (SQLException e) {
+            if(getUser().getIsAdmin() || username.equals(getUser().getUserName())){
+                Person.updatePerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, locked, userType, conn, getUser().getIsAdmin());
+                if(username.equals(getUser().getUserName())){
+                    request.getSession().setAttribute("userLoggedIn", Person.getPerson(getUser().getUserName(), conn));
+                }
+            }else{
+                addError("fehlende Rechte");
+            }
+        } catch (NotLoadedExeption | SQLException e) {
             addError("Datenbank Fehler", e);
         }
     }
@@ -119,12 +138,16 @@ public class UserPage extends FosUserPage {
     public Person getRequestPerson() {
         String userName = request.getParameter("username");
         Person result = null;
-        if (userName != null) {
-            try {
-                result = Person.getPerson(userName, conn);
-            } catch (SQLException e) {
-                addError("Datenbank Fehler", e);
+        try {
+            if(getUser().getIsAdmin()){
+                if (userName != null) {
+                    result = Person.getPerson(userName, conn);
+                }
+            }else {
+                result = getUser();
             }
+        } catch (NotLoadedExeption | SQLException e) {
+            addError("Datenbank Fehler", e);
         }
         return result;
     }
