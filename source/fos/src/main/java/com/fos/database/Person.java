@@ -162,9 +162,9 @@ public class Person implements Serializable {
      *
      */
     public static void removePerson(String username, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Deleted_YN\" = TRUE WHERE \"Username\" = ?");
-        preparedStatement.setString(1, username);
-        preparedStatement.execute();
+        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '"+username+"'");
+        sqlUpdateCommand.addBooleanValue("Deleted_YN", true);
+        conn.createStatement().execute(sqlUpdateCommand.toString());
     }
 
     private final DbObject<String> userName = new DbObject<>();
@@ -314,10 +314,9 @@ public class Person implements Serializable {
      * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"LoginTry\"= ? WHERE \"Username\" = ?;");
-        preparedStatement.setInt(1, loginTry);
-        preparedStatement.setString(2, userName.getValue());
-        preparedStatement.execute();
+        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '"+userName+"'");
+        sqlUpdateCommand.addIntValue("LoginTry", loginTry);
+        conn.createStatement().execute(sqlUpdateCommand.toString());
         if (loginTry > 10 && userType.getValue() == PersonUserType.MITARBEITER) {
             setLocked(true, conn);
         }
