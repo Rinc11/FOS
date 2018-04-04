@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/benutzerHinzufuegen", "/benutzerAendern"})
+@WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/fahrzeugAendern", "/benutzerHinzufuegen", "/benutzerAendern"})
 public class ControllerServlet extends HttpServlet {
 
     @Override
