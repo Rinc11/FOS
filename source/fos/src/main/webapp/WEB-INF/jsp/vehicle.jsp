@@ -1,5 +1,5 @@
 <%--
-Bentutzerverwaltungseite
+Fahrzeugverwaltungseite
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -28,14 +28,14 @@ Bentutzerverwaltungseite
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>ID</label>
-                    <input type="number" class="form-control" placeholder="12345678">
+                    <label>Seriennummer</label>
+                    <input type="text" class="form-control" placeholder="Seriennummer">
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label>Seriennummer</label>
-                    <input type="text" class="form-control" placeholder="Seriennummer">
+                    <label>Fahrzeugmarke</label>
+                    <input type="text" class="form-control" placeholder="Fahrzeugmarke">
                 </div>
             </div>
         </div>
@@ -74,8 +74,9 @@ Bentutzerverwaltungseite
                 <table class="table table-responsive">
                     <thead>
                     <tr>
-                        <th>FahrzeugID</th>
                         <th>Seriennummer</th>
+                        <th>Fahrzeugmarke</th>
+                        <th>Modell</th>
                         <th>Baujahr</th>
                         <th>Treibstoff</th>
                     </tr>
@@ -84,8 +85,9 @@ Bentutzerverwaltungseite
                     <c:forEach items="${actualPage.items}"
                                var="vehicle">
                         <tr>
-                            <td>${vehicle.vehicleID}</td>
                             <td>${vehicle.serialnumber}</td>
+                            <td>${vehicle.brand}</td>
+                            <td>${vehicle.type}</td>
                             <td>${vehicle.buildYear}</td>
                             <td>${vehicle.fuelType}</td>
                             <c:if test="${userLoggedIn.isAdmin}">
@@ -108,7 +110,7 @@ Bentutzerverwaltungseite
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Löschabfrage für Fahrzeug  -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
