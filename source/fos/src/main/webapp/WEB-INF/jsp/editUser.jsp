@@ -115,7 +115,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         </div>
                     </c:if>
                     <input name="command" value="editUser" type="hidden">
-                    <button type="submit" class="btn btn-default">Senden</button>
+                    <button type="submit" class="btn btn-default">Ändern</button>
                 </fieldset>
             </form>
         </div>
