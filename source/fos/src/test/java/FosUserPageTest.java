@@ -1,16 +1,24 @@
 import com.fos.database.NotLoadedExeption;
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -24,68 +32,102 @@ public class FosUserPageTest {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private Connection conn;
 
     /**
-     * tested ob man zur Anmeldeseite weitergeleitet wird, wenn man nicht angemeldet ist.
+     * setzt die Loginversuche zurück und entsperrt den testUser.
+     */
+    @Before
+    public void resetTestUser() throws SQLException, NotLoadedExeption {
+        conn = Helper.getConnection();
+        Person person = Person.getPerson("testUser", conn);
+        person.setLoginTry(0, conn);
+        person.setLocked(false, conn);
+    }
+
+    /**
+     * Tested ob der Testbenutzer sich anmelden kann und ob diese Person in der
+     * Session gespeichert wird.
      */
     @Test
-    public void testNotLoggedInUser() throws IOException {
+    public void testTryLoginValid() throws NotLoadedExeption {
         createMock();
-
+        when(request.getParameter("loginUserName")).thenReturn("testUser");
+        when(request.getParameter("pass")).thenReturn("1234");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        verify(response).sendRedirect(eq("login.jsp"));
+        testFosPage.tryLogIn(request);
+        ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+
+        verify(request.getSession()).setAttribute(eq("userLoggedIn"), argument.capture());
+        Assert.assertEquals("testUser", argument.getValue().getUserName());
     }
 
     /**
-     * Tested ob ein angemeldeter Mitarbeiter auf der Seite bleiben kann.
+     * Tested ob der logintry erhöht wird wenn für den TestUser das falsche Passwort
+     * eingegben wird.
      */
     @Test
-    public void testEmployeeLoggedIn() throws IOException, NotLoadedExeption {
-        createMock();
-        createSessionPersonMock(false);
+    public void testTryLoginWrongPasswordMultipleTimes() throws NotLoadedExeption, SQLException {
+        for (int i = 0; i <= 10; i++) {
+            createMock();
+            when(request.getParameter("loginUserName")).thenReturn("testUser");
+            when(request.getParameter("pass")).thenReturn("bla");
+            TestFosPage testFosPage = new TestFosPage(request, response, false);
+            testFosPage.tryLogIn(request);
 
+            ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
+            verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
+            verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+            assertEquals(1, errorListArgument.getValue().size());
+            assertEquals("Passwort ist falsch<br>Hinweis: 1234", errorListArgument.getValue().get(0));
+        }
+
+        createMock();
+        when(request.getParameter("loginUserName")).thenReturn("testUser");
+        when(request.getParameter("pass")).thenReturn("bla");
+
+        ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        verify(response, never()).sendRedirect(eq("login.jsp"));
+        testFosPage.tryLogIn(request);
+        verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+        errorListArgument.getValue();
+        assertEquals(1, errorListArgument.getValue().size());
+        assertEquals("Benutzer ist gesperrt", errorListArgument.getValue().get(0));
+
     }
 
-
     /**
-     * Tested ob ein angemeldeter Admin auf einer normalen Seite bleiben kann.
+     * Tested ob der logintry erhöht wird wenn für den TestUser das falsche Passwort
+     * eingegben wird.
      */
     @Test
-    public void testAdminLoggedInOnNormalPage() throws IOException, NotLoadedExeption {
+    public void testTryLoginWrongUserName() throws NotLoadedExeption, SQLException {
         createMock();
-        createSessionPersonMock(true);
-
+        when(request.getParameter("loginUserName")).thenReturn("nichtVorhanden");
+        when(request.getParameter("pass")).thenReturn("bla");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        verify(response, never()).sendRedirect(eq("login.jsp"));
-    }
+        testFosPage.tryLogIn(request);
 
-
-    /**
-     * Tested ob ein angemeldeter Mitarbeiter welcher eine Admin Seite aufrufen will
-     * zur Startseite weitergeleitet wird.
-     */
-    @Test
-    public void testEmployeeLoggedInOnAdminPage() throws IOException, NotLoadedExeption {
-        createMock();
-        createSessionPersonMock(false);
-
-        TestFosPage testFosPage = new TestFosPage(request, response, true);
-        verify(response).sendRedirect(eq("login.jsp"));
+        verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
+        ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
+        verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+        assertEquals(1, errorListArgument.getValue().size());
+        assertEquals("Falscher Benutzername", errorListArgument.getValue().get(0));
     }
 
     /**
-     * Tested ob ein angemeldeter Admin auf einer admin Seite bleiben kann.
+     * tested ob der Logout geht
      */
     @Test
-    public void testAdminLoggedInOnAdminPage() throws IOException, NotLoadedExeption {
+    public void TestLogout() throws ServletException, IOException {
         createMock();
-        createSessionPersonMock(true);
 
-        TestFosPage testFosPage = new TestFosPage(request, response, true);
-        verify(response, never()).sendRedirect(eq("login.jsp"));
+        TestFosPage.logout(request);
+
+        verify(request.getSession()).removeAttribute("userName");
+        verify(request.getSession()).invalidate();
     }
+
 
     /**
      * Testet ob getUser den erwarteten Benutzer zurückgibt.

@@ -50,7 +50,6 @@ public abstract class FosUserPage {
 
     public Boolean loginValid() {
         try {
-
             tryLogIn(request);
             Person user = getUser();
             if (user != null && (!needsAdminRight || user.getUserType() == Person.PersonUserType.ADMIN)) {
