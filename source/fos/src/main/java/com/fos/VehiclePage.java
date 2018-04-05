@@ -1,13 +1,11 @@
 package com.fos;
 
+import com.fos.database.NotLoadedExeption;
 import com.fos.database.Vehicle;
-import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
-import com.fos.tools.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +84,14 @@ public class VehiclePage extends FosUserPage {
 
     public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
         try {
-            Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
+            if (getUser().getIsAdmin()) {
+                Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
+            } else {
+                addError("fehlende Rechte");
+            }
         } catch (SQLException e) {
+            addError("Server Fehler", e);
+        } catch (NotLoadedExeption e) {
             addError("Datenbank Fehler", e);
         }
     }
