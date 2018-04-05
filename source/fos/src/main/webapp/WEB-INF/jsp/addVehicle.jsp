@@ -28,16 +28,21 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
                 <fieldset>
                     <legend>Fahrzeug</legend>
                     <div class="form-group">
-                        <label>FahrzeugID</label>
-                        <input class="form-control" name="vehicleID" type="number" placeholder="12345678" required>
-                    </div>
-                    <div class="form-group">
                         <label>Seriennummer</label>
                         <input class="form-control" name="serialnumber" type="text" placeholder="Seriennummer" required>
                     </div>
                     <div class="form-group">
+                        <label>Fahrzeugmarke</label>
+                        <input class="form-control" name="brand" type="text" placeholder="Tesla" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input class="form-control" name="type" type="text" placeholder="Model S" required>
+                    </div>
+                    <div class="form-group">
                         <label>Baujahr</label>
-                        <input class="form-control" name="buildYear" type="year" placeholder="2018" required>
+                        <input class="form-control" name="buildYear" type="year" placeholder="2018" pattern="[1-9][0-9][0-9][0-9]"
+                               title="Bitte geben Sie ein korrektes Jahr ein" required>
                     </div>
                     <div class="form-group">
                         <label>Treibstoff</label>
@@ -48,18 +53,7 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
                             <option>Erdgas</option>
                         </select>
                     </div>
-                    <legend style="color: rgb(64, 99, 180);"><a class="btn btn-sm btn-primary" onclick="toggle('optionalFieldsVehicle')">Optionale Felder
-                        </span class="glyphicon glyphicon-plus"></a></legend>
-                    <fieldset id="optionalFieldsVehicle" style="display: none">
-                        <div class="form-group">
-                            <label>Marke</label>
-                            <input class="form-control" name="brand" type="text" placeholder="Tesla">
-                        </div>
-                        <div class="form-group">
-                            <label>Typ</label>
-                            <input class="form-control" name="type" type="text" placeholder="Limousine">
-                        </div>
-                    </fieldset>
+
                     <input name="command" value="addVehicle" type="hidden">
                     <button type="submit" class="btn btn-default">Senden</button>
                     </legend>

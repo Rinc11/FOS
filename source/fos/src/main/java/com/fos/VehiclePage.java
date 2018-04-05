@@ -47,7 +47,7 @@ public class VehiclePage extends FosUserPage {
             if (command.startsWith(REMOVEVEHICLETAG)) {
                 removeItem(Integer.valueOf(command.substring(REMOVEVEHICLETAG.length())));
             } else if (command.equals("addVehicle")) {
-                addNewItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
+                addNewItem(request.getParameter("serialnumber"), request.getParameter("brand")
                         , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
             } else if (command.startsWith(EDITVEHICLETAG)) {
                 updateItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
@@ -84,9 +84,9 @@ public class VehiclePage extends FosUserPage {
         return jspFile;
     }
 
-    public void addNewItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+    public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
         try {
-            Vehicle.addNewVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
+            Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
         } catch (SQLException e) {
             addError("Datenbank Fehler", e);
         }

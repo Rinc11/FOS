@@ -65,13 +65,12 @@ public class Vehicle implements Serializable {
         return result;
     }
 
-    public static void addNewVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Vehicles\" (\"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\") VALUES (?, ?, ?, ?, ?, '" + fuelType + "')");
-        preparedStatement.setInt(1, vehicleID);
-        preparedStatement.setString(2, serialnumber);
-        preparedStatement.setString(3, brand);
-        preparedStatement.setString(4, type);
-        preparedStatement.setInt(5, buildYear);
+    public static void addNewVehicle(String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Vehicles\" (\"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\") VALUES (?, ?, ?, ?, '" + fuelType + "')");
+        preparedStatement.setString(1, serialnumber);
+        preparedStatement.setString(2, brand);
+        preparedStatement.setString(3, type);
+        preparedStatement.setInt(4, buildYear);
         preparedStatement.execute();
     }
 
