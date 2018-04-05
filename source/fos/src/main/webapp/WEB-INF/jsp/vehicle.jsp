@@ -19,48 +19,6 @@ Fahrzeugverwaltungseite
         <h1>Fahrzeuge</h1>
         <p>Hier können Sie einige Änderungen bezüglich Ihren Fahrzeugen vornehmen.</p>
     </div>
-
-
-    <legend style="color: rgb(64, 99, 180);">
-        <button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button>
-    </legend>
-    <fieldset id="filteroptionen">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Seriennummer</label>
-                    <input type="text" class="form-control" placeholder="Seriennummer">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Fahrzeugmarke</label>
-                    <input type="text" class="form-control" placeholder="Fahrzeugmarke">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Baujahr</label>
-                    <input type="number" class="form-control" placeholder="2018">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Treibstoff</label>
-                    <select class="form-control" name="fuelType">
-                        <option>Benzin</option>
-                        <option>Diesel</option>
-                        <option>Strom</option>
-                        <option>Erdgas</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-
-    </fieldset>
     <div class="panel panel-default" id="tables">
         <div class="panel-heading">Liste
         </div>

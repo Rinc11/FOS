@@ -20,28 +20,6 @@ Bentutzerverwaltungseite
         <p>Hier können Sie einige Änderungen bezüglich Ihres Kontos vornehmen.</p>
     </div>
 
-
-    <legend style="color: rgb(64, 99, 180);">
-        <button onclick="toggle('filteroptionen')">Filter ein-/ausblenden</button>
-    </legend>
-    <fieldset id="filteroptionen">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" placeholder="Name">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Vorname</label>
-                    <input type="text" class="form-control" placeholder="Vorname">
-                </div>
-            </div>
-        </div>
-
-
-    </fieldset>
     <div class="panel panel-default" id="tables">
         <div class="panel-heading">Liste
         </div>
