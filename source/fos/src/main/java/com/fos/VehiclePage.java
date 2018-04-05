@@ -57,7 +57,7 @@ public class VehiclePage extends FosUserPage {
     }
 
     /**
-     * zum Test und zur Demonstration eine Liste von Konfig Eintägen
+     * zum Test und zur Demonstration eine Liste von Config Einträgen
      *
      * @return
      */
