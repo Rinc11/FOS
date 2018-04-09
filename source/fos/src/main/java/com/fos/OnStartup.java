@@ -1,6 +1,6 @@
 package com.fos;
 
-import com.fos.databaseupdaterBla.SqlUpdate;
+import databaseupdater.SqlUpdate;
 import com.fos.tools.Helper;
 
 import javax.servlet.ServletContextEvent;
