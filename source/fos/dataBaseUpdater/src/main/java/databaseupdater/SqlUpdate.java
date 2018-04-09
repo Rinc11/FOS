@@ -22,13 +22,15 @@ public class SqlUpdate {
 
     private HashMap<Integer, String> commands = new HashMap<>();
     private int lastCommandId = -1;
+    private String schema;
 
     /**
      * erstellt eine Liste aller befehle in dataBaseUpdateSkript.sql
      *
      * @throws IOException beim lesen von dataBaseUpdateSkript.sql
      */
-    public SqlUpdate() {
+    public SqlUpdate(String schema, boolean withTest) {
+        this.schema = schema;
         try {
             InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
 
@@ -36,13 +38,17 @@ public class SqlUpdate {
             String line;
             StringBuilder sb = new StringBuilder();
             int commandNumber = -1;
+            boolean isTestOnly = false;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("--#")) {
                     if (commandNumber != -1) {
-                        addCommand(commandNumber, sb.toString());
+                        if(!isTestOnly || withTest) {
+                            addCommand(commandNumber, sb.toString());
+                        }
                         sb = new StringBuilder();
                     }
                     String numberStr = line.substring("--#".length(), line.indexOf(":"));
+                    isTestOnly = line.substring(line.indexOf(":") +1).equals("test");
                     commandNumber = Integer.parseInt(numberStr);
                 } else {
                     sb.append(line);
@@ -50,7 +56,9 @@ public class SqlUpdate {
                 }
             }
             if (commandNumber != -1) {
-                addCommand(commandNumber, sb.toString());
+                if(!isTestOnly || withTest) {
+                    addCommand(commandNumber, sb.toString());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -164,7 +172,7 @@ public class SqlUpdate {
     private void createFosSchema(Connection conn){
         try {
             Statement statement = conn.createStatement();
-            statement.execute("CREATE SCHEMA IF NOT EXISTS fos");
+            statement.execute("CREATE SCHEMA IF NOT EXISTS " + schema);
             statement.execute("" +
                     "CREATE TABLE FosConfig (\n" +
                     "  ConfigId TEXT NOT NULL\n" +

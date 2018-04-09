@@ -4,6 +4,7 @@ import com.fos.tools.FosUserPage;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -33,6 +34,16 @@ public class FosUserPageTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private Connection conn;
+
+
+    /**
+     * updated die Datenbank auf den neusten Stand mit Testdaten
+     */
+    @BeforeClass
+    public static void updateDatabase() throws SQLException {
+        tools.Helper.loadDatabaseUpdates();
+    }
+
 
     /**
      * setzt die Loginversuche zurück und entsperrt den testUser.

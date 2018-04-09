@@ -4,6 +4,7 @@ import com.fos.database.NotLoadedExeption;
 import com.fos.database.Person;
 import com.fos.tools.Helper;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +18,15 @@ import java.util.List;
  * Benötigt Datenbankseitig den TestUser Personen Datensatz
  */
 public class PersonTest {
+
+    /**
+     * updated die Datenbank auf den neusten Stand mit Testdaten
+     */
+    @BeforeClass
+    public static void updateDatabase() throws SQLException {
+        tools.Helper.loadDatabaseUpdates();
+    }
+
 
     /**
      * tested den testUser ob alle Werte so sind wie in der Datenbank.
@@ -125,7 +135,7 @@ public class PersonTest {
         Assert.assertTrue(Person.PersonUserType.MITARBEITER == person.getUserType());
         Assert.assertEquals(false, person.getDeleted());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM fos.\"Person\"  WHERE \"Username\" = '"+ username +"'");
+        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM \"Person\"  WHERE \"Username\" = '"+ username +"'");
         preparedStatement.execute();
     }
 
@@ -141,7 +151,7 @@ public class PersonTest {
 
         Assert.assertEquals(true, person.getDeleted());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Person\" SET \"Deleted_YN\" = false WHERE \"Username\" = 'testUser'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Person\" SET \"Deleted_YN\" = false WHERE \"Username\" = 'testUser'");
         preparedStatement.execute();
     }
 

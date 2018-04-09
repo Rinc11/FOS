@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.sql.Connection;
 
 
 /**
@@ -23,7 +24,8 @@ public class OnStartup implements ServletContextListener,
     public OnStartup() {
 
         try {
-            new SqlUpdate().UpdateDatabase(Helper.getConnection());
+            Connection connection = Helper.getConnection();
+            new SqlUpdate(Helper.getDbschema(), false).UpdateDatabase(connection);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

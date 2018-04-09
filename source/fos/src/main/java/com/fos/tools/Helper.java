@@ -1,6 +1,8 @@
 package com.fos.tools;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -8,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -18,6 +21,10 @@ import java.util.function.Supplier;
 public class Helper {
     private Helper() {
     }
+
+    private static String connectionString = null;
+    private static String dbschema;
+
 
     /**
      * gibt einem die Möglichkeit, wenn eine Methode null zurückgibt einen default wert zu setzen.
@@ -53,23 +60,45 @@ public class Helper {
         return function.apply(object);
     }
 
+
     /**
      * Erstellt nach Möglichkeit eine SQL Datenbank Connection
      *
      * @return eine Connection für die Datenbank
      */
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false&useUnicode=true&characterEncoding=utf-8";
+        if (connectionString == null) {
+            try {
+                InputStream resourceAsStream = Helper.class.getClassLoader().getResourceAsStream("config.properties");
+                Properties prop = new Properties();
+                prop.load(resourceAsStream);
+
+                String database = prop.getProperty("database");
+                dbschema = prop.getProperty("dbschema");
+                String dbuser = prop.getProperty("dbuser");
+                String dbpassword = prop.getProperty("dbpassword");
+                String  dbport= prop.getProperty("dbport");
+                connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("unable to read connection String");
+            }
+        }
+
         try {
             Class.forName("org.postgresql.Driver");
 
-            Connection conn = DriverManager.getConnection(url);
-            conn.setSchema("fos");
+            Connection conn = DriverManager.getConnection(connectionString);
+            conn.setSchema(dbschema);
             return conn;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException("connection konnte nicht erstellt werden");
         }
-        return null;
+    }
+
+    public static String getDbschema() {
+        return dbschema;
     }
 
     /***

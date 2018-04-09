@@ -67,7 +67,7 @@ public class SqlUpdateCommand {
      */
     public String getCommand() {
         StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE fos.\"" + table + "\" SET ");
+        sb.append("UPDATE \"" + table + "\" SET ");
 
         Boolean isFisrt = true;
         for (String[] commandValue : valueList) {
