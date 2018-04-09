@@ -1,4 +1,4 @@
-package com.fos.dataBaseUpdater;
+package com.fos.databaseupdaterBla;
 
 
 import java.sql.Connection;
