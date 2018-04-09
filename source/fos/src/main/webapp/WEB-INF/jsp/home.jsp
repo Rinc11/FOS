@@ -96,7 +96,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                     <div class="panel-heading">Auswertung
                     </div>
                     <div class="panel-body">
-                        <form action="/Auswertung" method="post">
+                        <form action="/auswertung" method="post">
                             <fieldset>
                                 <legend>Persönliche Auwertung</legend>
                                 <table>
@@ -124,7 +124,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                     <div class="panel-heading">Auswertung
                     </div>
                     <div class="panel-body">
-                        <form action="/Auswertung" method="post">
+                        <form action="/auswertung" method="post">
                             <fieldset>
                                 <legend>Firmafahrten Auwertung</legend>
                                 <table>

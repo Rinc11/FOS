@@ -20,47 +20,6 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <h1>Fahrten</h1>
         <p>Hier können Sie bereits eingetragene Fahrten einsehen und editieren.</p>
     </div>
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
-    <fieldset id="filteroptionen">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Fahrzeug</label>
-                    <input type="text" class="form-control" placeholder="Fahrzeug">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Fahrer</label>
-                    <input type="text" class="form-control" placeholder="Fahrer">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Datum von</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Datum bis</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Fahrttyp</label>
-                    <select class="form-control">
-                        <option>geschäftlich</option>
-                        <option>privat</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </fieldset>
     <div class="panel panel-default" id="tables">
         <div class="panel-heading">Liste
         </div>
