@@ -6,7 +6,9 @@ import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -52,4 +54,73 @@ public class VehicleTest {
 
         }).findAny().get().getVehicleID());
     }
+
+
+    /**
+     * testet, ob ein neues Fahrzeug korrekt in die Datenbank gespeichert wird
+     */
+    @Test
+    public void testAddNewVehicle() throws SQLException, NotLoadedExeption {
+
+        String serialnumber = "136c8b4";
+        String brand = "Honda";
+        String type = "Civic";
+        Integer buildYear = 2010;
+        String fuelType = "Benzin";
+
+        Connection conn = Helper.getConnection();
+        Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
+        Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
+
+        Assert.assertEquals(serialnumber, vehicle.getSerialnumber());
+        Assert.assertEquals(brand, vehicle.getBrand());
+        Assert.assertEquals(type, vehicle.getType());
+        Assert.assertEquals(buildYear, vehicle.getBuildYear());
+        Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
+
+        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM fos.\"Vehicles\"  WHERE \"VehicleID\" = '" + vehicleID + "'");
+        preparedStatement.execute();
+    }
+
+    /**
+     * testet, ob ein bestehendes Fahrzeug gelöscht wird.
+     */
+    @Test
+    public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
+
+        Connection conn = Helper.getConnection();
+        Vehicle.removeVehicle("testVehicle", conn);
+        Vehicle vehicle = Vehicle.getVehicle("testVehicle", conn);
+
+        Assert.assertEquals(true, vehicle.getDeleted());
+
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
+        preparedStatement.execute();
+    }
+
+    /**
+     * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
+     */
+    @Test
+    public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
+
+        String serialnumber = "136c8b4";
+        String brand = "Honda";
+        String type = "Civic";
+        Integer buildYear = 2010;
+        String fuelType = "Benzin";
+
+        Connection conn = Helper.getConnection();
+
+        Vehicle.updateVehicle(serialnumber, brand, type, buildYear, fuelType, conn, true);
+        Vehicle vehicle = Vehicle.getVehicle("testVehicle", conn);
+        Assert.assertEquals(serialnumber, vehicle.getSerialnumber());
+        Assert.assertEquals(brand, vehicle.getBrand());
+        Assert.assertEquals(type, vehicle.getType());
+        Assert.assertEquals(buildYear, vehicle.getBuildYear());
+        Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
+
+        Vehicle.updateVehicle("testVehicle", "136c8b4", "Honda", "Civic", 2010, "Benzin", conn, true);
+    }
+
 }

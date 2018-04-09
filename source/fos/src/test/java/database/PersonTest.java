@@ -146,7 +146,7 @@ public class PersonTest {
     }
 
     /**
-     * testet, ob eine bestehende Person richtig upgedatet wird
+     * testet, ob eine bestehende Person richtig geupdatet wird
      */
     @Test
     public void testUpdatePerson() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
