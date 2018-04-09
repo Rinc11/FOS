@@ -1,4 +1,4 @@
-package com.fos.dataBaseUpdater;
+package databaseupdater;
 
 import java.io.BufferedReader;
 import java.io.IOException;
