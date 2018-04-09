@@ -4,6 +4,7 @@ import com.fos.database.NotLoadedExeption;
 import com.fos.database.Vehicle;
 import com.fos.tools.Helper;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +20,15 @@ import java.util.List;
 public class VehicleTest {
 
     private Integer defaultTestVehicleID = 6;
+
+    /**
+     * updated die Datenbank auf den neusten Stand mit Testdaten
+     */
+    @BeforeClass
+    public static void updateDatabase() throws SQLException {
+        tools.Helper.loadDatabaseUpdates();
+    }
+
 
     /**
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.

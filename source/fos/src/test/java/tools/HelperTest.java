@@ -2,11 +2,14 @@ package tools;
 
 
 import com.fos.tools.Helper;
+import databaseupdater.SqlUpdate;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.stream.FactoryConfigurationError;
 
 import static com.fos.tools.Helper.nullCheck;
 import static com.fos.tools.Helper.nullValue;
@@ -16,6 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +29,17 @@ import java.util.List;
  */
 
 public class HelperTest {
-
     private final String TESTSTRING = "5. Item";
     private final String TESTSTRING2 = "anderes Item";
+
+    /**
+     * updated die Datenbank auf den neusten Stand mit Testdaten
+     */
+    @BeforeClass
+    public static void updateDatabase() throws SQLException {
+        tools.Helper.loadDatabaseUpdates();
+    }
+
 
     /**
      * testet ob die Methode getHash() die richtigen Hashes erstellt
@@ -133,7 +145,6 @@ public class HelperTest {
      */
     @Test
     public void testGetConnection() throws SQLException {
-        Assert.assertEquals("fos", Helper.getConnection().getSchema());
+        Assert.assertEquals("fostest", Helper.getConnection().getSchema());
     }
-
 }

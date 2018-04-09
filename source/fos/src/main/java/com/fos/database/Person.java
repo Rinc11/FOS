@@ -27,7 +27,7 @@ public class Person implements Serializable {
         Person result = null;
         PreparedStatement preparedStatement = conn.prepareStatement("SELECT \"Username\", \"Firstname\", " +
                 "\"Lastname\", \"AHV\", \"Street\", \"Place\",\"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\"," +
-                " \"LoginTry\", \"Usertype\",\"Deleted_YN\" FROM fos.\"Person\" WHERE \"Username\" = ?;");
+                " \"LoginTry\", \"Usertype\",\"Deleted_YN\" FROM \"Person\" WHERE \"Username\" = ?;");
         preparedStatement.setString(1, userName);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
@@ -61,7 +61,7 @@ public class Person implements Serializable {
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
                         " \"Email\", \"Password\", \"PasswordHint\", \"Locked_YN\", \"LoginTry\", \"Usertype\"," +
-                        " \"Deleted_YN\" FROM fos.\"Person\" WHERE \"Deleted_YN\" = FALSE ;"
+                        " \"Deleted_YN\" FROM \"Person\" WHERE \"Deleted_YN\" = FALSE ;"
         );
         while (resultSet.next()) {
             Person person = new Person(resultSet.getString("Username"));
@@ -100,7 +100,7 @@ public class Person implements Serializable {
      */
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO fos.\"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, firstname);
         preparedStatement.setString(3, lastname);

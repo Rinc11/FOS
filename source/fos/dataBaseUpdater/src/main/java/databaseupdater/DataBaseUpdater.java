@@ -1,8 +1,10 @@
 package databaseupdater;
 
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 /***
  * Diese Klasse started den Update Prozess der Datenbank.
@@ -17,7 +19,18 @@ public class DataBaseUpdater {
         System.out.println("start database update");
 
         try {
-            new DataBaseUpdater("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres&ssl=false&useUnicode=true&characterEncoding=utf-8");
+            InputStream resourceAsStream = SqlUpdate.class.getClassLoader().getResourceAsStream("config.properties");
+            Properties prop = new Properties();
+            prop.load(resourceAsStream);
+
+            String database = prop.getProperty("database");
+            String dbschema = prop.getProperty("dbschema");
+            String dbuser = prop.getProperty("dbuser");
+            String dbpassword = prop.getProperty("dbpassword");
+            String  dbport= prop.getProperty("dbport");
+            String connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
+
+            new DataBaseUpdater(connectionString, dbschema);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -26,17 +39,17 @@ public class DataBaseUpdater {
 
     /***
      * ruft die SqlUpdate.UpdateDatabase Methode auf - der eigentliche Update Befehl
-     * @param url
-     * @throws Exception
+     * @param url Verbindungs String
+     * @param schema Schma der Datenbank welche geupdatet werden soll
      */
-    public DataBaseUpdater(String url) {
+    public DataBaseUpdater(String url, String schema) {
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url);
 
-            conn.setSchema("fos");
-            new SqlUpdate().UpdateDatabase(conn);
+            conn.setSchema(schema);
+            new SqlUpdate(schema, false).UpdateDatabase(conn);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
