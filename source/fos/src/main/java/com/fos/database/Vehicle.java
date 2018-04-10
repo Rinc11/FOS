@@ -24,7 +24,7 @@ public class Vehicle implements Serializable {
      */
     public static Vehicle getVehicle(int vehicleID, Connection conn) throws SQLException {
         Vehicle result = null;
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\", \"Active_YN\" " +
                 " FROM \"Vehicles\" WHERE \"VehicleID\" = ?;");
         preparedStatement.setInt(1, vehicleID);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -35,6 +35,7 @@ public class Vehicle implements Serializable {
             vehicle.type.setValue(resultSet.getString("Type"));
             vehicle.buildYear.setValue(resultSet.getInt("BuildYear"));
             vehicle.fuelType.setValue(VehicleFuelType.valueOf(resultSet.getString("FuelType").toUpperCase()));
+            vehicle.active.setValue(resultSet.getBoolean("Active_YN"));
             result = vehicle;
         }
         return result;
@@ -53,6 +54,7 @@ public class Vehicle implements Serializable {
                 "SELECT \"VehicleID\", \"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\" " +
                         " FROM \"Vehicles\" WHERE \"Active_YN\" = TRUE;"
         );
+
         while (resultSet.next()) {
             Vehicle vehicle = new Vehicle(resultSet.getInt("VehicleID"));
             vehicle.serialnumber.setValue(resultSet.getString("Serialnumber"));
@@ -100,6 +102,7 @@ public class Vehicle implements Serializable {
     private final DbObject<String> type = new DbObject<>();
     private final DbObject<Integer> buildYear = new DbObject<>();
     private final DbObject<VehicleFuelType> fuelType = new DbObject<>();
+    private final DbObject<Boolean> active = new DbObject<>();
 
     private Vehicle(Integer vehicleID) {
         this.vehicleID.setValue(vehicleID);
@@ -157,6 +160,15 @@ public class Vehicle implements Serializable {
      */
     public VehicleFuelType getFuelType() throws NotLoadedExeption {
         return fuelType.getValue();
+    }
+
+    /**
+     *
+     * @return
+     * @throws NotLoadedExeption
+     */
+    public Boolean isActive() throws NotLoadedExeption {
+        return active.getValue();
     }
 
 

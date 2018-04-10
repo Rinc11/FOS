@@ -23,8 +23,6 @@ public class VehicleTest {
 
     /**
      * updated die Datenbank auf den neusten Stand mit Testdaten
-     */
-    /**
      *
      * @throws SQLException
      */
@@ -36,8 +34,6 @@ public class VehicleTest {
 
     /**
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
-     */
-    /**
      *
      * @throws SQLException
      * @throws NotLoadedExeption
@@ -57,8 +53,6 @@ public class VehicleTest {
 
     /**
      * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
-     */
-    /**
      *
      * @throws SQLException
      * @throws NotLoadedExeption
@@ -67,23 +61,19 @@ public class VehicleTest {
     public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
-        Assert.assertEquals(Integer.valueOf(6), vehicles.stream().filter(f -> {
+        Assert.assertTrue(vehicles.stream().anyMatch(f -> {
             try {
-                return f.getVehicleID().equals(6);
+                return f.getBrand().equals("VW");
             } catch (NotLoadedExeption notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
-
-
-        }).findAny().get().getVehicleID());
+        }));
     }
 
 
     /**
      * testet, ob ein neues Fahrzeug korrekt in die Datenbank gespeichert wird
-     */
-    /**
      *
      * @throws SQLException
      * @throws NotLoadedExeption
@@ -99,6 +89,13 @@ public class VehicleTest {
 
         Connection conn = Helper.getConnection();
         Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
+        Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
+            try {
+                return f.getSerialnumber().equals("136c8b4");
+            } catch (NotLoadedExeption notLoadedExeption) {
+                return false;
+            }
+        }).findAny().get().getVehicleID();
         Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
 
         Assert.assertEquals(serialnumber, vehicle.getSerialnumber());
@@ -111,39 +108,17 @@ public class VehicleTest {
         preparedStatement.execute();
     }
 
-    /**
-     * testet, ob ein bestehendes Fahrzeug gelöscht wird.
-     */
-    /**
-     *
-     * @throws SQLException
-     * @throws NotLoadedExeption
-     */
-    @Test
-    public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
-
-        Connection conn = Helper.getConnection();
-        Vehicle.removeVehicle("testVehicle", conn);
-        Vehicle vehicle = Vehicle.getVehicle("testVehicle", conn);
-
-        Assert.assertEquals(true, vehicle.getDeleted());
-
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
-        preparedStatement.execute();
-    }
 
     /**
      * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
-     */
-    /**
-     * 
+     *
      * @throws SQLException
      * @throws NotLoadedExeption
      * @throws NoSuchAlgorithmException
      */
     @Test
     public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
-
+        int vehicleID   = 2;
         String serialnumber = "136c8b4";
         String brand = "Honda";
         String type = "Civic";
@@ -152,15 +127,16 @@ public class VehicleTest {
 
         Connection conn = Helper.getConnection();
 
-        Vehicle.updateVehicle(serialnumber, brand, type, buildYear, fuelType, conn, true);
-        Vehicle vehicle = Vehicle.getVehicle("testVehicle", conn);
+        Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
+        Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
+
         Assert.assertEquals(serialnumber, vehicle.getSerialnumber());
         Assert.assertEquals(brand, vehicle.getBrand());
         Assert.assertEquals(type, vehicle.getType());
         Assert.assertEquals(buildYear, vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
 
-        Vehicle.updateVehicle("testVehicle", "136c8b4", "Honda", "Civic", 2010, "Benzin", conn, true);
+        Vehicle.updateVehicle(2, "136c8b4", "Honda", "Civic", 2010, "Benzin", conn);
     }
 
 }
