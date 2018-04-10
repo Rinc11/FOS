@@ -85,18 +85,17 @@ public class Person implements Serializable {
     /**
      * speichert eine neue Person in der Datenbank
      *
-     * @param username
-     * @param firstname
-     * @param lastname
-     * @param ahv
-     * @param street
-     * @param place
-     * @param email
-     * @param password
-     * @param passwordHint
-     * @param userType
-     * @param conn Die Connection zur Datenbank
-     *
+     * @param username     Username der neuen Person
+     * @param firstname    Vorname der neuen Person
+     * @param lastname     Nachname der neuen Person
+     * @param ahv          AHV-Nummer der neuen Person
+     * @param street       Strasse der neuen Person
+     * @param place        Ort der neuen Person
+     * @param email        Email der neuen Person
+     * @param password     Passwort der neuen Person
+     * @param passwordHint Passwort-Hinweis der neuen Person
+     * @param userType     Recht für neuePerson
+     * @param conn         Die Connection zur Datenbank
      */
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException {
@@ -114,22 +113,21 @@ public class Person implements Serializable {
     }
 
     /**
-     * datet eine Person in der Datenbank up
+     * ändert eine Person in der Datenbank ab
      *
-     * @param username
-     * @param firstname
-     * @param lastname
-     * @param ahv
-     * @param street
-     * @param place
-     * @param email
-     * @param password
-     * @param passwordHint
-     * @param locked
-     * @param userType
-     * @param conn Die Connection zur Datenbank
+     * @param username          Username der abgeänderten Person
+     * @param firstname         Vorname der abgeänderten Person
+     * @param lastname          Nachname der abgeänderten Person
+     * @param ahv               AHV-Nummer der abgeänderten Person
+     * @param street            Strasse der abgeänderten Person
+     * @param place             Ort der abgeänderten Person
+     * @param email             Email der abgeänderten Person
+     * @param password          Passwort der abgeänderten Person
+     * @param passwordHint      Passwort-Hinweis der abgeänderten Person
+     * @param locked            Sperrung, ob die Person gesperrt werden soll
+     * @param userType          Recht für abgeänderte Person
+     * @param conn              Die Connection zur Datenbank
      * @param commandRunAsAdmin
-     *
      */
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
@@ -158,11 +156,10 @@ public class Person implements Serializable {
      * löscht eine Person in der Datenbank
      *
      * @param username
-     * @param conn Die Connection zur Datenbank
-     *
+     * @param conn     Die Connection zur Datenbank
      */
     public static void removePerson(String username, Connection conn) throws SQLException {
-        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '"+username+"'");
+        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + username + "'");
         sqlUpdateCommand.addBooleanValue("Deleted_YN", true);
         conn.createStatement().execute(sqlUpdateCommand.toString());
     }
