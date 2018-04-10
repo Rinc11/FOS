@@ -1,4 +1,4 @@
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
 import com.fos.tools.Helper;
@@ -49,7 +49,7 @@ public class FosUserPageTest {
      * setzt die Loginversuche zurück und entsperrt den testUser.
      */
     @Before
-    public void resetTestUser() throws SQLException, NotLoadedExeption {
+    public void resetTestUser() throws SQLException, NotLoadedException {
         conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
         person.setLoginTry(0, conn);
@@ -61,7 +61,7 @@ public class FosUserPageTest {
      * Session gespeichert wird.
      */
     @Test
-    public void testTryLoginValid() throws NotLoadedExeption {
+    public void testTryLoginValid() throws NotLoadedException {
         createMock();
         when(request.getParameter("loginUserName")).thenReturn("testUser");
         when(request.getParameter("pass")).thenReturn("1234");
@@ -78,7 +78,7 @@ public class FosUserPageTest {
      * eingegben wird.
      */
     @Test
-    public void testTryLoginWrongPasswordMultipleTimes() throws NotLoadedExeption, SQLException {
+    public void testTryLoginWrongPasswordMultipleTimes() throws NotLoadedException, SQLException {
         for (int i = 0; i <= 10; i++) {
             createMock();
             when(request.getParameter("loginUserName")).thenReturn("testUser");
@@ -112,7 +112,7 @@ public class FosUserPageTest {
      * eingegben wird.
      */
     @Test
-    public void testTryLoginWrongUserName() throws NotLoadedExeption, SQLException {
+    public void testTryLoginWrongUserName() throws NotLoadedException, SQLException {
         createMock();
         when(request.getParameter("loginUserName")).thenReturn("nichtVorhanden");
         when(request.getParameter("pass")).thenReturn("bla");
@@ -144,7 +144,7 @@ public class FosUserPageTest {
      * Testet ob getUser den erwarteten Benutzer zurückgibt.
      */
     @Test
-    public void testGetUser() throws NotLoadedExeption {
+    public void testGetUser() throws NotLoadedException {
         createMock();
         createSessionPersonMock(false);
 
@@ -171,7 +171,7 @@ public class FosUserPageTest {
      *
      * @param isAdmin ob die Perosn Administrator ist
      */
-    private void createSessionPersonMock(Boolean isAdmin) throws NotLoadedExeption {
+    private void createSessionPersonMock(Boolean isAdmin) throws NotLoadedException {
         Person person = mock(Person.class);
         HttpSession session = request.getSession();
         when(session.getAttribute("userLoggedIn")).thenReturn(person);

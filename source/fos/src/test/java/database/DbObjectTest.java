@@ -1,7 +1,7 @@
 package database;
 
 import com.fos.database.DbObject;
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,8 +15,8 @@ public class DbObjectTest {
     /**
      * getValue auf nicht geladenes Objekt sollte eine Exeption werfen
      */
-    @Test(expected = NotLoadedExeption.class)
-    public void testDbObjectNotLoaded() throws NotLoadedExeption {
+    @Test(expected = NotLoadedException.class)
+    public void testDbObjectNotLoaded() throws NotLoadedException {
         DbObject<Integer> testObject = new DbObject<>();
         Assert.assertEquals(false, testObject.isLoaded());
         testObject.getValue();
@@ -27,7 +27,7 @@ public class DbObjectTest {
      * durch getValue wieder zurück gegeben wird
      */
     @Test
-    public void testDbObject() throws NotLoadedExeption {
+    public void testDbObject() throws NotLoadedException {
         DbObject<Integer> testObject = new DbObject<>(defaultTestInteger);
         Assert.assertTrue( testObject.isLoaded());
         Integer testValue = testObject.getValue();
@@ -39,7 +39,7 @@ public class DbObjectTest {
      * nicht geladenes Object setzten kann.
      */
     @Test
-    public void testSetValueOnNotLoadedObject() throws NotLoadedExeption {
+    public void testSetValueOnNotLoadedObject() throws NotLoadedException {
         DbObject<Integer> testObject = new DbObject<>();
         testObject.setValue(defaultTestInteger);
         Assert.assertTrue(testObject.isLoaded());
@@ -81,7 +81,7 @@ public class DbObjectTest {
      * prüft ob null zurückkommt auf ein null Wert
      */
     @Test
-    public void testGetValueAufNullWert() throws NotLoadedExeption {
+    public void testGetValueAufNullWert() throws NotLoadedException {
         DbObject<String> testObject = new DbObject<>();
         Assert.assertTrue(testObject.isNull());
         testObject.setValue(null);

@@ -1,9 +1,11 @@
 package com.fos;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.tools.FosUserPage;
 import com.fos.tools.Helper;
+import com.fos.tools.Logging;
+import com.fos.tools.MissingPermissionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,7 +72,7 @@ public class UserPage extends FosUserPage {
         try {
             return Person.getAllPersons(conn);
         } catch (SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logDatabaseException(request, e);
         }
         return new ArrayList<>();
     }
@@ -80,10 +82,12 @@ public class UserPage extends FosUserPage {
             if(getUser().getIsAdmin()) {
                 Person.removePerson(username, conn);
             }else{
-                addError("fehlende Rechte");
+                throw new MissingPermissionException();
             }
-        } catch (NotLoadedExeption | SQLException e) {
-            addError("Datenbank Fehler", e);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         }
 
     }
@@ -94,7 +98,7 @@ public class UserPage extends FosUserPage {
             if (getUser().getIsAdmin()) {
                 return jspFile;
             }
-        } catch (NotLoadedExeption notLoadedExeption) {
+        } catch (NotLoadedException notLoadedExeption) {
             notLoadedExeption.printStackTrace();
         }
         return "/WEB-INF/jsp/editUser.jsp";
@@ -107,12 +111,14 @@ public class UserPage extends FosUserPage {
                 password = Helper.getHash(password);
                 Person.addNewPerson(username, firstname, lastname, ahv, street, place, email, password, passwordHint, userType, conn);
             } else {
-                addError("fehlende Rechte");
+                throw new MissingPermissionException();
             }
         } catch (NoSuchAlgorithmException e) {
-            addError("Server Fehler", e);
-        } catch (NotLoadedExeption | SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logServerError(request, e);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         }
     }
 
@@ -122,7 +128,7 @@ public class UserPage extends FosUserPage {
             try {
                 password = Helper.getHash(password);
             } catch (NoSuchAlgorithmException e) {
-                addError("Server Fehler", e);
+                Logging.logServerError(request, e);
             }
         }
         try {
@@ -132,10 +138,12 @@ public class UserPage extends FosUserPage {
                     request.getSession().setAttribute("userLoggedIn", Person.getPerson(getUser().getUserName(), conn));
                 }
             }else{
-                addError("fehlende Rechte");
+                throw new MissingPermissionException();
             }
-        } catch (NotLoadedExeption | SQLException e) {
-            addError("Datenbank Fehler", e);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         }
     }
 
@@ -150,8 +158,8 @@ public class UserPage extends FosUserPage {
             }else {
                 result = getUser();
             }
-        } catch (NotLoadedExeption | SQLException e) {
-            addError("Datenbank Fehler", e);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
         }
         return result;
     }

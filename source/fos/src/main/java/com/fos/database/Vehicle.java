@@ -110,7 +110,7 @@ public class Vehicle implements Serializable {
      *
      * @return VehicleID
      */
-    public Integer getVehicleID() throws NotLoadedExeption {
+    public Integer getVehicleID() throws NotLoadedException {
         return vehicleID.getValue();
     }
 
@@ -119,7 +119,7 @@ public class Vehicle implements Serializable {
      *
      * @return Serialnumber
      */
-    public String getSerialnumber() throws NotLoadedExeption {
+    public String getSerialnumber() throws NotLoadedException {
         return serialnumber.getValue();
     }
 
@@ -128,7 +128,7 @@ public class Vehicle implements Serializable {
      *
      * @return Brand
      */
-    public String getBrand() throws NotLoadedExeption {
+    public String getBrand() throws NotLoadedException {
         return brand.getValue();
     }
 
@@ -137,7 +137,7 @@ public class Vehicle implements Serializable {
      *
      * @return Type
      */
-    public String getType() throws NotLoadedExeption {
+    public String getType() throws NotLoadedException {
         return type.getValue();
     }
 
@@ -146,7 +146,7 @@ public class Vehicle implements Serializable {
      *
      * @return BuildYear
      */
-    public Integer getBuildYear() throws NotLoadedExeption {
+    public Integer getBuildYear() throws NotLoadedException {
         return buildYear.getValue();
     }
 
@@ -155,7 +155,7 @@ public class Vehicle implements Serializable {
      *
      * @return Typ des Treibstoffs
      */
-    public VehicleFuelType getFuelType() throws NotLoadedExeption {
+    public VehicleFuelType getFuelType() throws NotLoadedException {
         return fuelType.getValue();
     }
 

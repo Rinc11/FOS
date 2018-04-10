@@ -1,6 +1,6 @@
 package database;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Vehicle;
 import com.fos.tools.Helper;
 import org.junit.Assert;
@@ -40,10 +40,10 @@ public class VehicleTest {
     /**
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
+    public void testIfTestVehicleExists() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Vehicle vehicle = Vehicle.getVehicle(defaultTestVehicleID, conn);
 
@@ -61,16 +61,16 @@ public class VehicleTest {
     /**
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
+    public void testGetAllVehicles() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
         Assert.assertEquals(Integer.valueOf(6), vehicles.stream().filter(f -> {
             try {
                 return f.getVehicleID().equals(6);
-            } catch (NotLoadedExeption notLoadedExeption) {
+            } catch (NotLoadedException notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
@@ -86,10 +86,10 @@ public class VehicleTest {
     /**
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testAddNewVehicle() throws SQLException, NotLoadedExeption {
+    public void testAddNewVehicle() throws SQLException, NotLoadedException {
 
         String serialnumber = "136c8b4";
         String brand = "Honda";
@@ -117,10 +117,10 @@ public class VehicleTest {
     /**
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
+    public void testRemoveVehicle() throws SQLException, NotLoadedException {
 
         Connection conn = Helper.getConnection();
         Vehicle.removeVehicle("testVehicle", conn);
@@ -138,11 +138,11 @@ public class VehicleTest {
     /**
      * 
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      * @throws NoSuchAlgorithmException
      */
     @Test
-    public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
+    public void testUpdateVehicle() throws SQLException, NotLoadedException, NoSuchAlgorithmException {
 
         String serialnumber = "136c8b4";
         String brand = "Honda";

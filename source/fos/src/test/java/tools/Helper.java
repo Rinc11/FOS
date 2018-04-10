@@ -17,7 +17,7 @@ public class Helper {
             return;
         }
         Connection connection = com.fos.tools.Helper.getConnection();
-        new SqlUpdate(com.fos.tools.Helper.getDbschema(), true).UpdateDatabase(connection);
+        new SqlUpdate(com.fos.tools.Helper.getDbchema(), true).UpdateDatabase(connection);
         alreadyLoaded = true;
     }
 }

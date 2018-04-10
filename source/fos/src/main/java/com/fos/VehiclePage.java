@@ -1,8 +1,10 @@
 package com.fos;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Vehicle;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Logging;
+import com.fos.tools.MissingPermissionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +65,7 @@ public class VehiclePage extends FosUserPage {
         try {
             return Vehicle.getAllVehicles(conn);
         } catch (SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logDatabaseException(request, e);
         }
         return new ArrayList<>();
     }
@@ -72,7 +74,7 @@ public class VehiclePage extends FosUserPage {
         try {
             Vehicle.removeVehicle(vehicleID, conn);
         } catch (SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logDatabaseException(request, e);
         }
 
     }
@@ -87,12 +89,14 @@ public class VehiclePage extends FosUserPage {
             if (getUser().getIsAdmin()) {
                 Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
             } else {
-                addError("fehlende Rechte");
+                throw new MissingPermissionException();
             }
         } catch (SQLException e) {
-            addError("Server Fehler", e);
-        } catch (NotLoadedExeption e) {
-            addError("Datenbank Fehler", e);
+            Logging.logServerError(request, e);
+        } catch (NotLoadedException e) {
+            Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         }
     }
 
@@ -100,7 +104,7 @@ public class VehiclePage extends FosUserPage {
         try {
             Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
         } catch (SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logDatabaseException(request, e);
         }
     }
 
@@ -111,7 +115,7 @@ public class VehiclePage extends FosUserPage {
             try {
                 result = Vehicle.getVehicle(vehicleID, conn);
             } catch (SQLException e) {
-                addError("Datenbank Fehler", e);
+                Logging.logDatabaseException(request, e);
             }
         }
         return result;

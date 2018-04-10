@@ -1,6 +1,6 @@
 package database;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.tools.Helper;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ public class PersonTest {
      * Voraussetzung für /F0001/ und /F0010/
      */
     @Test
-    public void testIfTestUserExists() throws SQLException, NotLoadedExeption {
+    public void testIfTestUserExists() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
 
@@ -61,7 +61,7 @@ public class PersonTest {
      * (1) /F0040/ Zif 2),  (2) /F0010/ Zif. 3)
      */
     @Test
-    public void testSetLoginTry() throws SQLException, NotLoadedExeption {
+    public void testSetLoginTry() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Person person = Person.getPerson("testUser", conn);
         person.setLocked(false, conn);
@@ -87,13 +87,13 @@ public class PersonTest {
      * /F0090/
      */
     @Test
-    public void testGetAllPersons() throws SQLException, NotLoadedExeption {
+    public void testGetAllPersons() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         List<Person> persons = Person.getAllPersons(conn);
         Assert.assertEquals("testUser", persons.stream().filter(f -> {
             try {
                 return f.getUserName().equals("testUser");
-            } catch (NotLoadedExeption notLoadedExeption) {
+            } catch (NotLoadedException notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
@@ -104,7 +104,7 @@ public class PersonTest {
      * testet, ob ein neuer Benutzer korrekt in die Datenbank gespeichert wird
      */
     @Test
-    public void testAddNewPerson() throws SQLException, NotLoadedExeption {
+    public void testAddNewPerson() throws SQLException, NotLoadedException {
 
         String username = "hansmuster";
         String firstName = "Hans";
@@ -143,7 +143,7 @@ public class PersonTest {
      * testet, ob ein bestehender Benutzer gelöscht wird.
      */
     @Test
-    public void testRemovePerson() throws SQLException, NotLoadedExeption {
+    public void testRemovePerson() throws SQLException, NotLoadedException {
 
         Connection conn = Helper.getConnection();
         Person.removePerson("testUser", conn);
@@ -159,7 +159,7 @@ public class PersonTest {
      * testet, ob eine bestehende Person richtig geupdatet wird
      */
     @Test
-    public void testUpdatePerson() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
+    public void testUpdatePerson() throws SQLException, NotLoadedException, NoSuchAlgorithmException {
 
         String username = "testUser";
         String firstName = "Hans";

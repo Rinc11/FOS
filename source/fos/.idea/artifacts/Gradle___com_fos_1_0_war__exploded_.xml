@@ -35,6 +35,8 @@
           </element>
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:8.5.28" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-el-api:8.5.28" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.11.0/e6b751e02120c08702d98750f6a80bc25343b7f5/log4j-core-2.11.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.11.0/bede79a3f150711634a3047985517431bf6499f2/log4j-api-2.11.0.jar" />
         </element>
       </element>
     </root>

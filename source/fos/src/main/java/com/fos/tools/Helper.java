@@ -97,46 +97,14 @@ public class Helper {
         }
     }
 
-    public static String getDbschema() {
+    /**gibt das Datenbank schema zurück
+     *
+     * @return das Datenbankschema
+     */
+    public static String getDbchema() {
         return dbschema;
     }
 
-    /***
-     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     * @param request der request wo die fehlermeldung angezeigt werden soll
-     * @param errorMessage die Fehlermelung
-     * @param e Exeption welche geloggt wird.
-     */
-    public static void addError(HttpServletRequest request, String errorMessage, Exception e) {
-        logExeption(e);
-        addError(request, errorMessage);
-    }
-
-    /***
-     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     * @param request der request wo die fehlermeldung angezeigt werden soll
-     * @param errorMessage die Fehlermelung
-     */
-    public static void addError(HttpServletRequest request, String errorMessage) {
-        List<String> errorMessages = (List<String>) request.getAttribute("errorMessage");
-        if (errorMessages == null) {
-            errorMessages = new ArrayList<>();
-            request.setAttribute("errorMessage", errorMessages);
-        }
-        errorMessages.add(errorMessage);
-    }
-
-    /**
-     * schreibt eine Fehlermeldung in die Konsole
-     *
-     * @param e Exeption welche gedruckt wird
-     */
-    public static void logExeption(Exception e) {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
-    }
 
     /**
      * erstellt einen hash(SHA-256) von einem Text z.B. Passwort

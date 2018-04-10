@@ -40,7 +40,7 @@ public class Config {
      *
      * @return Schlüssel bei der Konfig Tabelle
      */
-    public String getId() throws NotLoadedExeption {
+    public String getId() throws NotLoadedException {
         return id.getValue();
     }
 
@@ -49,7 +49,7 @@ public class Config {
      *
      * @return Wert des Konfig Eintrages
      */
-    public String getValue() throws NotLoadedExeption {
+    public String getValue() throws NotLoadedException {
         return value.getValue();
     }
 }

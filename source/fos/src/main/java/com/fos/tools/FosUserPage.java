@@ -1,12 +1,10 @@
 package com.fos.tools;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,7 +42,7 @@ public abstract class FosUserPage {
         try {
             conn = Helper.getConnection();
         } catch (SQLException e) {
-            addError("Datenbank Fehler", e);
+            Logging.logDatabaseException(request, e);
         }
     }
 
@@ -55,8 +53,8 @@ public abstract class FosUserPage {
             if (user != null && (!needsAdminRight || user.getUserType() == Person.PersonUserType.ADMIN)) {
                 return true;
             }
-        } catch (NotLoadedExeption e) {
-            addError("Fehler auf der Seite", e);
+        } catch (NotLoadedException e) {
+            Logging.logDatabaseException(request, e);
         }
         return false;
     }
@@ -77,7 +75,6 @@ public abstract class FosUserPage {
         if (formularUserName != null || pass != null) {
             try {
                 conn = Helper.getConnection();
-
                 Person user = Person.getPerson(formularUserName, conn);
                 if (user != null) {
                     if (!user.getLocked() && !user.getDeleted()) {
@@ -89,42 +86,19 @@ public abstract class FosUserPage {
                             request.getSession().setAttribute("userLoggedIn", user);
                         } else {
                             user.setLoginTry(user.getLoginTry() + 1, conn);
-                            Helper.addError(request, "Passwort ist falsch<br>Hinweis: " + user.getPasswordHint());
+                            Logging.messageToUser(request, "Passwort ist falsch<br>Hinweis: " + user.getPasswordHint());
                         }
                     } else {
-                        Helper.addError(request, "Benutzer ist gesperrt");
+                        Logging.messageToUser(request, "Benutzer ist gesperrt");
                     }
                 } else {
-                    Helper.addError(request, "Falscher Benutzername");
+                    Logging.messageToUser(request, "Falscher Benutzername");
                 }
             } catch (SQLException e) {
-                Helper.addError(request, "Datenbank Fehler", e);
-            } catch (NoSuchAlgorithmException e) {
-                Helper.addError(request, "Server Fehler", e);
-            } catch (NotLoadedExeption e) {
-                Helper.addError(request, "Fehler auf der Seite", e);
+                Logging.logDatabaseException(request, e);
+            } catch (NoSuchAlgorithmException | NotLoadedException e) {
+                Logging.logServerError(request, e);
             }
         }
-    }
-
-    /**
-     * fügt einen Fehler hinzu den der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     *
-     * @param errorMessage Fehlermeldung
-     * @param e            Exception welche auch geloggt wird
-     */
-    public void addError(String errorMessage, Exception e) {
-        Helper.addError(request, errorMessage, e);
-    }
-
-    /**
-     * fügt einen Fehler hinzu den der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     *
-     * @param errorMessage Fehlermeldung
-     */
-    public void addError(String errorMessage) {
-        Helper.addError(request, errorMessage);
     }
 }

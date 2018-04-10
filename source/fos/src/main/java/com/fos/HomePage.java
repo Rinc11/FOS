@@ -1,14 +1,13 @@
 package com.fos;
 
-import com.fos.database.Config;
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Vehicle;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Logging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.rtf.RTFEditorKit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,14 +71,13 @@ public class HomePage extends FosUserPage {
             return (int)Person.getAllPersons(conn).stream().filter(f -> {
                 try {
                     return f.getLocked();
-                } catch (NotLoadedExeption notLoadedExeption) {
-                    addError("Server Fehler", notLoadedExeption);
-                    notLoadedExeption.printStackTrace();
+                } catch (NotLoadedException notLoadedExeption) {
+                    Logging.logServerError(request, notLoadedExeption);
                 }
                 return false;
             }).count();
         } catch (SQLException e) {
-            addError("Datenbankfehler", e);
+            Logging.logDatabaseException(request, e);
         }
         return null;
     }
@@ -88,7 +86,7 @@ public class HomePage extends FosUserPage {
         try {
             return Vehicle.getAllVehicles(conn);
         } catch (SQLException e) {
-            addError("Datenbankfehler", e);
+            Logging.logDatabaseException(request, e);
         }
         return new ArrayList<>();
     }
