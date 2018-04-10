@@ -10,8 +10,8 @@ import org.junit.Test;
  */
 public class DbObjectTest {
 
-    private Integer defaultTestInteger = 5;
-    private String defaultTestString = "blabla";
+    private final Integer defaultTestInteger = 5;
+    private final String defaultTestString = "blabla";
     /**
      * getValue auf nicht geladenes Objekt sollte eine Exeption werfen
      */
@@ -31,7 +31,7 @@ public class DbObjectTest {
         DbObject<Integer> testObject = new DbObject<>(defaultTestInteger);
         Assert.assertTrue( testObject.isLoaded());
         Integer testValue = testObject.getValue();
-        Assert.assertTrue(defaultTestInteger == testValue);
+        Assert.assertTrue(defaultTestInteger.equals(testValue));
     }
 
     /**
@@ -43,7 +43,7 @@ public class DbObjectTest {
         DbObject<Integer> testObject = new DbObject<>();
         testObject.setValue(defaultTestInteger);
         Assert.assertTrue(testObject.isLoaded());
-        Assert.assertTrue(defaultTestInteger == testObject.getValue());
+        Assert.assertTrue(defaultTestInteger.equals(testObject.getValue()));
     }
 
     /**

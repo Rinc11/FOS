@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
  */
 public class DbObject<T> {
     private T value = null;
-    private Boolean loaded = false;
+    private Boolean loaded;
 
     /**
      * erstellt eine neue DbObject mit einem Wert.

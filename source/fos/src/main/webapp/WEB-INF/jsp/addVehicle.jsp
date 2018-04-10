@@ -56,7 +56,6 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
 
                     <input name="command" value="addVehicle" type="hidden">
                     <button type="submit" class="btn btn-default">Senden</button>
-                    </legend>
                 </fieldset>
             </form>
         </div>

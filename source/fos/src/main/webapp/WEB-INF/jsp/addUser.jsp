@@ -64,7 +64,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                     </div>
                     <legend style="color: rgb(64, 99, 180);"><a class="btn btn-sm btn-primary"
                                                                 onclick="toggle('optionalFieldsUser')">Optionale Felder
-                        <span class="glyphicon glyphicon-plus"></a></legend>
+                        <span class="glyphicon glyphicon-plus"></span></a></legend>
                     <fieldset id="optionalFieldsUser" style="display: none">
                         <div class="form-group">
                             <label>AHV</label>
