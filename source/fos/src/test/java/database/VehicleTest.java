@@ -108,6 +108,33 @@ public class VehicleTest {
         preparedStatement.execute();
     }
 
+    /**
+     * testet, ob ein bestehendes Fahrzeug gelöscht wird.
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
+     */
+    @Test
+    public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
+
+        Connection conn = Helper.getConnection();
+        Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
+            try {
+                return f.getSerialnumber().equals("1057");
+            } catch (NotLoadedExeption notLoadedExeption) {
+                return false;
+            }
+        }).findAny().get().getVehicleID();
+
+        Vehicle.removeVehicle(vehicleID, conn);
+
+        Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
+
+        Assert.assertEquals(false, vehicle.isActive());
+
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ' " +vehicleID +"  '");
+        preparedStatement.execute();
+    }
 
     /**
      * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
