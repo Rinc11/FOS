@@ -27,8 +27,8 @@ public class DataBaseUpdater {
             String dbschema = prop.getProperty("dbschema");
             String dbuser = prop.getProperty("dbuser");
             String dbpassword = prop.getProperty("dbpassword");
-            String  dbport= prop.getProperty("dbport");
-            String connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
+            String dbport = prop.getProperty("dbport");
+            String connectionString = "jdbc:postgresql://" + database + ":" + dbport + "/postgres?user=" + dbuser + "&password=" + dbpassword + "&ssl=false&useUnicode=true&characterEncoding=utf-8";
 
             new DataBaseUpdater(connectionString, dbschema);
         } catch (Exception e) {

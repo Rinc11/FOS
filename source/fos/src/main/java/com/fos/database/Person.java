@@ -311,7 +311,7 @@ public class Person implements Serializable {
      * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedException {
-        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '"+userName.getValue()+"'");
+        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + userName.getValue() + "'");
         sqlUpdateCommand.addIntValue("LoginTry", loginTry);
         conn.createStatement().execute(sqlUpdateCommand.toString());
         if (loginTry > 10 && userType.getValue() == PersonUserType.MITARBEITER) {
@@ -327,7 +327,7 @@ public class Person implements Serializable {
      * @param conn   Verbinung zu Datenbank
      */
     public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedException {
-        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '"+userName.getValue()+"'");
+        SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + userName.getValue() + "'");
         sqlUpdateCommand.addBooleanValue("Locked_YN", locked);
         conn.createStatement().execute(sqlUpdateCommand.toString());
         this.locked.setValueOnLoadedObject(locked);

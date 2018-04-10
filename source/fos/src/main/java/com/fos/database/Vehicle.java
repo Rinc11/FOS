@@ -78,15 +78,15 @@ public class Vehicle implements Serializable {
 
     public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
 
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
 
-            preparedStatement.setString(1, serialnumber);
-            preparedStatement.setString(2, brand);
-            preparedStatement.setString(3, type);
-            preparedStatement.setInt(4, buildYear);
-            preparedStatement.setInt(5, vehicleID);
+        preparedStatement.setString(1, serialnumber);
+        preparedStatement.setString(2, brand);
+        preparedStatement.setString(3, type);
+        preparedStatement.setInt(4, buildYear);
+        preparedStatement.setInt(5, vehicleID);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
     }
 
     public static void removeVehicle(Integer vehicleID, Connection conn) throws SQLException {
@@ -163,7 +163,6 @@ public class Vehicle implements Serializable {
     }
 
     /**
-     *
      * @return
      * @throws NotLoadedException
      */

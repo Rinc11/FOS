@@ -1,5 +1,7 @@
 package com.fos.tools;
 
+import org.apache.logging.log4j.Level;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,8 +82,9 @@ public class Helper {
                 String  dbport= prop.getProperty("dbport");
                 connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("unable to read connection String");
+                String msg = "Lesefehler bei der Connection String Config";
+                Logging.logMessage(msg, Level.FATAL);
+                throw new RuntimeException(msg);
             }
         }
 
@@ -92,8 +95,9 @@ public class Helper {
             conn.setSchema(dbschema);
             return conn;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("connection konnte nicht erstellt werden");
+            String msg = "connection konnte nicht erstellt werden";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new RuntimeException(msg);
         }
     }
 
@@ -121,7 +125,9 @@ public class Helper {
             if (hexByte.length() == 1) {
                 hexByte = '0' + hexByte;
             } else if (hexByte.length() != 2) {
-                throw new RuntimeException();
+                String msg = "fehler beim Hasalgorithmus";
+                Logging.logMessage(msg, Level.FATAL);
+                throw new RuntimeException(msg);
             }
             sb.append(hexByte);
         }

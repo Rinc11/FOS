@@ -1,5 +1,8 @@
 package com.fos.database;
 
+import com.fos.tools.Logging;
+import org.apache.logging.log4j.Level;
+
 /**
  * Ein Objekt um ein Datenbankfeld abzubilden
  * Es unterstützt auch nicht geladene Datenbank felder
@@ -48,7 +51,9 @@ public class DbObject<T> {
      */
     public void setValue(T value) {
         if (isLoaded()) {
-            throw new RuntimeException("Feld wurde bereits geladen");
+            String msg = "Feld wurde bereits geladen";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new RuntimeException(msg);
         }
         loaded = true;
         this.value = value;
@@ -64,7 +69,9 @@ public class DbObject<T> {
      */
     void setValueOnLoadedObject(T value) throws NotLoadedException {
         if (!loaded) {
-            throw new NotLoadedException("Database field is not loaded");
+            String msg = "Datenbankfeld ist nicht geladen";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new NotLoadedException(msg);
         }
         this.value = value;
     }
