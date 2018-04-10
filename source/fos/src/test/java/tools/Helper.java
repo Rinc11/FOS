@@ -10,13 +10,15 @@ public class Helper {
 
     /**
      * Updated die Datenbank mit Testdaten
+     *
      * @throws SQLException Wift Fehler von der Datenbank
      */
-    public static void loadDatabaseUpdates() throws SQLException {
-        if(alreadyLoaded){
+    public static void loadDatabaseUpdates() throws Exception {
+        if (alreadyLoaded) {
             return;
         }
         Connection connection = com.fos.tools.Helper.getConnection();
+        connection.createStatement().execute("DROP SCHEMA " + com.fos.tools.Helper.getDbchema() + " CASCADE ");
         new SqlUpdate(com.fos.tools.Helper.getDbchema(), true).UpdateDatabase(connection);
         alreadyLoaded = true;
     }

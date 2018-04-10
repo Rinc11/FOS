@@ -27,7 +27,7 @@ public class VehicleTest {
      * @throws SQLException
      */
     @BeforeClass
-    public static void updateDatabase() throws SQLException {
+    public static void updateDatabase() throws Exception {
         tools.Helper.loadDatabaseUpdates();
     }
 
@@ -63,10 +63,8 @@ public class VehicleTest {
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
         Assert.assertTrue(vehicles.stream().anyMatch(f -> {
             try {
-                return f.getVehicleID().equals(6);
-            } catch (NotLoadedException notLoadedExeption) {
                 return f.getBrand().equals("VW");
-            } catch (NotLoadedExeption notLoadedExeption) {
+            } catch (NotLoadedException notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
@@ -83,7 +81,7 @@ public class VehicleTest {
     @Test
     public void testAddNewVehicle() throws SQLException, NotLoadedException {
 
-        String serialnumber = "136c8b4";
+        String serialnumber = "136c8b4test";
         String brand = "Honda";
         String type = "Civic";
         Integer buildYear = 2010;
@@ -93,8 +91,8 @@ public class VehicleTest {
         Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
         Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
             try {
-                return f.getSerialnumber().equals("136c8b4");
-            } catch (NotLoadedExeption notLoadedExeption) {
+                return f.getSerialnumber().equals(serialnumber);
+            } catch (NotLoadedException notLoadedException) {
                 return false;
             }
         }).findAny().get().getVehicleID();
@@ -123,7 +121,7 @@ public class VehicleTest {
         Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
             try {
                 return f.getSerialnumber().equals("1057");
-            } catch (NotLoadedExeption notLoadedExeption) {
+            } catch (NotLoadedException notLoadedException) {
                 return false;
             }
         }).findAny().get().getVehicleID();
@@ -146,7 +144,7 @@ public class VehicleTest {
      * @throws NoSuchAlgorithmException
      */
     @Test
-    public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
+    public void testUpdateVehicle() throws SQLException, NotLoadedException, NoSuchAlgorithmException {
         int vehicleID   = 2;
         String serialnumber = "136c8b4";
         String brand = "Honda";

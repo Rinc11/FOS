@@ -2,6 +2,7 @@ package tools;
 
 
 import com.fos.tools.Helper;
+import com.fos.tools.Logging;
 import databaseupdater.SqlUpdate;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -36,7 +37,7 @@ public class HelperTest {
      * updated die Datenbank auf den neusten Stand mit Testdaten
      */
     @BeforeClass
-    public static void updateDatabase() throws SQLException {
+    public static void updateDatabase() throws Exception {
         tools.Helper.loadDatabaseUpdates();
     }
 
@@ -119,7 +120,7 @@ public class HelperTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getAttribute("errorMessage")).thenReturn(null);
 
-        Helper.addError(request, TESTSTRING);
+        Logging.messageToUser(request, TESTSTRING);
         ArgumentCaptor<List<String>> argument = ArgumentCaptor.forClass(List.class);
         verify(request).setAttribute(eq("errorMessage"), argument.capture());
         Assert.assertTrue(argument.getValue().contains(TESTSTRING));
@@ -135,7 +136,7 @@ public class HelperTest {
         List<String> errorList = new ArrayList<>();
         errorList.add(TESTSTRING);
         when(request.getAttribute("errorMessage")).thenReturn(errorList);
-        Helper.addError(request, TESTSTRING2);
+        Logging.messageToUser(request, TESTSTRING2);
         Assert.assertTrue(errorList.contains(TESTSTRING));
         Assert.assertTrue(errorList.contains(TESTSTRING2));
     }
