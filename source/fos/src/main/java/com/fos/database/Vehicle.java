@@ -165,9 +165,9 @@ public class Vehicle implements Serializable {
     /**
      *
      * @return
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
-    public Boolean isActive() throws NotLoadedExeption {
+    public Boolean isActive() throws NotLoadedException {
         return active.getValue();
     }
 
