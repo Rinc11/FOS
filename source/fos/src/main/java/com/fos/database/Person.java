@@ -56,7 +56,7 @@ public class Person implements Serializable {
      * @return Eine Liste von Personen
      */
     public static List<Person> getAllPersons(Connection conn) throws SQLException {
-        List<Person> result = new ArrayList<Person>();
+        List<Person> result = new ArrayList<>();
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery(
                 "SELECT \"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\"," +
@@ -127,7 +127,7 @@ public class Person implements Serializable {
      * @param locked            Sperrung, ob die Person gesperrt werden soll
      * @param userType          Recht für abgeänderte Person
      * @param conn              Die Connection zur Datenbank
-     * @param commandRunAsAdmin
+     * @param commandRunAsAdmin den update Befehl als administrator ausführen
      */
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
             , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
@@ -155,7 +155,7 @@ public class Person implements Serializable {
     /**
      * löscht eine Person in der Datenbank
      *
-     * @param username
+     * @param username  den zu löschenden Benutzer
      * @param conn     Die Connection zur Datenbank
      */
     public static void removePerson(String username, Connection conn) throws SQLException {
@@ -308,7 +308,6 @@ public class Person implements Serializable {
      *
      * @param loginTry neuer Login Zähler Wert
      * @param conn     Verbindung zur Datenbank
-     * @throws SQLException
      */
     public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedException {
         SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + userName.getValue() + "'");

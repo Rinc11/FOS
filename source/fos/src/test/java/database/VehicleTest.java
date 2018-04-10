@@ -58,7 +58,7 @@ public class VehicleTest {
      * @throws NotLoadedException
      */
     @Test
-    public void testGetAllVehicles() throws SQLException, NotLoadedException {
+    public void testGetAllVehicles() throws SQLException {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
         Assert.assertTrue(vehicles.stream().anyMatch(f -> {
@@ -144,7 +144,7 @@ public class VehicleTest {
      * @throws NoSuchAlgorithmException
      */
     @Test
-    public void testUpdateVehicle() throws SQLException, NotLoadedException, NoSuchAlgorithmException {
+    public void testUpdateVehicle() throws SQLException, NotLoadedException {
         int vehicleID   = 2;
         String serialnumber = "136c8b4";
         String brand = "Honda";

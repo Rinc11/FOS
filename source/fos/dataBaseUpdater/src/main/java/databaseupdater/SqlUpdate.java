@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class SqlUpdate {
 
-    private HashMap<Integer, String> commands = new HashMap<>();
+    private final HashMap<Integer, String> commands = new HashMap<>();
     private int lastCommandId = -1;
     private String schema;
 
@@ -97,7 +96,7 @@ public class SqlUpdate {
      * @param afterId alle Befehle mit einer Id grösser als diese Nummer werden zurückgegeben
      * @return eine Liste von entryies mit der id und dem Befehl der Id
      */
-    private List<Map.Entry> getCommandsAfter(int afterId) {
+    private List<Map.Entry<Integer, String>> getCommandsAfter(int afterId) {
         return commands.entrySet().stream()
                 .filter(f -> f.getKey() > afterId)
                 .sorted(Comparator.comparingInt(Map.Entry::getKey))
@@ -116,7 +115,7 @@ public class SqlUpdate {
 
         conn.setAutoCommit(false);
         if (dbVersion < getLastCommandId()) {
-            List<Map.Entry> commandsAfter = getCommandsAfter(dbVersion);
+            List<Map.Entry<Integer, String>> commandsAfter = getCommandsAfter(dbVersion);
             for (Map.Entry<Integer, String> command : commandsAfter) {
                 try {
                     conn.createStatement().execute(command.getValue());

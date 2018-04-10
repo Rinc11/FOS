@@ -78,7 +78,7 @@ public class FosUserPageTest {
      * eingegben wird.
      */
     @Test
-    public void testTryLoginWrongPasswordMultipleTimes() throws NotLoadedException, SQLException {
+    public void testTryLoginWrongPasswordMultipleTimes() {
         for (int i = 0; i <= 10; i++) {
             createMock();
             when(request.getParameter("loginUserName")).thenReturn("testUser");
@@ -112,7 +112,7 @@ public class FosUserPageTest {
      * eingegben wird.
      */
     @Test
-    public void testTryLoginWrongUserName() throws NotLoadedException, SQLException {
+    public void testTryLoginWrongUserName() {
         createMock();
         when(request.getParameter("loginUserName")).thenReturn("nichtVorhanden");
         when(request.getParameter("pass")).thenReturn("bla");
@@ -130,7 +130,7 @@ public class FosUserPageTest {
      * tested ob der Logout geht
      */
     @Test
-    public void TestLogout() throws ServletException, IOException {
+    public void TestLogout() {
         createMock();
 
         TestFosPage.logout(request);

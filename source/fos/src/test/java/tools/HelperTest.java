@@ -3,14 +3,12 @@ package tools;
 
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
-import databaseupdater.SqlUpdate;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.stream.FactoryConfigurationError;
 
 import static com.fos.tools.Helper.nullCheck;
 import static com.fos.tools.Helper.nullValue;
@@ -20,7 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

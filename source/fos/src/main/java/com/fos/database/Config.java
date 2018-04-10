@@ -32,8 +32,8 @@ public class Config {
         return result;
     }
 
-    private DbObject<String> id = new DbObject<>();
-    private DbObject<String> value = new DbObject<>();
+    private final DbObject<String> id = new DbObject<>();
+    private final DbObject<String> value = new DbObject<>();
 
     /**
      * gibt den Schlüssel des Konfig Eintrages zurück

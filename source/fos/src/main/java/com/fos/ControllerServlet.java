@@ -63,7 +63,7 @@ public class ControllerServlet extends HttpServlet {
         if (fosUserPage != null && fosUserPage.loginValid()) {
             request.setAttribute("actualPage", fosUserPage);
             request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
-        } else if (staticPage != "") {
+        } else if (!staticPage.equals("")) {
             Logging.messageToUser(request, "statische Seite");
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {

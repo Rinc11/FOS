@@ -111,12 +111,10 @@ public class VehiclePage extends FosUserPage {
     public Vehicle getRequestVehicle() {
         Integer vehicleID = Integer.valueOf(request.getParameter("vehicleID"));
         Vehicle result = null;
-        if (vehicleID != null) {
-            try {
-                result = Vehicle.getVehicle(vehicleID, conn);
-            } catch (SQLException e) {
-                Logging.logDatabaseException(request, e);
-            }
+        try {
+            result = Vehicle.getVehicle(vehicleID, conn);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
         }
         return result;
     }

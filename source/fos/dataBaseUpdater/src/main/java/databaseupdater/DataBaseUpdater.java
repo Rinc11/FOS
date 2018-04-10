@@ -43,7 +43,7 @@ public class DataBaseUpdater {
      * @param schema Schma der Datenbank welche geupdatet werden soll
      */
     public DataBaseUpdater(String url, String schema) {
-        Connection conn = null;
+        Connection conn;
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url);

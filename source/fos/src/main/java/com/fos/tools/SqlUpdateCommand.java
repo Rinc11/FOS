@@ -67,7 +67,9 @@ public class SqlUpdateCommand {
      */
     public String getCommand() {
         StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE \"" + table + "\" SET ");
+        sb.append("UPDATE \"")
+                .append(table)
+                .append("\" SET ");
 
         Boolean isFisrt = true;
         for (String[] commandValue : valueList) {
@@ -76,9 +78,13 @@ public class SqlUpdateCommand {
             } else {
                 sb.append(" , ");
             }
-            sb.append(" \"" + commandValue[0] + "\" = " + commandValue[1]);
+            sb.append(" \"")
+                    .append(commandValue[0])
+                    .append("\" = ")
+                    .append(commandValue[1]);
         }
-        sb.append(" WHERE " + wherePart);
+        sb.append(" WHERE ")
+                .append(wherePart);
         sb.append(";");
         return sb.toString();
     }
