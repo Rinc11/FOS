@@ -88,7 +88,7 @@ public class VehicleTest {
         Assert.assertEquals(buildYear, vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM fos.\"Vehicles\"  WHERE \"VehicleID\" = '" + vehicleID + "'");
+        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM \"Vehicles\"  WHERE \"VehicleID\" = '" + vehicleID + "'");
         preparedStatement.execute();
     }
 
@@ -104,7 +104,7 @@ public class VehicleTest {
 
         Assert.assertEquals(true, vehicle.getDeleted());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
         preparedStatement.execute();
     }
 
