@@ -187,7 +187,7 @@ public class Person implements Serializable {
      *
      * @return Benutzername
      */
-    public String getUserName() throws NotLoadedExeption {
+    public String getUserName() throws NotLoadedException {
         return userName.getValue();
     }
 
@@ -196,7 +196,7 @@ public class Person implements Serializable {
      *
      * @return Vorname
      */
-    public String getFirstName() throws NotLoadedExeption {
+    public String getFirstName() throws NotLoadedException {
         return firstName.getValue();
     }
 
@@ -205,7 +205,7 @@ public class Person implements Serializable {
      *
      * @return Nachname
      */
-    public String getLastName() throws NotLoadedExeption {
+    public String getLastName() throws NotLoadedException {
         return lastName.getValue();
     }
 
@@ -214,7 +214,7 @@ public class Person implements Serializable {
      *
      * @return AHV nummer als Text
      */
-    public String getAhv() throws NotLoadedExeption {
+    public String getAhv() throws NotLoadedException {
         return ahv.getValue();
     }
 
@@ -223,7 +223,7 @@ public class Person implements Serializable {
      *
      * @return Strassenname
      */
-    public String getStreet() throws NotLoadedExeption {
+    public String getStreet() throws NotLoadedException {
         return street.getValue();
     }
 
@@ -232,7 +232,7 @@ public class Person implements Serializable {
      *
      * @return Wohnort des Benutzers
      */
-    public String getPlace() throws NotLoadedExeption {
+    public String getPlace() throws NotLoadedException {
         return place.getValue();
     }
 
@@ -241,7 +241,7 @@ public class Person implements Serializable {
      *
      * @return E-Mail Addresse
      */
-    public String getEmail() throws NotLoadedExeption {
+    public String getEmail() throws NotLoadedException {
         return email.getValue();
     }
 
@@ -250,7 +250,7 @@ public class Person implements Serializable {
      *
      * @return Passwort als SHA-256
      */
-    public String getPasswordHash() throws NotLoadedExeption {
+    public String getPasswordHash() throws NotLoadedException {
         return passwordHash.getValue();
     }
 
@@ -259,7 +259,7 @@ public class Person implements Serializable {
      *
      * @return Passwort Hinweis
      */
-    public String getPasswordHint() throws NotLoadedExeption {
+    public String getPasswordHint() throws NotLoadedException {
         return passwordHint.getValue();
     }
 
@@ -268,7 +268,7 @@ public class Person implements Serializable {
      *
      * @return ob Benutzer gesperrt ist
      */
-    public Boolean getLocked() throws NotLoadedExeption {
+    public Boolean getLocked() throws NotLoadedException {
         return locked.getValue();
     }
 
@@ -277,7 +277,7 @@ public class Person implements Serializable {
      *
      * @return Anzahl misslungenen Anmelde Versuche
      */
-    public Integer getLoginTry() throws NotLoadedExeption {
+    public Integer getLoginTry() throws NotLoadedException {
         return loginTry.getValue();
     }
 
@@ -286,11 +286,11 @@ public class Person implements Serializable {
      *
      * @return Typ des Benutzers
      */
-    public PersonUserType getUserType() throws NotLoadedExeption {
+    public PersonUserType getUserType() throws NotLoadedException {
         return userType.getValue();
     }
 
-    public Boolean getIsAdmin() throws NotLoadedExeption {
+    public Boolean getIsAdmin() throws NotLoadedException {
         return userType.getValue() == PersonUserType.ADMIN;
     }
 
@@ -299,7 +299,7 @@ public class Person implements Serializable {
      *
      * @return ob der Benutzer gesperrt ist.
      */
-    public Boolean getDeleted() throws NotLoadedExeption {
+    public Boolean getDeleted() throws NotLoadedException {
         return deleted.getValue();
     }
 
@@ -310,7 +310,7 @@ public class Person implements Serializable {
      * @param conn     Verbindung zur Datenbank
      * @throws SQLException
      */
-    public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedExeption {
+    public void setLoginTry(int loginTry, Connection conn) throws SQLException, NotLoadedException {
         SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + userName.getValue() + "'");
         sqlUpdateCommand.addIntValue("LoginTry", loginTry);
         conn.createStatement().execute(sqlUpdateCommand.toString());
@@ -326,7 +326,7 @@ public class Person implements Serializable {
      * @param locked ob er gesperrt ist
      * @param conn   Verbinung zu Datenbank
      */
-    public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedExeption {
+    public void setLocked(boolean locked, Connection conn) throws SQLException, NotLoadedException {
         SqlUpdateCommand sqlUpdateCommand = new SqlUpdateCommand("Person", "\"Username\" = '" + userName.getValue() + "'");
         sqlUpdateCommand.addBooleanValue("Locked_YN", locked);
         conn.createStatement().execute(sqlUpdateCommand.toString());

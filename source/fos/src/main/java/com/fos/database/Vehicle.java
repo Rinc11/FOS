@@ -78,15 +78,15 @@ public class Vehicle implements Serializable {
 
     public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
 
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
 
-            preparedStatement.setString(1, serialnumber);
-            preparedStatement.setString(2, brand);
-            preparedStatement.setString(3, type);
-            preparedStatement.setInt(4, buildYear);
-            preparedStatement.setInt(5, vehicleID);
+        preparedStatement.setString(1, serialnumber);
+        preparedStatement.setString(2, brand);
+        preparedStatement.setString(3, type);
+        preparedStatement.setInt(4, buildYear);
+        preparedStatement.setInt(5, vehicleID);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
     }
 
     public static void removeVehicle(Integer vehicleID, Connection conn) throws SQLException {
@@ -113,7 +113,7 @@ public class Vehicle implements Serializable {
      *
      * @return VehicleID
      */
-    public Integer getVehicleID() throws NotLoadedExeption {
+    public Integer getVehicleID() throws NotLoadedException {
         return vehicleID.getValue();
     }
 
@@ -122,7 +122,7 @@ public class Vehicle implements Serializable {
      *
      * @return Serialnumber
      */
-    public String getSerialnumber() throws NotLoadedExeption {
+    public String getSerialnumber() throws NotLoadedException {
         return serialnumber.getValue();
     }
 
@@ -131,7 +131,7 @@ public class Vehicle implements Serializable {
      *
      * @return Brand
      */
-    public String getBrand() throws NotLoadedExeption {
+    public String getBrand() throws NotLoadedException {
         return brand.getValue();
     }
 
@@ -140,7 +140,7 @@ public class Vehicle implements Serializable {
      *
      * @return Type
      */
-    public String getType() throws NotLoadedExeption {
+    public String getType() throws NotLoadedException {
         return type.getValue();
     }
 
@@ -149,7 +149,7 @@ public class Vehicle implements Serializable {
      *
      * @return BuildYear
      */
-    public Integer getBuildYear() throws NotLoadedExeption {
+    public Integer getBuildYear() throws NotLoadedException {
         return buildYear.getValue();
     }
 
@@ -158,16 +158,15 @@ public class Vehicle implements Serializable {
      *
      * @return Typ des Treibstoffs
      */
-    public VehicleFuelType getFuelType() throws NotLoadedExeption {
+    public VehicleFuelType getFuelType() throws NotLoadedException {
         return fuelType.getValue();
     }
 
     /**
-     *
      * @return
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
-    public Boolean isActive() throws NotLoadedExeption {
+    public Boolean isActive() throws NotLoadedException {
         return active.getValue();
     }
 

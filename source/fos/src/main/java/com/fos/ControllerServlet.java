@@ -1,7 +1,7 @@
 package com.fos;
 
 import com.fos.tools.FosUserPage;
-import com.fos.tools.Helper;
+import com.fos.tools.Logging;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,7 +64,7 @@ public class ControllerServlet extends HttpServlet {
             request.setAttribute("actualPage", fosUserPage);
             request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
         } else if (staticPage != "") {
-            Helper.addError(request, "statische Seite");
+            Logging.messageToUser(request, "statische Seite");
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);

@@ -1,13 +1,11 @@
 package database;
 
 import com.fos.database.Config;
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.tools.Helper;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tools.HelperTest;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +20,7 @@ public class ConfigTest {
      * updated die Datenbank auf den neusten Stand mit Testdaten
      */
     @BeforeClass
-    public static void updateDatabase() throws SQLException {
+    public static void updateDatabase() throws Exception {
         tools.Helper.loadDatabaseUpdates();
     }
 
@@ -30,7 +28,7 @@ public class ConfigTest {
      * Testet die testConfig ob alle Werte so sind wie in der Datenbank.
      */
     @Test
-    public void testIfTestConfigExists() throws SQLException, NotLoadedExeption {
+    public void testIfTestConfigExists() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         List<Config> config = Config.getAllConfig(conn);
 

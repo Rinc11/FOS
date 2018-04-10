@@ -1,6 +1,6 @@
 package database;
 
-import com.fos.database.NotLoadedExeption;
+import com.fos.database.NotLoadedException;
 import com.fos.database.Vehicle;
 import com.fos.tools.Helper;
 import org.junit.Assert;
@@ -27,7 +27,7 @@ public class VehicleTest {
      * @throws SQLException
      */
     @BeforeClass
-    public static void updateDatabase() throws SQLException {
+    public static void updateDatabase() throws Exception {
         tools.Helper.loadDatabaseUpdates();
     }
 
@@ -36,10 +36,10 @@ public class VehicleTest {
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
+    public void testIfTestVehicleExists() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Vehicle vehicle = Vehicle.getVehicle(defaultTestVehicleID, conn);
 
@@ -55,16 +55,16 @@ public class VehicleTest {
      * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
+    public void testGetAllVehicles() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         List<Vehicle> vehicles = Vehicle.getAllVehicles(conn);
         Assert.assertTrue(vehicles.stream().anyMatch(f -> {
             try {
                 return f.getBrand().equals("VW");
-            } catch (NotLoadedExeption notLoadedExeption) {
+            } catch (NotLoadedException notLoadedExeption) {
                 notLoadedExeption.printStackTrace();
             }
             return false;
@@ -76,12 +76,12 @@ public class VehicleTest {
      * testet, ob ein neues Fahrzeug korrekt in die Datenbank gespeichert wird
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      */
     @Test
-    public void testAddNewVehicle() throws SQLException, NotLoadedExeption {
+    public void testAddNewVehicle() throws SQLException, NotLoadedException {
 
-        String serialnumber = "136c8b4";
+        String serialnumber = "136c8b4test";
         String brand = "Honda";
         String type = "Civic";
         Integer buildYear = 2010;
@@ -91,8 +91,8 @@ public class VehicleTest {
         Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
         Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
             try {
-                return f.getSerialnumber().equals("136c8b4");
-            } catch (NotLoadedExeption notLoadedExeption) {
+                return f.getSerialnumber().equals(serialnumber);
+            } catch (NotLoadedException notLoadedException) {
                 return false;
             }
         }).findAny().get().getVehicleID();
@@ -108,16 +108,43 @@ public class VehicleTest {
         preparedStatement.execute();
     }
 
+    /**
+     * testet, ob ein bestehendes Fahrzeug gelöscht wird.
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testRemoveVehicle() throws SQLException, NotLoadedException {
+
+        Connection conn = Helper.getConnection();
+        Integer vehicleID = Vehicle.getAllVehicles(conn).stream().filter(f -> {
+            try {
+                return f.getSerialnumber().equals("1057");
+            } catch (NotLoadedException notLoadedException) {
+                return false;
+            }
+        }).findAny().get().getVehicleID();
+
+        Vehicle.removeVehicle(vehicleID, conn);
+
+        Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
+
+        Assert.assertEquals(false, vehicle.isActive());
+
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ' " +vehicleID +"  '");
+        preparedStatement.execute();
+    }
 
     /**
      * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
      *
      * @throws SQLException
-     * @throws NotLoadedExeption
+     * @throws NotLoadedException
      * @throws NoSuchAlgorithmException
      */
     @Test
-    public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
+    public void testUpdateVehicle() throws SQLException, NotLoadedException, NoSuchAlgorithmException {
         int vehicleID   = 2;
         String serialnumber = "136c8b4";
         String brand = "Honda";

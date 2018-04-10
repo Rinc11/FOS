@@ -1,5 +1,8 @@
 package com.fos.database;
 
+import com.fos.tools.Logging;
+import org.apache.logging.log4j.Level;
+
 /**
  * Ein Objekt um ein Datenbankfeld abzubilden
  * Es unterstützt auch nicht geladene Datenbank felder
@@ -32,11 +35,11 @@ public class DbObject<T> {
      * gibt den gespeicherten Wert zurück. Wenn es nicht geladen ist wirft es eine Exeption.
      *
      * @return den Wert des Objektes
-     * @throws NotLoadedExeption wenn das Feld noch nicht geladen ist wird diese Exeption geworfen.
+     * @throws NotLoadedException wenn das Feld noch nicht geladen ist wird diese Exeption geworfen.
      */
-    public T getValue() throws NotLoadedExeption {
+    public T getValue() throws NotLoadedException {
         if (!loaded) {
-            throw new NotLoadedExeption("Database field is not loaded");
+            throw new NotLoadedException("Database field is not loaded");
         }
         return value;
     }
@@ -48,7 +51,9 @@ public class DbObject<T> {
      */
     public void setValue(T value) {
         if (isLoaded()) {
-            throw new RuntimeException("Feld wurde bereits geladen");
+            String msg = "Feld wurde bereits geladen";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new RuntimeException(msg);
         }
         loaded = true;
         this.value = value;
@@ -60,11 +65,13 @@ public class DbObject<T> {
      * Diese Methode sollte nur dann verwendet werden, wenn das Feld auf die Datenbank aktualisiert wird.
      *
      * @param value den neune Wert, den man auch auf dei Datenbank geupdatet hat.
-     * @throws NotLoadedExeption Fehler wenn das Objekt noch nicht geladen ist.
+     * @throws NotLoadedException Fehler wenn das Objekt noch nicht geladen ist.
      */
-    void setValueOnLoadedObject(T value) throws NotLoadedExeption {
+    void setValueOnLoadedObject(T value) throws NotLoadedException {
         if (!loaded) {
-            throw new NotLoadedExeption("Database field is not loaded");
+            String msg = "Datenbankfeld ist nicht geladen";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new NotLoadedException(msg);
         }
         this.value = value;
     }

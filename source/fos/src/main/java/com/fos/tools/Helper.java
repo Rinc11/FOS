@@ -1,5 +1,7 @@
 package com.fos.tools;
 
+import org.apache.logging.log4j.Level;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,8 +82,9 @@ public class Helper {
                 String  dbport= prop.getProperty("dbport");
                 connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("unable to read connection String");
+                String msg = "Lesefehler bei der Connection String Config";
+                Logging.logMessage(msg, Level.FATAL);
+                throw new RuntimeException(msg);
             }
         }
 
@@ -92,51 +95,20 @@ public class Helper {
             conn.setSchema(dbschema);
             return conn;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("connection konnte nicht erstellt werden");
+            String msg = "connection konnte nicht erstellt werden";
+            Logging.logMessage(msg, Level.FATAL);
+            throw new RuntimeException(msg);
         }
     }
 
-    public static String getDbschema() {
+    /**gibt das Datenbank schema zurück
+     *
+     * @return das Datenbankschema
+     */
+    public static String getDbchema() {
         return dbschema;
     }
 
-    /***
-     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     * @param request der request wo die fehlermeldung angezeigt werden soll
-     * @param errorMessage die Fehlermelung
-     * @param e Exeption welche geloggt wird.
-     */
-    public static void addError(HttpServletRequest request, String errorMessage, Exception e) {
-        logExeption(e);
-        addError(request, errorMessage);
-    }
-
-    /***
-     * fügt einen Fehler hinzu welcher der Benutzer sehen wird.
-     * Dafür ist aber auf der jsp Seite der showErrorMessage include notwendig.
-     * @param request der request wo die fehlermeldung angezeigt werden soll
-     * @param errorMessage die Fehlermelung
-     */
-    public static void addError(HttpServletRequest request, String errorMessage) {
-        List<String> errorMessages = (List<String>) request.getAttribute("errorMessage");
-        if (errorMessages == null) {
-            errorMessages = new ArrayList<>();
-            request.setAttribute("errorMessage", errorMessages);
-        }
-        errorMessages.add(errorMessage);
-    }
-
-    /**
-     * schreibt eine Fehlermeldung in die Konsole
-     *
-     * @param e Exeption welche gedruckt wird
-     */
-    public static void logExeption(Exception e) {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
-    }
 
     /**
      * erstellt einen hash(SHA-256) von einem Text z.B. Passwort
@@ -153,7 +125,9 @@ public class Helper {
             if (hexByte.length() == 1) {
                 hexByte = '0' + hexByte;
             } else if (hexByte.length() != 2) {
-                throw new RuntimeException();
+                String msg = "fehler beim Hasalgorithmus";
+                Logging.logMessage(msg, Level.FATAL);
+                throw new RuntimeException(msg);
             }
             sb.append(hexByte);
         }

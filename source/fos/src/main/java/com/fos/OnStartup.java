@@ -1,7 +1,9 @@
 package com.fos;
 
+import com.fos.tools.Logging;
 import databaseupdater.SqlUpdate;
 import com.fos.tools.Helper;
+import org.apache.logging.log4j.Level;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -25,9 +27,9 @@ public class OnStartup implements ServletContextListener,
 
         try {
             Connection connection = Helper.getConnection();
-            new SqlUpdate(Helper.getDbschema(), false).UpdateDatabase(connection);
+            new SqlUpdate(Helper.getDbchema(), false).UpdateDatabase(connection);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logging.logMessage("error by updateing the database", Level.FATAL);
             throw new RuntimeException(e);
         }
 

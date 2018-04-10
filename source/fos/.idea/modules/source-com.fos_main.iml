@@ -36,5 +36,6 @@
     <orderEntry type="module" module-name="dataBaseUpdater_main" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-el-api:8.5.28" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
   </component>
 </module>
