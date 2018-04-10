@@ -24,6 +24,10 @@ public class VehicleTest {
     /**
      * updated die Datenbank auf den neusten Stand mit Testdaten
      */
+    /**
+     *
+     * @throws SQLException
+     */
     @BeforeClass
     public static void updateDatabase() throws SQLException {
         tools.Helper.loadDatabaseUpdates();
@@ -32,6 +36,11 @@ public class VehicleTest {
 
     /**
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
@@ -48,6 +57,11 @@ public class VehicleTest {
 
     /**
      * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
@@ -68,6 +82,11 @@ public class VehicleTest {
 
     /**
      * testet, ob ein neues Fahrzeug korrekt in die Datenbank gespeichert wird
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testAddNewVehicle() throws SQLException, NotLoadedExeption {
@@ -95,6 +114,11 @@ public class VehicleTest {
     /**
      * testet, ob ein bestehendes Fahrzeug gelöscht wird.
      */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
+     */
     @Test
     public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
 
@@ -110,6 +134,12 @@ public class VehicleTest {
 
     /**
      * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
+     */
+    /**
+     * 
+     * @throws SQLException
+     * @throws NotLoadedExeption
+     * @throws NoSuchAlgorithmException
      */
     @Test
     public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
