@@ -24,6 +24,10 @@ public class VehicleTest {
     /**
      * updated die Datenbank auf den neusten Stand mit Testdaten
      */
+    /**
+     *
+     * @throws SQLException
+     */
     @BeforeClass
     public static void updateDatabase() throws SQLException {
         tools.Helper.loadDatabaseUpdates();
@@ -32,6 +36,11 @@ public class VehicleTest {
 
     /**
      * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testIfTestVehicleExists() throws SQLException, NotLoadedExeption {
@@ -48,6 +57,11 @@ public class VehicleTest {
 
     /**
      * Tested ob das Fahrzeug mit der VehicleID 6 in der Liste von allen Fahrzeugen erfasst ist.
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testGetAllVehicles() throws SQLException, NotLoadedExeption {
@@ -69,6 +83,11 @@ public class VehicleTest {
     /**
      * testet, ob ein neues Fahrzeug korrekt in die Datenbank gespeichert wird
      */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
+     */
     @Test
     public void testAddNewVehicle() throws SQLException, NotLoadedExeption {
 
@@ -88,12 +107,17 @@ public class VehicleTest {
         Assert.assertEquals(buildYear, vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM fos.\"Vehicles\"  WHERE \"VehicleID\" = '" + vehicleID + "'");
+        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM \"Vehicles\"  WHERE \"VehicleID\" = '" + vehicleID + "'");
         preparedStatement.execute();
     }
 
     /**
      * testet, ob ein bestehendes Fahrzeug gelöscht wird.
+     */
+    /**
+     *
+     * @throws SQLException
+     * @throws NotLoadedExeption
      */
     @Test
     public void testRemoveVehicle() throws SQLException, NotLoadedExeption {
@@ -104,12 +128,18 @@ public class VehicleTest {
 
         Assert.assertEquals(true, vehicle.getDeleted());
 
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE fos.\"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = FALSE WHERE \"VehicleID\" = 'testVehicle'");
         preparedStatement.execute();
     }
 
     /**
      * testet, ob ein bestehendes Fahrzeug richtig geupdatet wird
+     */
+    /**
+     * 
+     * @throws SQLException
+     * @throws NotLoadedExeption
+     * @throws NoSuchAlgorithmException
      */
     @Test
     public void testUpdateVehicle() throws SQLException, NotLoadedExeption, NoSuchAlgorithmException {
