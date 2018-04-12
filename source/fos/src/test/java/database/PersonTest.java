@@ -176,7 +176,7 @@ public class PersonTest {
         Connection conn = Helper.getConnection();
 
         Person.updatePerson(username, firstName, lastName, ahv, street, place, email, Helper.getHash(password), passwordHint, locked, userType, conn, true );
-        Person person = Person.getPerson("testUser", conn);
+        Person person = Person.getPerson(username, conn);
         Assert.assertEquals(username, person.getUserName());
         Assert.assertEquals(firstName, person.getFirstName());
         Assert.assertEquals(lastName, person.getLastName());
