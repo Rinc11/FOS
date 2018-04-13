@@ -51,10 +51,10 @@ public class VehiclePage extends FosPage {
                 removeItem(Integer.valueOf(command.substring(REMOVEVEHICLETAG.length())));
             } else if (command.equals("addVehicle")) {
                 addNewItem(request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), Vehicle.VehicleFuelType.valueOf(request.getParameter("fuelType")));
             } else if (command.startsWith(EDITVEHICLETAG)) {
                 updateItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), Vehicle.VehicleFuelType.valueOf(request.getParameter("fuelType")));
             }
         }
     }
@@ -85,9 +85,15 @@ public class VehiclePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            Vehicle.removeVehicle(vehicleID, conn);
-        } catch (SQLException e) {
+            if (getUser().getIsAdmin()) {
+                Vehicle.removeVehicle(vehicleID, conn);
+            } else {
+                throw new MissingPermissionException();
+            }
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         } finally {
             try {
                 conn.close();
@@ -110,7 +116,7 @@ public class VehiclePage extends FosPage {
         return "/WEB-INF/jsp/vehicle.jsp";
     }
 
-    public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+    public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
@@ -119,9 +125,7 @@ public class VehiclePage extends FosPage {
             } else {
                 throw new MissingPermissionException();
             }
-        } catch (SQLException e) {
-            Logging.logServerError(request, e);
-        } catch (NotLoadedException e) {
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (MissingPermissionException e) {
             Logging.logMissingPermission(request, e);
@@ -134,13 +138,19 @@ public class VehiclePage extends FosPage {
         }
     }
 
-    public void updateItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+    public void updateItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
-        } catch (SQLException e) {
+            if (getUser().getIsAdmin()) {
+                Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
+            } else {
+                throw new MissingPermissionException();
+            }
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         } finally {
             try {
                 conn.close();

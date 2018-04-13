@@ -67,7 +67,7 @@ public class Vehicle implements Serializable {
         return result;
     }
 
-    public static void addNewVehicle(String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
+    public static void addNewVehicle(String serialnumber, String brand, String type, Integer buildYear, VehicleFuelType fuelType, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Vehicles\" (\"Serialnumber\", \"Brand\", \"Type\", \"BuildYear\", \"FuelType\") VALUES (?, ?, ?, ?, '" + fuelType + "')");
         preparedStatement.setString(1, serialnumber);
         preparedStatement.setString(2, brand);
@@ -76,7 +76,7 @@ public class Vehicle implements Serializable {
         preparedStatement.execute();
     }
 
-    public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType, Connection conn) throws SQLException {
+    public static void updateVehicle(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, VehicleFuelType fuelType, Connection conn) throws SQLException {
 
         PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET  \"Serialnumber\" = ?, \"Brand\" = ?, \"Type\" = ?, \"BuildYear\" = ?, \"FuelType\" = '" + fuelType + "' WHERE \"VehicleID\" = ?");
 
