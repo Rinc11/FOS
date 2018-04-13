@@ -28,9 +28,10 @@ public class DataBaseUpdater {
             String dbuser = prop.getProperty("dbuser");
             String dbpassword = prop.getProperty("dbpassword");
             String dbport = prop.getProperty("dbport");
+            boolean withTestData = prop.getProperty("test") != null && prop.getProperty("test").equals ("true");
             String connectionString = "jdbc:postgresql://" + database + ":" + dbport + "/postgres?user=" + dbuser + "&password=" + dbpassword + "&ssl=false&useUnicode=true&characterEncoding=utf-8";
 
-            new DataBaseUpdater(connectionString, dbschema);
+            new DataBaseUpdater(connectionString, dbschema, withTestData);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -42,14 +43,14 @@ public class DataBaseUpdater {
      * @param url Verbindungs String
      * @param schema Schma der Datenbank welche geupdatet werden soll
      */
-    public DataBaseUpdater(String url, String schema) {
+    public DataBaseUpdater(String url, String schema, boolean withTest) {
         Connection conn;
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url);
 
             conn.setSchema(schema);
-            new SqlUpdate(schema, false).UpdateDatabase(conn);
+            new SqlUpdate(schema, withTest).UpdateDatabase(conn);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
