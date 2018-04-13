@@ -18,7 +18,7 @@ public class Helper {
             return;
         }
         Connection connection = com.fos.tools.Helper.getConnection();
-        connection.createStatement().execute("DROP SCHEMA " + com.fos.tools.Helper.getDbchema() + " CASCADE ");
+        connection.createStatement().execute("DROP SCHEMA IF EXISTS " + com.fos.tools.Helper.getDbchema() + " CASCADE ");
         new SqlUpdate(com.fos.tools.Helper.getDbchema(), true).UpdateDatabase(connection);
         alreadyLoaded = true;
     }
