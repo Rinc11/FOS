@@ -65,7 +65,7 @@ public class FosPageTest {
         when(request.getParameter("loginUserName")).thenReturn("testUser");
         when(request.getParameter("pass")).thenReturn("1234");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn(request);
+        testFosPage.tryLogIn();
         ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
 
         verify(request.getSession()).setAttribute(eq("userLoggedIn"), argument.capture());
@@ -83,7 +83,7 @@ public class FosPageTest {
             when(request.getParameter("loginUserName")).thenReturn("testUser");
             when(request.getParameter("pass")).thenReturn("bla");
             TestFosPage testFosPage = new TestFosPage(request, response, false);
-            testFosPage.tryLogIn(request);
+            testFosPage.tryLogIn();
 
             ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
             verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
@@ -98,7 +98,7 @@ public class FosPageTest {
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn(request);
+        testFosPage.tryLogIn();
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         errorListArgument.getValue();
         assertEquals(1, errorListArgument.getValue().size());
@@ -116,7 +116,7 @@ public class FosPageTest {
         when(request.getParameter("loginUserName")).thenReturn("nichtVorhanden");
         when(request.getParameter("pass")).thenReturn("bla");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn(request);
+        testFosPage.tryLogIn();
 
         verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);

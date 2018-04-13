@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.sql.Connection;
 
-import static com.fos.tools.Logging.logDatabasNotCloseable;
+import static com.fos.tools.Logging.logConnectionNotCloseable;
 
 
 /**
@@ -26,19 +26,20 @@ public class OnStartup implements ServletContextListener,
      * wird ausgeführt wenn der Server started
      */
     public OnStartup() {
-        Connection connection = null;
+        Connection conn = null;
         try {
-            connection = Helper.getConnection();
-            new SqlUpdate(Helper.getDbchema(), false).UpdateDatabase(connection);
+            conn = Helper.getConnection();
+            new SqlUpdate(Helper.getDbchema(), false).UpdateDatabase(conn);
         } catch (Exception e) {
             Logging.logMessage("error by updateing the database", Level.FATAL);
             throw new RuntimeException(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                logConnectionNotCloseable();
+            }
         }
-        finally {
-            try { connection.close(); } catch (Exception e) { logDatabasNotCloseable(); }
-        }
-
-
     }
 
     @Override

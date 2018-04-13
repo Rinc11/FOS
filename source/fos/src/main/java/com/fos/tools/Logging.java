@@ -92,7 +92,7 @@ public class Logging {
     /**
      * logt einen Fehler, wenn die Datenbank nicht geclost werden kann
      */
-    public static void logDatabasNotCloseable(){
+    public static void logConnectionNotCloseable(){
         logMessage( "database not closeable", Level.ERROR);
     }
 }
