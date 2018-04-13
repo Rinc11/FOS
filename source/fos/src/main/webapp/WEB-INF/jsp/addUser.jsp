@@ -90,8 +90,8 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                     <div class="form-group">
                         <label>Rechte</label>
                         <select class="form-control" name="usertype">
-                            <option>Admin</option>
-                            <option>Mitarbeiter</option>
+                            <option>ADMIN</option>
+                            <option>MITARBEITER</option>
                         </select>
                     </div>
                     <input name="command" value="addUser" type="hidden">

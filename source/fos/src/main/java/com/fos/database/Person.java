@@ -98,7 +98,7 @@ public class Person implements Serializable {
      * @param conn         Die Connection zur Datenbank
      */
     public static void addNewPerson(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, String userType, Connection conn) throws SQLException {
+            , String email, String password, String passwordHint, PersonUserType userType, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Person\" (\"Username\", \"Firstname\", \"Lastname\", \"AHV\", \"Street\", \"Place\", \"Email\", \"Password\", \"PasswordHint\", \"Usertype\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '" + userType + "')");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, firstname);
@@ -130,7 +130,7 @@ public class Person implements Serializable {
      * @param commandRunAsAdmin den update Befehl als administrator ausführen
      */
     public static void updatePerson(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, Boolean locked, String userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
+            , String email, String password, String passwordHint, Boolean locked, PersonUserType userType, Connection conn, Boolean commandRunAsAdmin) throws SQLException {
 
         SqlUpdateCommand command = new SqlUpdateCommand("Person", "\"Username\" = '" + username + "'");
         if (!password.equals("")) {
@@ -146,7 +146,7 @@ public class Person implements Serializable {
 
         if (commandRunAsAdmin) {
             command.addBooleanValue("Locked_YN", locked);
-            command.addStringValue("Usertype", userType);
+            command.addStringValue("Usertype", userType.toString());
         }
         Statement statement = conn.createStatement();
         statement.execute(command.toString());

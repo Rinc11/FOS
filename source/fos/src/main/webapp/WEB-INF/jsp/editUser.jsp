@@ -106,10 +106,10 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         <div class="form-group">
                             <label>Rechte</label>
                             <select class="form-control" name="usertype">
-                                <option
-                                        <c:if test="${person.userType == 'ADMIN'}">selected</c:if> >Admin
+                                <option value="ADMIN"
+                                        <c:if test="${person.userType == 'ADMIN'}">selected</c:if> >ADMIN
                                 </option>
-                                <option <c:if test="${person.userType == 'MITARBEITER'}">selected</c:if>>Mitarbeiter
+                                <option value="MITARBEITER" <c:if test="${person.userType == 'MITARBEITER'}">selected</c:if>>MITARBEITER
                                 </option>
                             </select>
                         </div>
