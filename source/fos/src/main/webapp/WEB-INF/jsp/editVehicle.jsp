@@ -54,17 +54,17 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
                     <div class="form-group">
                         <label>Treibstoff</label>
                         <select class="form-control" name="fuelType">
-                            <option
-                                    <c:if test="${vehicle.fuelType == 'BENZIN'}">selected</c:if>>Benzin
+                            <option value="BENZIN"
+                                    <c:if test="${vehicle.fuelType == 'BENZIN'}">selected</c:if>>BENZIN
                             </option>
-                            <option
-                                    <c:if test="${vehicle.fuelType == 'DIESEL'}">selected</c:if>>Diesel
+                            <option value="DIESEL"
+                                    <c:if test="${vehicle.fuelType == 'DIESEL'}">selected</c:if>>DIESEL
                             </option>
-                            <option
-                                    <c:if test="${vehicle.fuelType == 'STROM'}">selected</c:if>>Strom
+                            <option value="STROM"
+                                    <c:if test="${vehicle.fuelType == 'STROM'}">selected</c:if>>STROM
                             </option>
-                            <option
-                                    <c:if test="${vehicle.fuelType == 'ERDGAS'}">selected</c:if>>Erdgas
+                            <option value="ERDGAS"
+                                    <c:if test="${vehicle.fuelType == 'ERDGAS'}">selected</c:if>>ERDGAS
                             </option>
                         </select>
                     </div>

@@ -86,7 +86,7 @@ public class VehicleTest {
         String brand = "Honda";
         String type = "Civic";
         Integer buildYear = 2010;
-        String fuelType = "Benzin";
+        Vehicle.VehicleFuelType fuelType = Vehicle.VehicleFuelType.BENZIN;
 
         Connection conn = Helper.getConnection();
         Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
@@ -151,7 +151,7 @@ public class VehicleTest {
         String brand = "Honda";
         String type = "Civic";
         Integer buildYear = 2010;
-        String fuelType = "Benzin";
+        Vehicle.VehicleFuelType fuelType = Vehicle.VehicleFuelType.BENZIN;
 
         Connection conn = Helper.getConnection();
 
@@ -164,7 +164,7 @@ public class VehicleTest {
         Assert.assertEquals(buildYear, vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
 
-        Vehicle.updateVehicle(2, "136c8b4", "Honda", "Civic", 2010, "Benzin", conn);
+        Vehicle.updateVehicle(2, "136c8b4", "Honda", "Civic", 2010, Vehicle.VehicleFuelType.BENZIN, conn);
     }
 
 }

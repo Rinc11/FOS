@@ -47,10 +47,10 @@ Formular für ein neues Fahrzeug oder zum ein Fahrzeug zu ändern
                     <div class="form-group">
                         <label>Treibstoff</label>
                         <select class="form-control" name="fuelType">
-                            <option>Benzin</option>
-                            <option>Diesel</option>
-                            <option>Strom</option>
-                            <option>Erdgas</option>
+                            <option>BENZIN</option>
+                            <option>DIESEL</option>
+                            <option>STROM</option>
+                            <option>ERDGAS</option>
                         </select>
                     </div>
 

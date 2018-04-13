@@ -51,10 +51,10 @@ public class VehiclePage extends FosPage {
                 removeItem(Integer.valueOf(command.substring(REMOVEVEHICLETAG.length())));
             } else if (command.equals("addVehicle")) {
                 addNewItem(request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), Vehicle.VehicleFuelType.valueOf(request.getParameter("fuelType")));
             } else if (command.startsWith(EDITVEHICLETAG)) {
                 updateItem(Integer.valueOf(request.getParameter("vehicleID")), request.getParameter("serialnumber"), request.getParameter("brand")
-                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), request.getParameter("fuelType"));
+                        , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), Vehicle.VehicleFuelType.valueOf(request.getParameter("fuelType")));
             }
         }
     }
@@ -103,7 +103,7 @@ public class VehiclePage extends FosPage {
         return jspFile;
     }
 
-    public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+    public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
@@ -127,7 +127,7 @@ public class VehiclePage extends FosPage {
         }
     }
 
-    public void updateItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+    public void updateItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
