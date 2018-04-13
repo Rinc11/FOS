@@ -97,7 +97,7 @@ public abstract class FosPage {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    Logging.logConnectionNotCloseable();
+                    Logging.logConnectionNotCloseable(e);
                 }
             }
         }

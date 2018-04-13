@@ -92,7 +92,7 @@ public class HomePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return null;
@@ -109,7 +109,7 @@ public class HomePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return new ArrayList<>();

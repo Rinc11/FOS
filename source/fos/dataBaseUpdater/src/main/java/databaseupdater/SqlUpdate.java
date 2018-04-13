@@ -58,6 +58,7 @@ public class SqlUpdate {
                 addCommand(commandNumber, sb.toString());
             }
         }
+        resourceAsStream.close();
     }
 
     /**

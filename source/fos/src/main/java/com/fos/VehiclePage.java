@@ -75,7 +75,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return new ArrayList<>();
@@ -98,7 +98,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
 
@@ -106,7 +106,14 @@ public class VehiclePage extends FosPage {
 
     @Override
     public String getJspPath() {
-        return jspFile;
+        try {
+            if (getUser().getIsAdmin()) {
+                return jspFile;
+            }
+        } catch (NotLoadedException notLoadedExeption) {
+            Logging.logDatabaseException(request, notLoadedExeption);
+        }
+        return "/WEB-INF/jsp/vehicle.jsp";
     }
 
     public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
@@ -126,7 +133,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -148,7 +155,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -166,7 +173,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return result;

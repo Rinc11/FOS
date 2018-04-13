@@ -1,6 +1,6 @@
 package databaseupdater;
 
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,8 +18,9 @@ public class DataBaseUpdater {
     public static void main(String[] args) {
         System.out.println("start database update");
 
+        InputStream resourceAsStream = null;
         try {
-            InputStream resourceAsStream = SqlUpdate.class.getClassLoader().getResourceAsStream("config.properties");
+            resourceAsStream = SqlUpdate.class.getClassLoader().getResourceAsStream("config.properties");
             Properties prop = new Properties();
             prop.load(resourceAsStream);
 
@@ -35,6 +36,12 @@ public class DataBaseUpdater {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }finally {
+            try {
+                resourceAsStream.close();
+            } catch (IOException e) {
+                System.out.println("File konnte nicht geschlossen werden");
+            }
         }
     }
 
