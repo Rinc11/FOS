@@ -2,7 +2,7 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Vehicle;
-import com.fos.tools.FosUserPage;
+import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Logik für die Vehicleseite
  */
-public class VehiclePage extends FosUserPage {
+public class VehiclePage extends FosPage {
     private static final String REMOVEVEHICLETAG = "removeVehicle:";
     private static final String EDITVEHICLETAG = "editVehicle";
     private String jspFile = "/WEB-INF/jsp/vehicle.jsp";
