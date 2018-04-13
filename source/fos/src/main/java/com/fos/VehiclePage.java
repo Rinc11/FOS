@@ -75,7 +75,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return new ArrayList<>();
@@ -85,14 +85,20 @@ public class VehiclePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            Vehicle.removeVehicle(vehicleID, conn);
-        } catch (SQLException e) {
+            if (getUser().getIsAdmin()) {
+                Vehicle.removeVehicle(vehicleID, conn);
+            } else {
+                throw new MissingPermissionException();
+            }
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
 
@@ -100,7 +106,14 @@ public class VehiclePage extends FosPage {
 
     @Override
     public String getJspPath() {
-        return jspFile;
+        try {
+            if (getUser().getIsAdmin()) {
+                return jspFile;
+            }
+        } catch (NotLoadedException notLoadedExeption) {
+            Logging.logDatabaseException(request, notLoadedExeption);
+        }
+        return "/WEB-INF/jsp/vehicle.jsp";
     }
 
     public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, Vehicle.VehicleFuelType fuelType) {
@@ -112,9 +125,7 @@ public class VehiclePage extends FosPage {
             } else {
                 throw new MissingPermissionException();
             }
-        } catch (SQLException e) {
-            Logging.logServerError(request, e);
-        } catch (NotLoadedException e) {
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (MissingPermissionException e) {
             Logging.logMissingPermission(request, e);
@@ -122,7 +133,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -131,14 +142,20 @@ public class VehiclePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
-        } catch (SQLException e) {
+            if (getUser().getIsAdmin()) {
+                Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
+            } else {
+                throw new MissingPermissionException();
+            }
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
+        } catch (MissingPermissionException e) {
+            Logging.logMissingPermission(request, e);
         } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -156,7 +173,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return result;

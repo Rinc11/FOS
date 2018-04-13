@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Logik für die Userseite
@@ -81,7 +82,7 @@ public class UserPage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return new ArrayList<>();
@@ -104,7 +105,7 @@ public class UserPage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -116,7 +117,7 @@ public class UserPage extends FosPage {
                 return jspFile;
             }
         } catch (NotLoadedException notLoadedExeption) {
-            notLoadedExeption.printStackTrace();
+            Logging.logDatabaseException(request, notLoadedExeption);
         }
         return "/WEB-INF/jsp/editUser.jsp";
     }
@@ -142,7 +143,7 @@ public class UserPage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -176,7 +177,7 @@ public class UserPage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -200,7 +201,7 @@ public class UserPage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return result;

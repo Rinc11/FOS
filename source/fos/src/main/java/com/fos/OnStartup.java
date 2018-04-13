@@ -37,7 +37,7 @@ public class OnStartup implements ServletContextListener,
             try {
                 conn.close();
             } catch (Exception e) {
-                logConnectionNotCloseable();
+                logConnectionNotCloseable(e);
             }
         }
     }
