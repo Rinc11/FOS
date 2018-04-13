@@ -68,8 +68,9 @@ public class Helper {
      */
     public static Connection getConnection() throws SQLException {
         if (connectionString == null) {
+            InputStream resourceAsStream = null;
             try {
-                InputStream resourceAsStream = Helper.class.getClassLoader().getResourceAsStream("config.properties");
+                resourceAsStream = Helper.class.getClassLoader().getResourceAsStream("config.properties");
                 Properties prop = new Properties();
                 prop.load(resourceAsStream);
 
@@ -84,6 +85,12 @@ public class Helper {
                 String msg = "Lesefehler bei der Connection String Config";
                 Logging.logMessage(msg, Level.FATAL);
                 throw new RuntimeException(msg);
+            } finally {
+                try {
+                    resourceAsStream.close();
+                } catch (IOException e) {
+                    Logging.logExeption(e, "ressource not closeable", Level.ERROR);
+                }
             }
         }
 

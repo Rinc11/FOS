@@ -75,7 +75,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return new ArrayList<>();
@@ -92,7 +92,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
 
@@ -122,7 +122,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -138,7 +138,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
@@ -156,7 +156,7 @@ public class VehiclePage extends FosPage {
             try {
                 conn.close();
             } catch (SQLException e) {
-                Logging.logConnectionNotCloseable();
+                Logging.logConnectionNotCloseable(e);
             }
         }
         return result;
