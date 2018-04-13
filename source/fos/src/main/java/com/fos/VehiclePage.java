@@ -100,7 +100,14 @@ public class VehiclePage extends FosPage {
 
     @Override
     public String getJspPath() {
-        return jspFile;
+        try {
+            if (getUser().getIsAdmin()) {
+                return jspFile;
+            }
+        } catch (NotLoadedException notLoadedExeption) {
+            Logging.logDatabaseException(request, notLoadedExeption);
+        }
+        return "/WEB-INF/jsp/vehicle.jsp";
     }
 
     public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
