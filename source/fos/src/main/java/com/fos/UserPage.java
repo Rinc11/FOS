@@ -53,12 +53,12 @@ public class UserPage extends FosPage {
                 addNewItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
-                        , request.getParameter("usertype"));
+                        , Person.PersonUserType.valueOf(request.getParameter("usertype")));
             } else if (command.startsWith(EDITUSERTAG)) {
                 updateItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
-                        , (request.getParameter("locked") != null), request.getParameter("usertype"));
+                        , (request.getParameter("locked") != null), Person.PersonUserType.valueOf(request.getParameter("usertype")));
             }
         }
     }
@@ -105,7 +105,7 @@ public class UserPage extends FosPage {
     }
 
     public void addNewItem(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, String userType) {
+            , String email, String password, String passwordHint, Person.PersonUserType userType) {
         try {
             if (getUser().getIsAdmin()) {
                 password = Helper.getHash(password);
@@ -123,7 +123,7 @@ public class UserPage extends FosPage {
     }
 
     public void updateItem(String username, String firstname, String lastname, String ahv, String street, String place
-            , String email, String password, String passwordHint, Boolean locked, String userType) {
+            , String email, String password, String passwordHint, Boolean locked, Person.PersonUserType userType) {
         if (!password.equals("")) {
             try {
                 password = Helper.getHash(password);

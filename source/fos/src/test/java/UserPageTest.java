@@ -61,7 +61,7 @@ public class UserPageTest {
         String email = "hans.muster@muster.ch";
         String password = "1234";
         String passwordHint = "1234";
-        String userType = "Mitarbeiter";
+        Person.PersonUserType userType = Person.PersonUserType.MITARBEITER;
 
         loggedInUserIsAdmin();
 
@@ -76,7 +76,7 @@ public class UserPageTest {
         when(request.getParameter("email")).thenReturn(email);
         when(request.getParameter("password")).thenReturn(password);
         when(request.getParameter("passwordHint")).thenReturn(passwordHint);
-        when(request.getParameter("usertype")).thenReturn(userType);
+        when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         new UserPage(request, response);
 
@@ -116,7 +116,7 @@ public class UserPageTest {
         String email = "hans.muster@muster.ch";
         String password = "1234";
         String passwordHint = "1234";
-        String userType = "Mitarbeiter";
+        Person.PersonUserType userType = Person.PersonUserType.MITARBEITER;
 
         loggedInUserIsEmployee();
 
@@ -130,7 +130,7 @@ public class UserPageTest {
         when(request.getParameter("email")).thenReturn(email);
         when(request.getParameter("password")).thenReturn(password);
         when(request.getParameter("passwordHint")).thenReturn(passwordHint);
-        when(request.getParameter("usertype")).thenReturn(userType);
+        when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
         new UserPage(request, response);
@@ -158,7 +158,7 @@ public class UserPageTest {
         String passwordHash = "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f";
         String passwordHint = "12345678";
         String locked = "on";
-        String userType = "Admin";
+        Person.PersonUserType userType = Person.PersonUserType.ADMIN;
 
         loggedInUserIsAdmin();
 
@@ -173,7 +173,7 @@ public class UserPageTest {
         when(request.getParameter("password")).thenReturn(password);
         when(request.getParameter("passwordHint")).thenReturn(passwordHint);
         when(request.getParameter("locked")).thenReturn(locked);
-        when(request.getParameter("usertype")).thenReturn(userType);
+        when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         new UserPage(request, response);
 
@@ -192,7 +192,7 @@ public class UserPageTest {
         assertEquals(false, person.getDeleted());
 
         //abgeänderter Test-Datensatz wieder zurücksetzen
-        Person.updatePerson("testUser", "Hans", "Test","756.1234.5678.90","Teststrasse 1", "Testdorf", "test.user@students.zhaw.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4","1234", false,"Mitarbeiter", conn, true);
+        Person.updatePerson("testUser", "Hans", "Test","756.1234.5678.90","Teststrasse 1", "Testdorf", "test.user@students.zhaw.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4","1234", false,Person.PersonUserType.MITARBEITER, conn, true);
     }
 
     /**
@@ -214,7 +214,7 @@ public class UserPageTest {
         String passwordHash = "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f";
         String passwordHint = "12345678";
         String locked = "on";
-        String userType = "Admin";
+        Person.PersonUserType userType = Person.PersonUserType.ADMIN;
 
         loggedInUserIsEmployee();
 
@@ -229,7 +229,7 @@ public class UserPageTest {
         when(request.getParameter("password")).thenReturn(password);
         when(request.getParameter("passwordHint")).thenReturn(passwordHint);
         when(request.getParameter("locked")).thenReturn(locked);
-        when(request.getParameter("usertype")).thenReturn(userType);
+        when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
         new UserPage(request, response);

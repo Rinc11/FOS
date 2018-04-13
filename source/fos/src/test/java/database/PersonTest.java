@@ -116,7 +116,7 @@ public class PersonTest {
         String email = "hans.muster@muster.ch";
         String password = "1234";
         String passwordHint = "1234";
-        String userType = "Mitarbeiter";
+        Person.PersonUserType userType = Person.PersonUserType.MITARBEITER;
 
         Connection conn = Helper.getConnection();
         Person.addNewPerson(username, firstName, lastName, ahv, street, place, email, password, passwordHint, userType
@@ -172,7 +172,7 @@ public class PersonTest {
         String password = "12345678";
         String passwordHint = "12345678";
         Boolean locked = true;
-        String userType = "Admin";
+        Person.PersonUserType userType = Person.PersonUserType.ADMIN;
 
         Connection conn = Helper.getConnection();
 
@@ -191,7 +191,7 @@ public class PersonTest {
         Assert.assertTrue(Person.PersonUserType.ADMIN == person.getUserType());
         Assert.assertEquals(false, person.getDeleted());
 
-        Person.updatePerson("testUser", "Hans", "Test","756.1234.5678.90","Teststrasse 1", "Testdorf", "test.user@students.zhaw.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4","1234", false,"Mitarbeiter", conn, true);
+        Person.updatePerson("testUser", "Hans", "Test","756.1234.5678.90","Teststrasse 1", "Testdorf", "test.user@students.zhaw.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4","1234", false,Person.PersonUserType.MITARBEITER, conn, true);
     }
 
 }

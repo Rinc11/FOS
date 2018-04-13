@@ -85,3 +85,7 @@ INSERT INTO "Trip" ("VehicleID", "StartTime", "EndTime", "PlaceStart", "PlaceEnd
 --#3:test
 -- Benutzer für Tests
 INSERT INTO "Person" ("Username", "Firstname", "Lastname", "AHV", "Street", "Place", "Email", "Password", "PasswordHint", "Locked_YN", "LoginTry", "Usertype", "Deleted_YN") VALUES ('testUser', 'Hans', 'Test', '756.1234.5678.90', 'Teststrasse 1', 'Testdorf', 'test.user@students.zhaw.ch', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '1234', false, 0, 'Mitarbeiter', false);
+
+--#4:
+ALTER TYPE ENUM_PERSON_USERTYPE RENAME VALUE 'Admin' TO 'ADMIN';
+ALTER TYPE ENUM_PERSON_USERTYPE RENAME VALUE 'Mitarbeiter' TO 'MITARBEITER';
