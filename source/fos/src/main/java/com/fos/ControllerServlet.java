@@ -1,6 +1,6 @@
 package com.fos;
 
-import com.fos.tools.FosUserPage;
+import com.fos.tools.FosPage;
 import com.fos.tools.Logging;
 
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class ControllerServlet extends HttpServlet {
 
         checkLogout(request);
 
-        FosUserPage fosUserPage = null;
+        FosPage fosUserPage = null;
         String staticPage = "";
         switch (request.getRequestURI()) {
             case "/benutzer":
@@ -74,7 +74,7 @@ public class ControllerServlet extends HttpServlet {
     private void checkLogout(HttpServletRequest request) {
         String command = request.getParameter("command");
         if (command != null && command.equals("logout")) {
-            FosUserPage.logout(request);
+            FosPage.logout(request);
         }
     }
 }

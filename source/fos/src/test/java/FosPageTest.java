@@ -1,6 +1,6 @@
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
-import com.fos.tools.FosUserPage;
+import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,9 +26,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * tested ide FosUserPage
+ * tested ide FosPage
  */
-public class FosUserPageTest {
+public class FosPageTest {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -185,9 +185,9 @@ public class FosUserPageTest {
 
 
     /**
-     * test Klasse welche zum testen von FosUserPage benutzt wird.
+     * test Klasse welche zum testen von FosPage benutzt wird.
      */
-    private class TestFosPage extends FosUserPage {
+    private class TestFosPage extends FosPage {
         /**
          * Erstellt eine neue test Fos Seite
          *

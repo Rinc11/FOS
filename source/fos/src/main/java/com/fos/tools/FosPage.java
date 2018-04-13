@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  * Logik die für alle Seiten des fos Projektes gilt
  */
-public abstract class FosUserPage {
+public abstract class FosPage {
 
 
     public static void logout(HttpServletRequest request) {
@@ -36,7 +36,7 @@ public abstract class FosUserPage {
      * @param request         der request vom jsp
      * @param needsAdminRight Angabe, ob Administratorenrechte für diese Seite benötigt werden.
      */
-    public FosUserPage(HttpServletRequest request, Boolean needsAdminRight) {
+    public FosPage(HttpServletRequest request, Boolean needsAdminRight) {
         this.request = request;
         this.needsAdminRight = needsAdminRight;
         try {

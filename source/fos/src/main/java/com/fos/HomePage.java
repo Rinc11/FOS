@@ -3,7 +3,7 @@ package com.fos;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Vehicle;
-import com.fos.tools.FosUserPage;
+import com.fos.tools.FosPage;
 import com.fos.tools.Logging;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Logik für die Startseite
  */
-public class HomePage extends FosUserPage {
+public class HomePage extends FosPage {
     /**
      * Logic für die Startseite
      *

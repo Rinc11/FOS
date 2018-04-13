@@ -2,7 +2,7 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
-import com.fos.tools.FosUserPage;
+import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Logik für die Userseite
  */
-public class UserPage extends FosUserPage {
+public class UserPage extends FosPage {
     private static final String REMOVEUSERTAG = "removeUser:";
     private static final String EDITUSERTAG = "editUser";
     private String jspFile = "/WEB-INF/jsp/user.jsp";
