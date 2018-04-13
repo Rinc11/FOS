@@ -88,4 +88,11 @@ public class Logging {
     public static void logMissingPermission(HttpServletRequest request, MissingPermissionException e){
         logErrorVisibleToUser(request, "fehlende Rechte", e, Level.WARN);
     }
+
+    /**
+     * logt einen Fehler, wenn die Datenbank nicht geclost werden kann
+     */
+    public static void logDatabasNotCloseable(){
+        logMessage( "database not closeable", Level.ERROR);
+    }
 }

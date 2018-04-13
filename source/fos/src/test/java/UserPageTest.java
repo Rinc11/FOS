@@ -66,6 +66,7 @@ public class UserPageTest {
         loggedInUserIsAdmin();
 
         when(request.getParameter("command")).thenReturn("addUser");
+
         when(request.getParameter("username")).thenReturn(username);
         when(request.getParameter("firstname")).thenReturn(firstName);
         when(request.getParameter("lastname")).thenReturn(lastName);

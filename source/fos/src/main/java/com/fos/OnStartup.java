@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.sql.Connection;
 
+import static com.fos.tools.Logging.logDatabasNotCloseable;
+
 
 /**
  * wird gestartet wenn der Tomcat Server started.
@@ -24,14 +26,18 @@ public class OnStartup implements ServletContextListener,
      * wird ausgeführt wenn der Server started
      */
     public OnStartup() {
-
+        Connection connection = null;
         try {
-            Connection connection = Helper.getConnection();
+            connection = Helper.getConnection();
             new SqlUpdate(Helper.getDbchema(), false).UpdateDatabase(connection);
         } catch (Exception e) {
             Logging.logMessage("error by updateing the database", Level.FATAL);
             throw new RuntimeException(e);
         }
+        finally {
+            try { connection.close(); } catch (Exception e) { logDatabasNotCloseable(); }
+        }
+
 
     }
 
