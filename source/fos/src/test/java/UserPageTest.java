@@ -41,7 +41,6 @@ public class UserPageTest {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
-
     }
 
     /**

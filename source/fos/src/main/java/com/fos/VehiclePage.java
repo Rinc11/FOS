@@ -3,11 +3,14 @@ package com.fos;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Vehicle;
 import com.fos.tools.FosUserPage;
+import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,19 +65,35 @@ public class VehiclePage extends FosUserPage {
      * @return
      */
     public List<Vehicle> getItems() {
+        Connection conn = null;
         try {
+            conn = Helper.getConnection();
             return Vehicle.getAllVehicles(conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable();
+            }
         }
         return new ArrayList<>();
     }
 
     public void removeItem(Integer vehicleID) {
+        Connection conn = null;
         try {
+            conn = Helper.getConnection();
             Vehicle.removeVehicle(vehicleID, conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable();
+            }
         }
 
     }
@@ -85,7 +104,9 @@ public class VehiclePage extends FosUserPage {
     }
 
     public void addNewItem(String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+        Connection conn = null;
         try {
+            conn = Helper.getConnection();
             if (getUser().getIsAdmin()) {
                 Vehicle.addNewVehicle(serialnumber, brand, type, buildYear, fuelType, conn);
             } else {
@@ -97,24 +118,46 @@ public class VehiclePage extends FosUserPage {
             Logging.logDatabaseException(request, e);
         } catch (MissingPermissionException e) {
             Logging.logMissingPermission(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable();
+            }
         }
     }
 
     public void updateItem(Integer vehicleID, String serialnumber, String brand, String type, Integer buildYear, String fuelType) {
+        Connection conn = null;
         try {
+            conn = Helper.getConnection();
             Vehicle.updateVehicle(vehicleID, serialnumber, brand, type, buildYear, fuelType, conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable();
+            }
         }
     }
 
     public Vehicle getRequestVehicle() {
         Integer vehicleID = Integer.valueOf(request.getParameter("vehicleID"));
         Vehicle result = null;
+        Connection conn = null;
         try {
+            conn = Helper.getConnection();
             result = Vehicle.getVehicle(vehicleID, conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable();
+            }
         }
         return result;
     }

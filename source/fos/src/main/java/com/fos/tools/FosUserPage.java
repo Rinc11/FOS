@@ -26,7 +26,6 @@ public abstract class FosUserPage {
     /**
      * Datenbank Verbindung
      */
-    protected Connection conn;
     protected HttpServletRequest request;
     private Boolean needsAdminRight;
 
@@ -39,16 +38,11 @@ public abstract class FosUserPage {
     public FosUserPage(HttpServletRequest request, Boolean needsAdminRight) {
         this.request = request;
         this.needsAdminRight = needsAdminRight;
-        try {
-            conn = Helper.getConnection();
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        }
     }
 
     public Boolean loginValid() {
         try {
-            tryLogIn(request);
+            tryLogIn();
             Person user = getUser();
             if (user != null && (!needsAdminRight || user.getUserType() == Person.PersonUserType.ADMIN)) {
                 return true;
@@ -68,11 +62,12 @@ public abstract class FosUserPage {
         return (Person) request.getSession().getAttribute("userLoggedIn");
     }
 
-    public void tryLogIn(HttpServletRequest request){
+    public void tryLogIn(){
         String formularUserName = request.getParameter("loginUserName");
         String pass = request.getParameter("pass");
 
         if (formularUserName != null || pass != null) {
+            Connection conn = null;
             try {
                 conn = Helper.getConnection();
                 Person user = Person.getPerson(formularUserName, conn);
@@ -98,6 +93,12 @@ public abstract class FosUserPage {
                 Logging.logDatabaseException(request, e);
             } catch (NoSuchAlgorithmException | NotLoadedException e) {
                 Logging.logServerError(request, e);
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    Logging.logConnectionNotCloseable();
+                }
             }
         }
     }
