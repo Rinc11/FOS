@@ -23,6 +23,7 @@ public class Helper {
 
     private static String connectionString = null;
     private static String dbschema;
+    private static boolean withTestData = false;
 
 
     /**
@@ -77,6 +78,7 @@ public class Helper {
                 String dbuser = prop.getProperty("dbuser");
                 String dbpassword = prop.getProperty("dbpassword");
                 String  dbport= prop.getProperty("dbport");
+                withTestData = nullValue(() -> nullCheck(prop.getProperty("test"), o -> o.equals("true")), () -> false );
                 connectionString = "jdbc:postgresql://"+database+":"+dbport+"/postgres?user="+dbuser+"&password="+dbpassword+"&ssl=false&useUnicode=true&characterEncoding=utf-8";
             } catch (IOException e) {
                 String msg = "Lesefehler bei der Connection String Config";
@@ -104,6 +106,15 @@ public class Helper {
      */
     public static String getDbchema() {
         return dbschema;
+    }
+
+
+    /**
+     * Gibt zurück, ob in der Konfig eingetragen ist, ob testdaten mit erstellt werden sollen.
+     * @return true wenn testdaten miterstellt werden sollen
+     */
+    public static boolean getWithTestData(){
+        return withTestData;
     }
 
 
