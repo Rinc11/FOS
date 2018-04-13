@@ -6,7 +6,6 @@ import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +20,7 @@ import java.util.List;
 public class VehiclePage extends FosPage {
     private static final String REMOVEVEHICLETAG = "removeVehicle:";
     private static final String EDITVEHICLETAG = "editVehicle";
+    private static final String ADDVEHICLETAG = "addVehicle";
     private String jspFile = "/WEB-INF/jsp/vehicle.jsp";
 
 
@@ -49,7 +49,7 @@ public class VehiclePage extends FosPage {
         if (command != null) {
             if (command.startsWith(REMOVEVEHICLETAG)) {
                 removeItem(Integer.valueOf(command.substring(REMOVEVEHICLETAG.length())));
-            } else if (command.equals("addVehicle")) {
+            } else if (command.equals(ADDVEHICLETAG)) {
                 addNewItem(request.getParameter("serialnumber"), request.getParameter("brand")
                         , request.getParameter("type"), Integer.valueOf(request.getParameter("buildYear")), Vehicle.VehicleFuelType.valueOf(request.getParameter("fuelType")));
             } else if (command.startsWith(EDITVEHICLETAG)) {

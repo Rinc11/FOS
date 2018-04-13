@@ -6,7 +6,6 @@ import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +22,7 @@ import java.util.List;
 public class UserPage extends FosPage {
     private static final String REMOVEUSERTAG = "removeUser:";
     private static final String EDITUSERTAG = "editUser";
+    private static final String ADDUSERTAG = "addUser";
     private String jspFile = "/WEB-INF/jsp/user.jsp";
 
 
@@ -51,7 +51,7 @@ public class UserPage extends FosPage {
         if (command != null) {
             if (command.startsWith(REMOVEUSERTAG)) {
                 removeItem(command.substring(REMOVEUSERTAG.length()));
-            } else if (command.equals("addUser")) {
+            } else if (command.equals(ADDUSERTAG)) {
                 addNewItem(request.getParameter("username"), request.getParameter("firstname"), request.getParameter("lastname")
                         , request.getParameter("ahv"), request.getParameter("street"), request.getParameter("place")
                         , request.getParameter("email"), request.getParameter("password"), request.getParameter("passwordHint")
