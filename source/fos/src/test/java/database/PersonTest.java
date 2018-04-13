@@ -6,6 +6,7 @@ import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tools.TestHelper;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class PersonTest {
      */
     @BeforeClass
     public static void updateDatabase() throws Exception {
-        tools.Helper.loadDatabaseUpdates();
+        TestHelper.loadDatabaseUpdates();
     }
 
 

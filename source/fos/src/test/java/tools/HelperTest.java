@@ -35,7 +35,7 @@ public class HelperTest {
      */
     @BeforeClass
     public static void updateDatabase() throws Exception {
-        tools.Helper.loadDatabaseUpdates();
+        TestHelper.loadDatabaseUpdates();
     }
 
 

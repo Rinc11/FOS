@@ -8,13 +8,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
+import tools.TestHelper;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -41,7 +40,7 @@ public class FosUserPageTest {
      */
     @BeforeClass
     public static void updateDatabase() throws Exception {
-        tools.Helper.loadDatabaseUpdates();
+        TestHelper.loadDatabaseUpdates();
     }
 
 

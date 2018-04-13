@@ -5,7 +5,7 @@ import databaseupdater.SqlUpdate;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Helper {
+public class TestHelper {
     private static boolean alreadyLoaded = false;
 
     /**
