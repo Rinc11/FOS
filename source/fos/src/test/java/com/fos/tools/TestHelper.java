@@ -1,4 +1,4 @@
-package tools;
+package com.fos.tools;
 
 import databaseupdater.SqlUpdate;
 
@@ -19,7 +19,7 @@ public class TestHelper {
         }
         Connection connection = com.fos.tools.Helper.getConnection();
         connection.createStatement().execute("DROP SCHEMA IF EXISTS " + com.fos.tools.Helper.getDbchema() + " CASCADE ");
-        new SqlUpdate(com.fos.tools.Helper.getDbchema(), true).UpdateDatabase(connection);
+        new SqlUpdate(com.fos.tools.Helper.getDbchema(), true).updateDatabase(connection);
         alreadyLoaded = true;
     }
 }

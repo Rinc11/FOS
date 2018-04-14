@@ -1,3 +1,5 @@
+package com.fos;
+
 import com.fos.UserPage;
 import com.fos.VehiclePage;
 import com.fos.database.NotLoadedException;

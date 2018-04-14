@@ -1,7 +1,5 @@
-package database;
+package com.fos.database;
 
-import com.fos.database.DbObject;
-import com.fos.database.NotLoadedException;
 import org.junit.Assert;
 import org.junit.Test;
 

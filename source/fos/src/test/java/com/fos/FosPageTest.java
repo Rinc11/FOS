@@ -1,3 +1,5 @@
+package com.fos;
+
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.tools.FosPage;
@@ -8,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
-import tools.TestHelper;
+import com.fos.tools.TestHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +30,9 @@ import static org.mockito.Mockito.when;
 /**
  * tested ide FosPage
  */
+
 public class FosPageTest {
+    private static final String testUserName = "testUser";
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -50,7 +54,7 @@ public class FosPageTest {
     @Before
     public void resetTestUser() throws SQLException, NotLoadedException {
         conn = Helper.getConnection();
-        Person person = Person.getPerson("testUser", conn);
+        Person person = Person.getPerson(testUserName, conn);
         person.setLoginTry(0, conn);
         person.setLocked(false, conn);
     }
@@ -62,14 +66,12 @@ public class FosPageTest {
     @Test
     public void testTryLoginValid() throws NotLoadedException {
         createMock();
-        when(request.getParameter("loginUserName")).thenReturn("testUser");
-        when(request.getParameter("pass")).thenReturn("1234");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn();
+        testFosPage.tryLogIn(testUserName, "1234");
         ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
 
         verify(request.getSession()).setAttribute(eq("userLoggedIn"), argument.capture());
-        Assert.assertEquals("testUser", argument.getValue().getUserName());
+        Assert.assertEquals(testUserName, argument.getValue().getUserName());
     }
 
     /**
@@ -80,10 +82,8 @@ public class FosPageTest {
     public void testTryLoginWrongPasswordMultipleTimes() {
         for (int i = 0; i <= 10; i++) {
             createMock();
-            when(request.getParameter("loginUserName")).thenReturn("testUser");
-            when(request.getParameter("pass")).thenReturn("bla");
             TestFosPage testFosPage = new TestFosPage(request, response, false);
-            testFosPage.tryLogIn();
+            testFosPage.tryLogIn(testUserName, "bla");
 
             ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
             verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
@@ -93,12 +93,10 @@ public class FosPageTest {
         }
 
         createMock();
-        when(request.getParameter("loginUserName")).thenReturn("testUser");
-        when(request.getParameter("pass")).thenReturn("bla");
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn();
+        testFosPage.tryLogIn(testUserName, "bla");
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         errorListArgument.getValue();
         assertEquals(1, errorListArgument.getValue().size());
@@ -113,10 +111,8 @@ public class FosPageTest {
     @Test
     public void testTryLoginWrongUserName() {
         createMock();
-        when(request.getParameter("loginUserName")).thenReturn("nichtVorhanden");
-        when(request.getParameter("pass")).thenReturn("bla");
         TestFosPage testFosPage = new TestFosPage(request, response, false);
-        testFosPage.tryLogIn();
+        testFosPage.tryLogIn("nichtVorhanden", "bla");
 
         verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);

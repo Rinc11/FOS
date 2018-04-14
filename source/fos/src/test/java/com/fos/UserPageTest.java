@@ -1,3 +1,5 @@
+package com.fos;
+
 import com.fos.UserPage;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;

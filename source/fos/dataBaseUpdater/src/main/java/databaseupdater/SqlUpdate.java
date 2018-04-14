@@ -1,7 +1,10 @@
 package databaseupdater;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -20,16 +23,24 @@ import java.util.stream.Collectors;
 public class SqlUpdate {
 
     private final HashMap<Integer, String> commands = new HashMap<>();
+    static final Logger logger = LogManager.getRootLogger();
     private int lastCommandId = -1;
     private String schema;
 
     /**
      * erstellt eine Liste aller befehle in dataBaseUpdateSkript.sql
      *
-     * @throws IOException beim lesen von dataBaseUpdateSkript.sql
      */
     public SqlUpdate(String schema, boolean withTest) throws Exception {
         this.schema = schema;
+        readSqlFile(withTest);
+    }
+
+    /**
+     * lest die sql datei und fügt die einzelnen Kommandos hinzuu
+     * @param withTest ob die tests auch hinzugefügt werden sollen
+     */
+    private void readSqlFile(boolean withTest) throws Exception {
         InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream, "UTF-8"));
@@ -38,6 +49,7 @@ public class SqlUpdate {
         int commandNumber = -1;
         boolean isTestOnly = false;
         while ((line = reader.readLine()) != null) {
+            //@toDo To:Gruppe From Reto: sollte gemäss CodeReview vereinfacht werden, hab aber nur die methode rausgezogen von Konstruktor. Keine ahnug wie man das Weiter Vereifachen kann
             if (line.startsWith("--#")) {
                 if (commandNumber != -1) {
                     if (!isTestOnly || withTest) {
@@ -69,13 +81,13 @@ public class SqlUpdate {
      */
     private void addCommand(int id, String command) throws Exception {
         if (commands.containsKey(id)) {
-            System.out.println("key already exists");
+            SqlUpdate.logger.log(Level.ERROR, "key already exists");
             throw new RuntimeException("key already exists");
         } else {
             if (lastCommandId < id) {
                 commands.put(id, command);
             } else {
-                System.out.println("id is smaller then last");
+                SqlUpdate.logger.log(Level.ERROR, "id is smaller then last");
                 throw new Exception("id is smaller then last");
             }
         }
@@ -111,7 +123,7 @@ public class SqlUpdate {
      * @param conn die verbindung zur Datenbank
      * @throws SQLException wird geworfen wenn es ein Fehler mit der Datenkbank gibt.
      */
-    public void UpdateDatabase(Connection conn) throws SQLException {
+    public void updateDatabase(Connection conn) throws SQLException {
         int dbVersion = getLastDbVersionFromDb(conn);
 
         conn.setAutoCommit(false);
@@ -122,17 +134,15 @@ public class SqlUpdate {
                     conn.createStatement().execute(command.getValue());
                     conn.createStatement().execute("UPDATE FosConfig set ConfigValue = '" + command.getKey() + "' WHERE ConfigId = 'dbVersion'");
                     conn.commit();
-                    System.out.println("command " + command.getKey() + " executed");
+                    SqlUpdate.logger.log(Level.INFO, "command " + command.getKey() + " executed");
                 } catch (SQLException e) {
-                    System.out.println("error by command " + command.getKey());
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
+                    SqlUpdate.logger.log(Level.ERROR, "error by command " + command.getKey(), e);
                     throw e;
                 }
             }
-            System.out.println(commandsAfter.size() + " commands executed");
+            SqlUpdate.logger.log(Level.INFO, commandsAfter.size() + " commands executed");
         } else {
-            System.out.println("database is up to date");
+            SqlUpdate.logger.log(Level.INFO,"com.fos.database is up to date" );
         }
     }
 

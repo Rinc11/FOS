@@ -1,12 +1,10 @@
-package database;
+package com.fos.database;
 
-import com.fos.database.NotLoadedException;
-import com.fos.database.Person;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tools.TestHelper;
+import com.fos.tools.TestHelper;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;

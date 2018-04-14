@@ -1,8 +1,6 @@
-package tools;
+package com.fos.tools;
 
-
-import com.fos.tools.Helper;
-import com.fos.tools.Logging;
+//@toDo hier sollte eine zyklische referenz mit com.fos.database vorliege kann sie aber nicht finden
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,8 +25,8 @@ import java.util.List;
  */
 
 public class HelperTest {
-    private final String TESTSTRING = "5. Item";
-    private final String TESTSTRING2 = "anderes Item";
+    private static final String TESTSTRING = "5. Item";
+    private static final String TESTSTRING2 = "anderes Item";
 
     /**
      * updated die Datenbank auf den neusten Stand mit Testdaten

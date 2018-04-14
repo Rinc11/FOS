@@ -2,6 +2,7 @@ package com.fos;
 
 import com.fos.tools.FosPage;
 import com.fos.tools.Logging;
+import org.apache.logging.log4j.Level;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,7 +58,7 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new HomePage(request, response);
                 break;
             default:
-                System.out.println(request.getRequestURI());
+                Logging.logMessage("Seite nicht erkannt", Level.ERROR);
                 break;
         }
         if (fosUserPage != null && fosUserPage.loginValid()) {

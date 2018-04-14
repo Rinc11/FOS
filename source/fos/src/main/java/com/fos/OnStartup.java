@@ -29,7 +29,7 @@ public class OnStartup implements ServletContextListener,
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            new SqlUpdate(Helper.getDbchema(), Helper.getWithTestData()).UpdateDatabase(conn);
+            new SqlUpdate(Helper.getDbchema(), Helper.getWithTestData()).updateDatabase(conn);
         } catch (Exception e) {
             Logging.logMessage("error by updateing the database", Level.FATAL);
             throw new RuntimeException(e);

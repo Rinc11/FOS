@@ -1,11 +1,12 @@
-import com.fos.HomePage;
+package com.fos;
+
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.tools.Helper;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tools.TestHelper;
+import com.fos.tools.TestHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

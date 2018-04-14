@@ -1,5 +1,7 @@
 package databaseupdater;
 
+import org.apache.logging.log4j.Level;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -16,7 +18,7 @@ public class DataBaseUpdater {
      * @param args Argumente werden keine benötigt. Macht nichts
      */
     public static void main(String[] args) {
-        System.out.println("start database update");
+        SqlUpdate.logger.log(Level.INFO, "start com.fos.database update");
 
         InputStream resourceAsStream = null;
         try {
@@ -34,19 +36,19 @@ public class DataBaseUpdater {
 
             new DataBaseUpdater(connectionString, dbschema, withTestData);
         } catch (Exception e) {
-            e.printStackTrace();
+            SqlUpdate.logger.log(Level.ERROR, "Fehler beim Ausführen des Sql Updaters", e);
             throw new RuntimeException(e);
         }finally {
             try {
                 resourceAsStream.close();
             } catch (IOException e) {
-                System.out.println("File konnte nicht geschlossen werden");
+                SqlUpdate.logger.log(Level.ERROR, "File konnte nicht geschlossen werden", e);
             }
         }
     }
 
     /***
-     * ruft die SqlUpdate.UpdateDatabase Methode auf - der eigentliche Update Befehl
+     * ruft die SqlUpdate.updateDatabase Methode auf - der eigentliche Update Befehl
      * @param url Verbindungs String
      * @param schema Schma der Datenbank welche geupdatet werden soll
      */
@@ -57,9 +59,9 @@ public class DataBaseUpdater {
             conn = DriverManager.getConnection(url);
 
             conn.setSchema(schema);
-            new SqlUpdate(schema, withTest).UpdateDatabase(conn);
+            new SqlUpdate(schema, withTest).updateDatabase(conn);
         } catch (Exception e) {
-            e.printStackTrace();
+            SqlUpdate.logger.log(Level.ERROR, "Fehler beim Ausführen des Sql Updaters",e);
             throw new RuntimeException(e);
         }
     }

@@ -1,12 +1,10 @@
-package database;
+package com.fos.database;
 
-import com.fos.database.NotLoadedException;
-import com.fos.database.Vehicle;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tools.TestHelper;
+import com.fos.tools.TestHelper;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -44,11 +42,11 @@ public class VehicleTest {
         Connection conn = Helper.getConnection();
         Vehicle vehicle = Vehicle.getVehicle(defaultTestVehicleID, conn);
 
-        Assert.assertEquals(Integer.valueOf(defaultTestVehicleID), vehicle.getVehicleID());
+        Assert.assertEquals(defaultTestVehicleID, vehicle.getVehicleID());
         Assert.assertEquals("1057", vehicle.getSerialnumber());
         Assert.assertEquals("OPEL", vehicle.getBrand());
         Assert.assertEquals("Astra", vehicle.getType());
-        Assert.assertEquals(Integer.valueOf(2014), vehicle.getBuildYear());
+        Assert.assertEquals(new Integer(2014), vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
     }
 

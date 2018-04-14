@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Logging {
 
-    final static Logger logger = LogManager.getRootLogger();
+    private static final Logger logger = LogManager.getRootLogger();
 
     private Logging(){}
 

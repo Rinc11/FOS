@@ -42,7 +42,9 @@ public abstract class FosPage {
 
     public Boolean loginValid() {
         try {
-            tryLogIn();
+            String formularUserName = request.getParameter("loginUserName");
+            String pass = request.getParameter("pass");
+            tryLogIn(formularUserName, pass);
             Person user = getUser();
             if (user != null && (!needsAdminRight || user.getUserType() == Person.PersonUserType.ADMIN)) {
                 return true;
@@ -62,43 +64,50 @@ public abstract class FosPage {
         return (Person) request.getSession().getAttribute("userLoggedIn");
     }
 
-    public void tryLogIn(){
-        String formularUserName = request.getParameter("loginUserName");
-        String pass = request.getParameter("pass");
+    public void tryLogIn(String userName, String password) {
+        //check ob die Anmeldedaten übertragen wuden
+        if (userName == null && password == null) {
+            return;
+        }
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            Person user = Person.getPerson(userName, conn);
 
-        if (formularUserName != null || pass != null) {
-            Connection conn = null;
+            //check ob benutzer in der DB vorhanden
+            if (user == null) {
+                Logging.messageToUser(request, "Falscher Benutzername");
+                return;
+            }
+
+            //check ob benutzer ist gesperrt
+            if (user.getLocked() || user.getDeleted()) {
+                Logging.messageToUser(request, "Benutzer ist gesperrt");
+                return;
+            }
+            String hash = Helper.getHash(password);
+            // überprüfe  Passwort mit Hash ob es falsch ist
+            if (!hash.equals(user.getPasswordHash())) {
+                user.setLoginTry(user.getLoginTry() + 1, conn);
+                Logging.messageToUser(request, "Passwort ist falsch<br>Hinweis: " + user.getPasswordHint());
+                return;
+            }
+
+            //ab hier ist der Login erfolgreich
+            //versuchte login zurücksetzen fals nicht 0
+            if (user.getLoginTry() != 0) {
+                user.setLoginTry(0, conn);
+            }
+            request.getSession().setAttribute("userLoggedIn", user);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } catch (NoSuchAlgorithmException | NotLoadedException e) {
+            Logging.logServerError(request, e);
+        } finally {
             try {
-                conn = Helper.getConnection();
-                Person user = Person.getPerson(formularUserName, conn);
-                if (user != null) {
-                    if (!user.getLocked() && !user.getDeleted()) {
-                        String hash = Helper.getHash(pass);
-                        if (hash.equals(user.getPasswordHash())) {
-                            if (user.getLoginTry() != 0) {
-                                user.setLoginTry(0, conn);
-                            }
-                            request.getSession().setAttribute("userLoggedIn", user);
-                        } else {
-                            user.setLoginTry(user.getLoginTry() + 1, conn);
-                            Logging.messageToUser(request, "Passwort ist falsch<br>Hinweis: " + user.getPasswordHint());
-                        }
-                    } else {
-                        Logging.messageToUser(request, "Benutzer ist gesperrt");
-                    }
-                } else {
-                    Logging.messageToUser(request, "Falscher Benutzername");
-                }
+                conn.close();
             } catch (SQLException e) {
-                Logging.logDatabaseException(request, e);
-            } catch (NoSuchAlgorithmException | NotLoadedException e) {
-                Logging.logServerError(request, e);
-            } finally {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    Logging.logConnectionNotCloseable(e);
-                }
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }

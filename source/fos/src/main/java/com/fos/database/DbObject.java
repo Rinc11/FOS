@@ -91,12 +91,7 @@ public class DbObject<T> {
      * @return ob der Wert Null ist. Wenn nicht gelaen, gibt es true zurück.
      */
     public Boolean isNull() {
-        if (isLoaded()) {
-            if (value != null) {
-                return false;
-            }
-        }
-        return true;
+        return !isLoaded() || value == null;
     }
 
     /**
