@@ -9,5 +9,8 @@
 -Dcom.sun.management.jmxremote.port=1099
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.ssl=false
->>>>>>>>>>>>> die unteren 4 Linien sind von mir wichtig mit ok speicher und
- dann neu öffnen und dann server starten: nicht übernehme benutzen
+
+>>>>> die unteren 4 Linien sind von mir 
+>>>>> Wichtig mit ok speicher und dann neu öffnen und dann server starten: nicht übernehme benutzen
+>>>>> Prüfen ob die Zeilen immer noch drinn sind, falls nicht mit Apply/Übernehmen versuchen, dann Server neu starten
+>>>>> Keinen Abstand zwischen den Zeilen lassen
