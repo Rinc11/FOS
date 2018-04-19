@@ -32,7 +32,6 @@ public class UserPageTest {
 
     private Connection conn;
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private HttpSession session;
 
     @Before
@@ -40,7 +39,6 @@ public class UserPageTest {
         conn = com.fos.tools.Helper.getConnection();
 
         request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
     }
@@ -79,7 +77,7 @@ public class UserPageTest {
         when(request.getParameter("passwordHint")).thenReturn(passwordHint);
         when(request.getParameter("usertype")).thenReturn(userType.toString());
 
-        new UserPage(request, response);
+        new UserPage(request);
 
         Person person = Person.getPerson(username, conn);
         assertEquals(username, person.getUserName());
@@ -134,7 +132,7 @@ public class UserPageTest {
         when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
-        new UserPage(request, response);
+        new UserPage(request);
 
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         assertEquals(1, errorListArgument.getValue().size());
@@ -176,7 +174,7 @@ public class UserPageTest {
         when(request.getParameter("locked")).thenReturn(locked);
         when(request.getParameter("usertype")).thenReturn(userType.toString());
 
-        new UserPage(request, response);
+        new UserPage(request);
 
         Person person = Person.getPerson(username, conn);
         assertEquals(username, person.getUserName());
@@ -233,7 +231,7 @@ public class UserPageTest {
         when(request.getParameter("usertype")).thenReturn(userType.toString());
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
-        new UserPage(request, response);
+        new UserPage(request);
 
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         assertEquals(1, errorListArgument.getValue().size());
@@ -255,7 +253,7 @@ public class UserPageTest {
 
         when(request.getParameter("command")).thenReturn("removeUser:"+ testUserName);
 
-        new UserPage(request, response);
+        new UserPage(request);
 
         person = Person.getPerson(testUserName, conn);
         assertEquals(true, person.getDeleted());
@@ -282,7 +280,7 @@ public class UserPageTest {
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
 
-        new UserPage(request, response);
+        new UserPage(request);
 
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         assertEquals(1, errorListArgument.getValue().size());

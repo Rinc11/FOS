@@ -31,11 +31,10 @@ public class UserPage extends FosPage {
      * Logic für die Userseite mit einer anderen jsp Seite
      *
      * @param request  servlet request
-     * @param response servlet response
      * @param jspFile  eine andere Seite welche geladen wird.
      */
-    public UserPage(HttpServletRequest request, HttpServletResponse response, String jspFile) {
-        this(request, response);
+    public UserPage(HttpServletRequest request, String jspFile) {
+        this(request);
         this.jspFile = jspFile;
     }
 
@@ -44,9 +43,8 @@ public class UserPage extends FosPage {
      * Logic für die Userseite
      *
      * @param request  servlet request
-     * @param response servlet response
      */
-    public UserPage(HttpServletRequest request, HttpServletResponse response) {
+    public UserPage(HttpServletRequest request) {
         super(request, false);
         String command = request.getParameter("command");
         if (command != null) {

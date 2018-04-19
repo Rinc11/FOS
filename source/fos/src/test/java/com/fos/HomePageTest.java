@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.fos.tools.TestHelper;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -19,7 +18,6 @@ import static org.mockito.Mockito.mock;
 
 public class HomePageTest {
     private HttpServletRequest request;
-    private HttpServletResponse response;
 
     /**
      * updated die Datenbank auf den neusten Stand mit Testdaten
@@ -30,9 +28,8 @@ public class HomePageTest {
     }
 
     @Before
-    public void createRequestAndResponse(){
+    public void createRequest(){
         request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
     }
 
     @Test
@@ -42,7 +39,7 @@ public class HomePageTest {
         Person testUser = Person.getPerson("testUser", conn);
         testUser.setLocked(false, conn);
 
-        HomePage homePage = new HomePage(request, response);
+        HomePage homePage = new HomePage(request);
         int oldLockCount = homePage.getLockedUserCount();
         testUser.setLocked(true, conn);
 

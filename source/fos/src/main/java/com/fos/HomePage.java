@@ -22,9 +22,8 @@ public class HomePage extends FosPage {
      * Logic für die Startseite
      *
      * @param request  servlet request
-     * @param response servlet response
      */
-    public HomePage(HttpServletRequest request, HttpServletResponse response) {
+    public HomePage(HttpServletRequest request) {
         super(request, false);
     }
 

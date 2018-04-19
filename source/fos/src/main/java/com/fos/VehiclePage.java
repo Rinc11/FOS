@@ -28,11 +28,10 @@ public class VehiclePage extends FosPage {
      * Logic für die Vehicleseite mit einer anderen jsp Seite
      *
      * @param request  servlet request
-     * @param response servlet response
      * @param jspFile  eine andere Seite welche geladen wird.
      */
-    public VehiclePage(HttpServletRequest request, HttpServletResponse response, String jspFile) {
-        this(request, response);
+    public VehiclePage(HttpServletRequest request, String jspFile) {
+        this(request);
         this.jspFile = jspFile;
     }
 
@@ -41,9 +40,8 @@ public class VehiclePage extends FosPage {
      * Logic für die Vehicleseite
      *
      * @param request  servlet request
-     * @param response servlet response
      */
-    public VehiclePage(HttpServletRequest request, HttpServletResponse response) {
+    public VehiclePage(HttpServletRequest request) {
         super(request, false);
         String command = request.getParameter("command");
         if (command != null) {

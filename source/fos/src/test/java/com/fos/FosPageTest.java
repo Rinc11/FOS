@@ -35,7 +35,6 @@ public class FosPageTest {
     private static final String testUserName = "testUser";
 
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private Connection conn;
 
 
@@ -66,7 +65,7 @@ public class FosPageTest {
     @Test
     public void testTryLoginValid() throws NotLoadedException {
         createMock();
-        TestFosPage testFosPage = new TestFosPage(request, response, false);
+        TestFosPage testFosPage = new TestFosPage(request, false);
         testFosPage.tryLogIn(testUserName, "1234");
         ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
 
@@ -82,7 +81,7 @@ public class FosPageTest {
     public void testTryLoginWrongPasswordMultipleTimes() {
         for (int i = 0; i <= 10; i++) {
             createMock();
-            TestFosPage testFosPage = new TestFosPage(request, response, false);
+            TestFosPage testFosPage = new TestFosPage(request, false);
             testFosPage.tryLogIn(testUserName, "bla");
 
             ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
@@ -95,7 +94,7 @@ public class FosPageTest {
         createMock();
 
         ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
-        TestFosPage testFosPage = new TestFosPage(request, response, false);
+        TestFosPage testFosPage = new TestFosPage(request, false);
         testFosPage.tryLogIn(testUserName, "bla");
         verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
         errorListArgument.getValue();
@@ -111,7 +110,7 @@ public class FosPageTest {
     @Test
     public void testTryLoginWrongUserName() {
         createMock();
-        TestFosPage testFosPage = new TestFosPage(request, response, false);
+        TestFosPage testFosPage = new TestFosPage(request, false);
         testFosPage.tryLogIn("nichtVorhanden", "bla");
 
         verify(request.getSession(), never()).setAttribute(eq("userLoggedIn"), ArgumentMatchers.any());
@@ -143,7 +142,7 @@ public class FosPageTest {
         createMock();
         createSessionPersonMock(false);
 
-        TestFosPage testFosPage = new TestFosPage(request, response, false);
+        TestFosPage testFosPage = new TestFosPage(request, false);
         Person person = testFosPage.getUser();
         Assert.assertEquals("MockUser", person.getUserName());
         Assert.assertEquals(Person.PersonUserType.MITARBEITER, person.getUserType());
@@ -155,7 +154,6 @@ public class FosPageTest {
      */
     private void createMock() {
         request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
 
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
@@ -188,10 +186,9 @@ public class FosPageTest {
          * Erstellt eine neue test Fos Seite
          *
          * @param request         mocked request
-         * @param response        mocked response
          * @param needsAdminRight ob admin rechte benötigt werden.
          */
-        public TestFosPage(HttpServletRequest request, HttpServletResponse response, Boolean needsAdminRight) {
+        public TestFosPage(HttpServletRequest request, Boolean needsAdminRight) {
             super(request, needsAdminRight);
         }
 

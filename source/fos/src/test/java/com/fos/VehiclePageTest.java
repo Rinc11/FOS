@@ -34,7 +34,6 @@ public class VehiclePageTest {
 
     private Connection conn;
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private HttpSession session;
 
     @Before
@@ -42,7 +41,6 @@ public class VehiclePageTest {
         conn = com.fos.tools.Helper.getConnection();
 
         request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
     }
@@ -62,7 +60,7 @@ public class VehiclePageTest {
 
         when(request.getParameter("command")).thenReturn("removeVehicle:" + testVehicleID);
 
-        new VehiclePage(request, response);
+        new VehiclePage(request);
 
         vehicle = Vehicle.getVehicle(testVehicleID, conn);
         assertEquals(false, vehicle.isActive());

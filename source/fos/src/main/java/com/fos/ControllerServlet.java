@@ -31,22 +31,22 @@ public class ControllerServlet extends HttpServlet {
         String staticPage = "";
         switch (request.getRequestURI()) {
             case "/benutzer":
-                fosUserPage = new UserPage(request, response);
+                fosUserPage = new UserPage(request);
                 break;
             case "/benutzerHinzufuegen":
-                fosUserPage = new UserPage(request, response, "/WEB-INF/jsp/addUser.jsp");
+                fosUserPage = new UserPage(request, "/WEB-INF/jsp/addUser.jsp");
                 break;
             case "/benutzerAendern":
-                fosUserPage = new UserPage(request, response, "/WEB-INF/jsp/editUser.jsp");
+                fosUserPage = new UserPage(request, "/WEB-INF/jsp/editUser.jsp");
                 break;
             case "/fahrzeug":
-                fosUserPage = new VehiclePage(request, response);
+                fosUserPage = new VehiclePage(request);
                 break;
             case "/fahrzeugHinzufuegen":
-                fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/addVehicle.jsp");
+                fosUserPage = new VehiclePage(request, "/WEB-INF/jsp/addVehicle.jsp");
                 break;
             case "/fahrzeugAendern":
-                fosUserPage = new VehiclePage(request, response, "/WEB-INF/jsp/editVehicle.jsp");
+                fosUserPage = new VehiclePage(request, "/WEB-INF/jsp/editVehicle.jsp");
                 break;
             case "/auswertung":
                 staticPage = "/WEB-INF/jsp/statistic.jsp";
@@ -55,7 +55,7 @@ public class ControllerServlet extends HttpServlet {
                 staticPage = "/WEB-INF/jsp/trip.jsp";
                 break;
             case "/":
-                fosUserPage = new HomePage(request, response);
+                fosUserPage = new HomePage(request);
                 break;
             default:
                 Logging.logMessage("Seite nicht erkannt", Level.ERROR);
