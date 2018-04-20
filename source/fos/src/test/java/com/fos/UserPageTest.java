@@ -264,7 +264,7 @@ public class UserPageTest {
     }
 
     /**
-     * testet die Methode removeItem als Mitarbert-User
+     * testet die Methode removeItem als Mitarbeiter-User
      *
      * @throws SQLException
      * @throws NotLoadedException
