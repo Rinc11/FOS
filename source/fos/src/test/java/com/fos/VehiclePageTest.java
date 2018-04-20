@@ -70,6 +70,33 @@ public class VehiclePageTest {
         preparedStatement.execute();
     }
 
+    /**
+     * testet die Methode removeItem als Mitarbeiter-User
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testRemoveItemAsEmployee() throws SQLException, NotLoadedException {
+        Vehicle vehicle = Vehicle.getVehicle(testVehicleID, conn);
+        Assert.assertEquals(true, vehicle.isActive());
+
+        loggedInUserIsEmployee();
+
+        when(request.getParameter("command")).thenReturn("removeVehicle:" + testVehicleID);
+
+        ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
+
+        new VehiclePage(request);
+
+        verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+        assertEquals(1, errorListArgument.getValue().size());
+        assertEquals("fehlende Rechte", errorListArgument.getValue().get(0));
+
+        vehicle = Vehicle.getVehicle(testVehicleID, conn);
+        assertEquals(true, vehicle.isActive());
+    }
+
     private void loggedInUserIsAdmin() throws NotLoadedException {
         Person loggedInPerson = mock(Person.class);
         when(loggedInPerson.getIsAdmin()).thenReturn(true);
