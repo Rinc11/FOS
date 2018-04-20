@@ -9,6 +9,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -148,4 +151,10 @@ public class Helper {
         }
         return sb.toString();
     }
+
+    public static Timestamp dateToSqlTimestamp(Date date){
+        Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+        return timestamp;
+    }
+
 }
