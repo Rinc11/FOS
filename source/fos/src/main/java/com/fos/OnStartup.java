@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.io.InputStream;
 import java.sql.Connection;
 
 import static com.fos.tools.Logging.logConnectionNotCloseable;
@@ -29,7 +30,9 @@ public class OnStartup implements ServletContextListener,
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            new SqlUpdate(Helper.getDbchema(), Helper.getWithTestData()).updateDatabase(conn);
+            InputStream sqlCommandStream = getClass().getClassLoader().getResourceAsStream("dataBaseUpdateSkript.sql");
+            new SqlUpdate(Helper.getDbchema(), Helper.getWithTestData(), sqlCommandStream).updateDatabase(conn);
+            sqlCommandStream.close();
         } catch (Exception e) {
             Logging.logMessage("error by updateing the database", Level.FATAL);
             throw new RuntimeException(e);

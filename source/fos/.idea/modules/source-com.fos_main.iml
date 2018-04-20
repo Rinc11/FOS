@@ -21,6 +21,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/DatabaseUpdater-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.0" level="project" />
@@ -35,7 +44,6 @@
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-annotations-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jni:8.5.28" level="project" />
-    <orderEntry type="module" module-name="dataBaseUpdater_main" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-jaspic-api:8.5.28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-el-api:8.5.28" level="project" />
   </component>
