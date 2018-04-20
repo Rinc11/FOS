@@ -1,10 +1,19 @@
 <%@ page import="com.fos.HomePage" %>
-<%@ page import="com.fos.database.Person" %><%--
+<%@ page import="com.fos.database.Person" %>
+<%@ page import="com.fos.StatisticPage" %><%--
 Startseite welche nach dem einlogen aufgerufen wird.
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    StatisticPage statisticPage = new StatisticPage(request);
+    request.setAttribute("actualPage", statisticPage);
+
+    Person person = null;
+    request.setAttribute("userLoggedIn", person);
+%>
 
 <html lang="de">
 <head>
@@ -21,7 +30,9 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <h1>Auswertung</h1>
         <p>Laden Sie Ihre ausgewerteten Daten bequem als *.csv herunter.</p>
     </div>
-    <legend style="color: rgb(64, 99, 180);"><button onclick="toggle()">Filter ein-/ausblenden</button></legend>
+    <legend style="color: rgb(64, 99, 180);">
+        <button onclick="toggle()">Filter ein-/ausblenden</button>
+    </legend>
     <fieldset id="filteroptionen">
         <div class="row">
             <div class="col-lg-6">
@@ -30,12 +41,14 @@ Startseite welche nach dem einlogen aufgerufen wird.
                     <input type="text" class="form-control" placeholder="Fahrzeug">
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>Fahrer</label>
-                    <input type="text" class="form-control" placeholder="Fahrer">
+            <c:if test="${userLoggedIn.isAdmin == true}">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Fahrer</label>
+                        <input type="text" class="form-control" placeholder="Fahrer">
+                    </div>
                 </div>
-            </div>
+            </c:if>
         </div>
 
         <div class="row">
@@ -69,6 +82,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <div class="scrollme">
             <table class="table table-responsive">
                 <thead>
+
                 <tr>
                     <th>Fahrtnr.</th>
                     <th>Fahrer</th>
