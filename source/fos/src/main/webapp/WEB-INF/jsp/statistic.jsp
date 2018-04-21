@@ -1,19 +1,12 @@
 <%@ page import="com.fos.HomePage" %>
 <%@ page import="com.fos.database.Person" %>
-<%@ page import="com.fos.StatisticPage" %><%--
-Startseite welche nach dem einlogen aufgerufen wird.
+<%@ page import="com.fos.StatisticPage" %>
+<%--
+Auswertung
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    StatisticPage statisticPage = new StatisticPage(request);
-    request.setAttribute("actualPage", statisticPage);
-
-    Person person = null;
-    request.setAttribute("userLoggedIn", person);
-%>
 
 <html lang="de">
 <head>
@@ -79,6 +72,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                     <div class="form-group">
                         <label>Fahrttyp</label>
                         <select class="form-control" name="tripType">
+                            <option value="" <c:if test="${param.tripType == ''}"> selected</c:if>>alle</option>
                             <option value="g" <c:if test="${param.tripType == 'g'}"> selected</c:if> >geschäftlich
                             </option>
                             <option value="p" <c:if test="${param.tripType == 'p'}"> selected</c:if>>privat</option>
@@ -101,49 +95,28 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <div class="scrollme">
             <table class="table table-responsive">
                 <thead>
-
                 <tr>
-                    <th>Fahrtnr.</th>
                     <th>Fahrer</th>
                     <th>Auto</th>
                     <th>Fahrt Start</th>
                     <th>Fahrt Ziel</th>
                     <th>Kilometer</th>
+                    <th>Fahrt Typ</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Fabian Wipf</td>
-                    <td>Fiat</td>
-                    <td>Frauenfeld</td>
-                    <td>Winterthur</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jonas Rüegge</td>
-                    <td>Smart</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Reto Mayer</td>
-                    <td>VW</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Marco Sutter</td>
-                    <td>Audi</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                </tr>
+
+                <c:forEach items="${actualPage.filteredTrips}"
+                    var="trip">
+                    <tr>
+                        <td>${trip.username}</td>
+                        <td>${trip.vehicleID}</td>
+                        <td>${trip.placeStart}</td>
+                        <td>${trip.placeEnd}</td>
+                        <td>${trip.endKM - trip.startKM}</td>
+                        <td>${trip.type}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

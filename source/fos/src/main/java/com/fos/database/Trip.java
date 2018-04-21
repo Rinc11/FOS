@@ -8,7 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,13 +57,43 @@ public class Trip implements Serializable {
      * @return eine Liste mit allen Fahrten aus der Datenbank zu der die Verbindung übergeben wurde
      */
     public static List<Trip> getAllTrips(Connection conn) throws SQLException {
+        return getFilteredTrips(conn, null, null, null, null, null);
+    }
+
+    public static List<Trip> getFilteredTrips(Connection conn,
+                                              Integer tripVehicleId,
+                                              String tripPersonUserName,
+                                              Date dateFrom,
+                                              Date dateTo,
+                                              TripType tripType) throws SQLException{
         List<Trip> result = new ArrayList<>();
         Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
-                " FROM \"Trip\"");
+        StringBuilder sqlCommand = new StringBuilder();
+        sqlCommand.append("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", ");
+        sqlCommand.append("\"Start_km\", \"End_km\", \"Type\", \"Username\"  FROM \"Trip\" WHERE 1=1\n");
+        if(tripVehicleId != null){
+            sqlCommand.append("AND \"VehicleID\" = "+tripVehicleId+"\n");
+        }
+        if(tripPersonUserName != null){
+            sqlCommand.append("AND \"Username\" = '"+tripPersonUserName+"'\n");
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(dateFrom != null){
+            sqlCommand.append("AND \"StartTime\" >= '"+dateFormat.format(dateFrom)+"'\n");
+        }
+        if(dateTo != null){
+            Calendar c = Calendar.getInstance();
+            c.setTime(dateTo);
+            c.add(Calendar.DATE, 1);
+            sqlCommand.append( "AND \"StartTime\" < '"+dateFormat.format(c.getTime())+"'\n");
+        }
+        if(tripType != null){
+            sqlCommand.append( "AND \"Type\" = '"+tripType.name()+"'\n");
+        }
+        ResultSet resultSet = statement.executeQuery(sqlCommand.toString());
 
         while (resultSet.next()) {
-
             Trip trip = new Trip(resultSet.getInt("TripID"));
             trip.vehicleID.setValue(resultSet.getInt("VehicleID"));
             trip.startTime.setValue(resultSet.getTimestamp("StartTime"));
