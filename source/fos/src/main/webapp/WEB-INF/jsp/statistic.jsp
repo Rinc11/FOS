@@ -88,9 +88,23 @@ Auswertung
             </div>
         </fieldset>
     </form>
-    <div class="panel panel-default" id="auswertungen">
-        <div class="panel-heading">Auswertungen
+        <div class="panel panel-default" id="auswertungen">
+            <div class="panel-heading">Auswertung</div>
+            <table class="table table-responsive">
+                <p><b>For developer:</b> einfach zu erstellen, da in StatisticPage bereits die daten geladen sind, mann muss nur noch das array durchgehen und diese werte abfüllen</p>
+                <p>design anpassen</p>
+                <tr>
+                    <td>Totale Kilometer:</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>Anzahl Fahrten</td>
+                    <td>5000</td>
+                </tr>
+            </table>
         </div>
+    <div class="panel panel-default" id="auswertungen">
+        <div class="panel-heading">Liste</div>
 
         <div class="scrollme">
             <table class="table table-responsive">
@@ -110,7 +124,7 @@ Auswertung
                     var="trip">
                     <tr>
                         <td>${trip.username}</td>
-                        <td>${trip.vehicleID}</td>
+                        <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
                         <td>${trip.placeStart}</td>
                         <td>${trip.placeEnd}</td>
                         <td>${trip.endKM - trip.startKM}</td>

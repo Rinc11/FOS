@@ -97,14 +97,14 @@ public class Vehicle implements Serializable {
     }
 
     private final DbObject<Integer> vehicleID = new DbObject<>();
-    private final DbObject<String> serialnumber = new DbObject<>();
-    private final DbObject<String> brand = new DbObject<>();
-    private final DbObject<String> type = new DbObject<>();
-    private final DbObject<Integer> buildYear = new DbObject<>();
-    private final DbObject<VehicleFuelType> fuelType = new DbObject<>();
-    private final DbObject<Boolean> active = new DbObject<>();
+    final DbObject<String> serialnumber = new DbObject<>();
+    final DbObject<String> brand = new DbObject<>();
+    final DbObject<String> type = new DbObject<>();
+    final DbObject<Integer> buildYear = new DbObject<>();
+    final DbObject<VehicleFuelType> fuelType = new DbObject<>();
+    final DbObject<Boolean> active = new DbObject<>();
 
-    private Vehicle(Integer vehicleID) {
+    Vehicle(Integer vehicleID) {
         this.vehicleID.setValue(vehicleID);
     }
 

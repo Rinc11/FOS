@@ -69,8 +69,10 @@ public class Trip implements Serializable {
         List<Trip> result = new ArrayList<>();
         Statement statement = conn.createStatement();
         StringBuilder sqlCommand = new StringBuilder();
-        sqlCommand.append("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", ");
-        sqlCommand.append("\"Start_km\", \"End_km\", \"Type\", \"Username\"  FROM \"Trip\" WHERE 1=1\n");
+        sqlCommand.append("SELECT \"TripID\", \"VehicleID\", \"Brand\", \"Vehicles\".\"Type\" as \"VehicleType\", ");
+        sqlCommand.append("\"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", ");
+        sqlCommand.append("\"Trip\".\"Type\" as \"TripType\", \"Username\" ");
+        sqlCommand.append("FROM \"Trip\" join \"Vehicles\" using (\"VehicleID\") WHERE 1=1\n");
         if(tripVehicleId != null){
             sqlCommand.append("AND \"VehicleID\" = "+tripVehicleId+"\n");
         }
@@ -102,8 +104,13 @@ public class Trip implements Serializable {
             trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
             trip.startKM.setValue(resultSet.getInt("Start_km"));
             trip.endKM.setValue(resultSet.getInt("End_km"));
-            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
+            trip.type.setValue(TripType.valueOf(resultSet.getString("TripType").toUpperCase()));
             trip.username.setValue(resultSet.getString("Username"));
+
+            Vehicle tripVehicle = new Vehicle(resultSet.getInt("VehicleID"));
+            tripVehicle.brand.setValue(resultSet.getString("Brand"));
+            tripVehicle.type.setValue(resultSet.getString("VehicleType"));
+            trip.vehicle.setValue(tripVehicle);
             result.add(trip);
         }
         return result;
@@ -151,6 +158,8 @@ public class Trip implements Serializable {
     private final DbObject<TripType> type = new DbObject<>();
     private final DbObject<String> username = new DbObject<>();
 
+    private final DbObject<Vehicle> vehicle = new DbObject<>();
+
     private Trip(Integer vehicleID) {
         this.tripID.setValue(vehicleID);
     }
@@ -193,6 +202,10 @@ public class Trip implements Serializable {
 
     public String getUsername() throws NotLoadedException {
         return username.getValue();
+    }
+
+    public Vehicle getVehicle() throws NotLoadedException {
+        return vehicle.getValue();
     }
 
     /**

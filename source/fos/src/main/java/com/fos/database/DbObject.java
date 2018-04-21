@@ -49,7 +49,7 @@ public class DbObject<T> {
      *
      * @param value der Wert der hinzugefügt wird.
      */
-    public void setValue(T value) {
+    void setValue(T value) {
         if (isLoaded()) {
             String msg = "Feld wurde bereits geladen";
             Logging.logMessage(msg, Level.FATAL);
