@@ -53,7 +53,7 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new StatisticPage(request);
                 break;
             case "/fahrt":
-                staticPage = "/WEB-INF/jsp/trip.jsp";
+                fosUserPage = new TripPage(request);
                 break;
             case "/":
                 try {

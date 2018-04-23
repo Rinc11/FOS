@@ -23,71 +23,41 @@ Startseite welche nach dem einlogen aufgerufen wird.
     <div class="panel panel-default" id="tables">
         <div class="panel-heading">Liste
         </div>
-
-        <div class="scrollme">
-            <table class="table table-responsive">
-                <thead>
-                <tr>
-                    <th>Fahrtnr.</th>
-                    <th>Auto</th>
-                    <th>Start</th>
-                    <th>Stopp</th>
-                    <th>Anzahl Kilometer</th>
-                    <th>Fahrttyp</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Fiat</td>
-                    <td>Frauenfeld</td>
-                    <td>Winterthur</td>
-                    <td>15</td>
-                    <td>geschäftlich</td>
-                    <td>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Smart</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                    <td>geschäftlich</td>
-                    <td>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>VW</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                    <td>privat</td>
-                    <td>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Audi</td>
-                    <td>Romanshorn</td>
-                    <td>Zürich</td>
-                    <td>40</td>
-                    <td>geschäftlich</td>
-                    <td>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="panel-body">
+            <div class="scrollme">
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Fahrtnr.</th>
+                        <th>Auto</th>
+                        <th>Start</th>
+                        <th>Stopp</th>
+                        <th>Anzahl Kilometer</th>
+                        <th>Fahrttyp</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${actualPage.items}"
+                               var="trip">
+                        <tr>
+                            <td>${trip.tripID}</td>
+                            <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
+                            <td>${trip.placeStart}</td>
+                            <td>${trip.placeEnd}</td>
+                            <td>${trip.endKM - trip.startKM}</td>
+                            <td>${trip.type}</td>
+                            <td>
+                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"
+                                                                                    aria-hidden="true"></span></button>
+                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"
+                                                                                    aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
