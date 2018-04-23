@@ -1,5 +1,6 @@
 package com.fos;
 
+import com.fos.database.NotLoadedException;
 import com.fos.tools.FosPage;
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
@@ -55,7 +56,11 @@ public class ControllerServlet extends HttpServlet {
                 staticPage = "/WEB-INF/jsp/trip.jsp";
                 break;
             case "/":
-                fosUserPage = new HomePage(request);
+                try {
+                    fosUserPage = new HomePage(request);
+                } catch (NotLoadedException e) {
+                    Logging.logDatabaseException(request, e);
+                }
                 break;
             default:
                 Logging.logMessage("Seite nicht erkannt", Level.ERROR);

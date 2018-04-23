@@ -2,29 +2,38 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
+import com.fos.database.Trip;
 import com.fos.database.Vehicle;
 import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Logik für die Startseite
  */
 public class HomePage extends FosPage {
+
+    private static final String ADDSTARTTRIP = "startTrip";
     /**
      * Logic für die Startseite
      *
      * @param request  servlet request
      */
-    public HomePage(HttpServletRequest request) {
+    public HomePage(HttpServletRequest request) throws NotLoadedException {
         super(request, false);
+        String command = request.getParameter("command");
+        if (command != null) {
+            if (command.startsWith(ADDSTARTTRIP)) {
+                addNewTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(), new Date(), request.getParameter("placeStart"), "", Integer.valueOf(request.getParameter("startKM")), 0, Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName() );
+            }
+        }
     }
 
     /**
@@ -112,6 +121,25 @@ public class HomePage extends FosPage {
             }
         }
         return new ArrayList<>();
+    }
+
+    public void addNewTrip(int vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, int startKM, int endKM, Trip.TripType type, String username){
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+                Trip.addNewTrip(vehicleID, startTime, endTime, placeStart, placeEnd, startKM, endKM, type, username, conn);
+        }
+        catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        }
+
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
     }
 
     @Override

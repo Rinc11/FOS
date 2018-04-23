@@ -6,14 +6,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.fos.tools.TestHelper;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.List;
+
 
 /**
  * Testet ob die Klasse Trip sich richtig verhält

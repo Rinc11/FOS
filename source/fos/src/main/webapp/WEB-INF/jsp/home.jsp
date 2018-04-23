@@ -40,19 +40,19 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 </div>
                                 <div class="form-group">
                                     <label>Ortschaft</label>
-                                    <input type="text" name="place" class="form-control" required="true"
+                                    <input type="text" name="placeStart" class="form-control" required="true"
                                            placeholder="Ortschaft">
                                 </div>
                                 <div class="form-group">
                                     <label>Kilometerstand</label>
-                                    <input type="number" name="kmMilage" class="form-control" required="true" min="0"
+                                    <input type="number" name="startKM" class="form-control" required="true" min="0"
                                            placeholder="Kilometerstand">
                                 </div>
                                 <div class="form-group">
                                     <label>Fahrttyp</label>
-                                    <select class="form-control" name="tripType">
-                                        <option selected>geschäftlich</option>
-                                        <option>privat</option>
+                                    <select class="form-control" name="type">
+                                        <option selected>GESCHÄFTLICH</option>
+                                        <option>PRIVAT</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="command" value="startTrip">
