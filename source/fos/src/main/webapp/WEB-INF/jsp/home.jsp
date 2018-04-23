@@ -79,7 +79,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 </div>
                                 <div class="form-group">
                                     <label>Kilometerstand</label>
-                                    <input type="number" name="kmMilage" min="0" required="true" class="form-control"
+                                    <input type="number" name="kmEnd" min="0" required="true" class="form-control"
                                            placeholder="Kilometerstand">
                                 </div>
                                 <input type="hidden" name="command" value="stopTrip">
