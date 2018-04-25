@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/fahrzeugAendern", "/benutzerHinzufuegen",
-        "/benutzerAendern", "/auswertung", "/fahrt"})
+        "/benutzerAendern", "/auswertung", "/fahrt", "/fahrtAendern"})
 public class ControllerServlet extends HttpServlet {
 
     @Override
@@ -54,6 +54,9 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "/fahrt":
                 fosUserPage = new TripPage(request);
+                break;
+            case "/fahrtAendern":
+                fosUserPage = new TripPage(request, "/WEB-INF/jsp/editTrip.jsp");
                 break;
             case "/":
                 try {

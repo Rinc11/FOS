@@ -48,8 +48,8 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             <td>${trip.endKM - trip.startKM}</td>
                             <td>${trip.type}</td>
                             <td>
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"
-                                                                                    aria-hidden="true"></span></button>
+                                <a class="btn btn-default" href="/fahrtAendern?tripID=${trip.tripID}"><span
+                                        class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                             </td>
                         </tr>
                     </c:forEach>

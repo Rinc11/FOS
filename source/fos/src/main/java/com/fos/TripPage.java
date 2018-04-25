@@ -2,7 +2,6 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Trip;
-import com.fos.database.Vehicle;
 import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
@@ -24,6 +23,7 @@ public class TripPage extends FosPage {
 
     public TripPage(HttpServletRequest request) {
         super(request, false);
+
     }
 
     public List<Trip> getItems() {
@@ -53,5 +53,24 @@ public class TripPage extends FosPage {
             Logging.logDatabaseException(request, notLoadedExeption);
         }
         return "/WEB-INF/jsp/trip.jsp";
+    }
+
+    public Trip getRequestTrip() {
+        Integer tripID = Integer.valueOf(request.getParameter("tripID"));
+        Trip result = null;
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            result = Trip.getTrip(tripID, conn);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return result;
     }
 }

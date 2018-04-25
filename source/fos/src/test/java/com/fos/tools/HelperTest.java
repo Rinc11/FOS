@@ -17,7 +17,13 @@ import static org.mockito.Mockito.when;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -142,5 +148,14 @@ public class HelperTest {
     @Test
     public void testGetConnection() throws SQLException {
         Assert.assertEquals("fostest", Helper.getConnection().getSchema());
+    }
+
+    @Test
+    public void testDateToSqlTimestamp() throws SQLException, ParseException {
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy/H:m:s");
+        Date date = dateFormat.parse("23/09/2007/12:33:21");
+        Timestamp timestamp = Helper.dateToSqlTimestamp(date);
+
     }
 }
