@@ -91,15 +91,14 @@ Auswertung
         <div class="panel panel-default" id="auswertungen">
             <div class="panel-heading">Auswertung</div>
             <table class="table table-responsive">
-                <p><b>For developer:</b> einfach zu erstellen, da in StatisticPage bereits die daten geladen sind, mann muss nur noch das array durchgehen und diese werte abfüllen</p>
                 <p>design anpassen</p>
                 <tr>
                     <td>Totale Kilometer:</td>
-                    <td>5000</td>
+                    <td>${actualPage.filteredKm}</td>
                 </tr>
                 <tr>
                     <td>Anzahl Fahrten</td>
-                    <td>5000</td>
+                    <td>${actualPage.filteredListCount}</td>
                 </tr>
             </table>
         </div>

@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StatisticPage extends FosPage {
     private String jspFile = "/WEB-INF/jsp/statistic.jsp";
@@ -52,22 +53,19 @@ public class StatisticPage extends FosPage {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateFromParameter = request.getParameter("dateFrom");
             Date dateFrom = null;
-            if (dateFromParameter != null && !dateFromParameter.equals("")) {
-                try {
-                    dateFrom = dateFormat.parse(dateFromParameter);
-                } catch (ParseException e) {
-                    Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
-                }
-            }
-
-            String dateToParameter = request.getParameter("dateTo");
             Date dateTo = null;
-            if (dateToParameter != null && !dateToParameter.equals("")) {
-                try {
-                    dateTo = dateFormat.parse(dateToParameter);
-                } catch (ParseException e) {
-                    Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
+            try {
+
+                if (dateFromParameter != null && !dateFromParameter.equals("")) {
+                    dateFrom = dateFormat.parse(dateFromParameter);
                 }
+
+                String dateToParameter = request.getParameter("dateTo");
+                if (dateToParameter != null && !dateToParameter.equals("")) {
+                    dateTo = dateFormat.parse(dateToParameter);
+                }
+            } catch (ParseException e) {
+                Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
             }
 
             String tripTypeParameter = request.getParameter("tripType");
@@ -99,6 +97,30 @@ public class StatisticPage extends FosPage {
 
     public List<Trip> getFilteredTrips() {
         return filteredTrips;
+    }
+
+    public int getFilteredListCount(){
+        return filteredTrips.size();
+    }
+
+    public int getFilteredKm(){
+        List<Trip> filterdTripsWithKm = filteredTrips.stream().filter(f -> {
+            try {
+                return f.getEndKM() != null;
+            } catch (NotLoadedException e) {
+                Logging.logDatabaseException(request, e);
+                return false;
+            }
+        }).collect(Collectors.toList());
+        int sumOfKm = 0;
+        for(Trip trip : filterdTripsWithKm){
+            try {
+                sumOfKm += trip.getEndKM() - trip.getStartKM();
+            } catch (NotLoadedException e) {
+                Logging.logDatabaseException(request, e);
+            }
+        }
+        return sumOfKm;
     }
 
 
