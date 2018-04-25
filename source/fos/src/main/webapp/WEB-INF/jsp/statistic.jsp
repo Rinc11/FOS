@@ -12,6 +12,7 @@ Auswertung
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
+    <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 </head>
 <body>
 <c:set var="navSelection" value="Auswertung" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>

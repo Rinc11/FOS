@@ -1,0 +1,121 @@
+* {
+  text-shadow: none;
+}
+
+#logoStartseite {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#logoDefault {
+    float: right;
+    width: 17%;
+}
+
+#navbar {
+  float:right;
+  color: #ffffff;
+}
+
+.scrollme {
+    overflow-y: auto;
+}
+
+.errorText {
+    color: #be0012;
+    font-size: 16px !important;
+    font-weight: 400;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #ffffff !important;
+}
+
+.menu {
+  color: #ffffff !important;
+}
+
+.icon-bar {
+  color: #ffffff !important;
+}
+
+.active {
+  color: rgb(64, 99, 180) !important;
+}
+
+#navbar > ul > .active > a > strong{
+    color: rgb(64, 99, 180) !important;
+}
+
+
+.container-fluid {
+  background-color: rgb(64, 99, 180);
+  border-style-top: none;
+  border-style-bottom: solid;
+  border-width-bottom: 3px;
+  border-bottom-color: #eeeeee;
+}
+
+body {
+  background-color: #eeeeee;
+}
+
+footer {
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 1rem;
+    background-color: rgb(64, 99, 180);
+    text-align: center;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-top-color: #eeeeee;
+}
+
+#login {
+    color: white;
+    background-color: #ffffff;
+    padding-top: 0px;
+    border-radius: 5px;
+}
+
+.login-title {
+  margin-top: 35px;
+}
+
+.btn-primary {
+  background-color: rgb(64, 99, 180);
+}
+
+.btn-primary:hover {
+  background-color: #ffffff;
+  border-color: rgb(64, 99, 180);
+  border-width: 1px;
+  color: rgb(64, 99, 180);
+}
+
+.panel>.panel-heading {
+    background-image: none;
+    background-color: rgb(64, 99, 180);
+    color: white;
+}
+
+.welcome {
+    background-image: url("../img/login_background.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+@media screen and (max-width: 767px) {
+  #FOSmaske {
+    width: 50%;
+  }
+  .welcome {
+    background-image:none;
+  }
+  #navbar {
+    width: 105% !important;
+  }
+}
