@@ -91,7 +91,7 @@ public class Trip implements Serializable {
             sqlCommand.append( "AND \"StartTime\" < '"+dateFormat.format(c.getTime())+"'\n");
         }
         if(tripType != null){
-            sqlCommand.append( "AND \"Type\" = '"+tripType.name()+"'\n");
+            sqlCommand.append( "AND \"Trip\".\"Type\" = '"+tripType.name()+"'\n");
         }
         ResultSet resultSet = statement.executeQuery(sqlCommand.toString());
 
