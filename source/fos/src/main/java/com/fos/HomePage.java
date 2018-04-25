@@ -32,10 +32,9 @@ public class HomePage extends FosPage {
         String command = request.getParameter("command");
         if (command != null) {
             if (command.startsWith(ADDSTARTTRIP)) {
-                startTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(), new Date(), request.getParameter("placeStart"), "", Integer.valueOf(request.getParameter("startKM")), 0, Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName() );
+                startTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(),request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName() );
             } else if (command.equals(ADDSTOPTRIP)) {
                 stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
-
             }
         }
     }
@@ -50,8 +49,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> trips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, null);
-            if (trips.get(trips.size() - 1).getPlaceEnd().equals("")) {
+            if (Trip.getOpenTripByUsername(getUser().getUserName(), conn) != null){
                 return true;
             }
         } catch (SQLException e) {
@@ -146,11 +144,11 @@ public class HomePage extends FosPage {
         return new ArrayList<>();
     }
 
-    public void startTrip(int vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, int startKM, int endKM, Trip.TripType type, String username){
+    public void startTrip(int vehicleID, Date startTime, String placeStart, int startKM, Trip.TripType type, String username){
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-                Trip.addNewTrip(vehicleID, startTime, endTime, placeStart, placeEnd, startKM, endKM, type, username, conn);
+                Trip.startNewTrip(vehicleID, startTime, placeStart, startKM, type, username, conn);
         }
         catch (SQLException e) {
             Logging.logDatabaseException(request, e);
@@ -168,8 +166,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> trips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, null);
-            Trip openTrip = trips.get(trips.size()-1);
+            Trip openTrip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
             Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd ,openTrip.getType(), openTrip.getUsername(), conn);
         }
         catch (SQLException e) {

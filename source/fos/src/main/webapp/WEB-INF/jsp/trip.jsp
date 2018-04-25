@@ -50,8 +50,6 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             <td>
                                 <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"
                                                                                     aria-hidden="true"></span></button>
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"
-                                                                                    aria-hidden="true"></span></button>
                             </td>
                         </tr>
                     </c:forEach>

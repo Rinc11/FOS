@@ -116,16 +116,13 @@ public class Trip implements Serializable {
         return result;
     }
 
-    public static void addNewTrip(Integer vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, Integer startKM, Integer endKM, TripType type, String username, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Trip\" (\"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\") VALUES (?, ?, ?, ?, ?, ?, ?, '" + type + "', ?)");
+    public static void startNewTrip(Integer vehicleID, Date startTime, String placeStart, Integer startKM, TripType type, String username, Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Trip\" (\"VehicleID\", \"StartTime\",  \"PlaceStart\",  \"Start_km\",  \"Type\", \"Username\") VALUES (?, ?, ?, ?,'" + type + "', ?)");
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.setTimestamp(2, Helper.dateToSqlTimestamp(startTime));
-        preparedStatement.setTimestamp(3, Helper.dateToSqlTimestamp(endTime));
-        preparedStatement.setString(4, placeStart);
-        preparedStatement.setString(5, placeEnd);
-        preparedStatement.setInt(6, startKM);
-        preparedStatement.setInt(7, endKM);
-        preparedStatement.setString(8, username);
+        preparedStatement.setString(3, placeStart);
+        preparedStatement.setInt(4, startKM);
+        preparedStatement.setString(5, username);
         preparedStatement.execute();
     }
 
@@ -144,6 +141,28 @@ public class Trip implements Serializable {
         preparedStatement.setInt(9, tripID);
 
         preparedStatement.execute();
+    }
+
+    public static Trip getOpenTripByUsername(String username, Connection conn) throws SQLException {
+        Trip trip = null;
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
+                " FROM \"Trip\" WHERE \"Username\" = '"+ username +"' AND \"PlaceEnd\" IS NULL");
+
+        if (resultSet.next()) {
+
+            trip = new Trip(resultSet.getInt("TripID"));
+            trip.vehicleID.setValue(resultSet.getInt("VehicleID"));
+            trip.startTime.setValue(resultSet.getTimestamp("StartTime"));
+            trip.endTime.setValue(resultSet.getTimestamp("EndTime"));
+            trip.placeStart.setValue(resultSet.getString("PlaceStart"));
+            trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
+            trip.startKM.setValue(resultSet.getInt("Start_km"));
+            trip.endKM.setValue(resultSet.getInt("End_km"));
+            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
+            trip.username.setValue(resultSet.getString("Username"));
+        }
+        return trip;
     }
 
 
