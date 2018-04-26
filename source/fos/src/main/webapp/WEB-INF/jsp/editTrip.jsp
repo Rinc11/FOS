@@ -30,6 +30,15 @@ Formular zum eine Fahrt abändern
                     <legend>Fahrt</legend>
 
                     <div class="form-group">
+                        <label>Fahrzeug</label>
+                        <select class="form-control" name="tripVehicle" required="true">
+                            <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
+                                <option value="${vehicle.vehicleID}" <c:if test="${vehicle.vehicleID == trip.vehicleID}"> selected </c:if>>${vehicle.brand} ${vehicle.type}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label>Start-Ort</label>
                         <input class="form-control" name="placeStart" type="text" placeholder="Seriennummer"
                                value="${trip.placeStart}" required>

@@ -2,6 +2,7 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Trip;
+import com.fos.database.Vehicle;
 import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
@@ -28,7 +29,7 @@ public class TripPage extends FosPage {
         String command = request.getParameter("command");
         if (command != null) {
            if (command.startsWith(EDITTRIPTAG)) {
-                updateItem(Integer.valueOf(request.getParameter("tripID")), null, null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
+                updateItem(Integer.valueOf(request.getParameter("tripID")), Integer.valueOf(request.getParameter("tripVehicle")), null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
                         , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.valueOf(request.getParameter("type")), null);
             }
         }
@@ -69,7 +70,6 @@ public class TripPage extends FosPage {
         try {
             conn = Helper.getConnection();
                 Trip trip = Trip.getTrip(tripID, conn);
-                vehicleID = trip.getVehicleID();
                 startTime = trip.getStartTime();
                 endTime = trip.getEndTime();
                 username = trip.getUsername();
@@ -86,6 +86,23 @@ public class TripPage extends FosPage {
                 Logging.logConnectionNotCloseable(e);
             }
         }
+    }
+
+    public List<Vehicle> getVehiclesToChoose() {
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            return Vehicle.getAllVehicles(conn);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return new ArrayList<>();
     }
 
     public Trip getRequestTrip() {
