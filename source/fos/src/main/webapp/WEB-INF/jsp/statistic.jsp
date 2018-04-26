@@ -12,6 +12,7 @@ Auswertung
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
+    <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 </head>
 <body>
 <c:set var="navSelection" value="Auswertung" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
@@ -88,20 +89,23 @@ Auswertung
             </div>
         </fieldset>
     </form>
-        <div class="panel panel-default" id="auswertungen">
-            <div class="panel-heading">Auswertung</div>
-            <table class="table table-responsive">
-                <p>design anpassen</p>
-                <tr>
-                    <td>Totale Kilometer:</td>
-                    <td>${actualPage.filteredKm}</td>
-                </tr>
-                <tr>
-                    <td>Anzahl Fahrten</td>
-                    <td>${actualPage.filteredListCount}</td>
-                </tr>
-            </table>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default" id="auswertungen">
+                <div class="panel-heading">Auswertung</div>
+                <table class="table table-responsive">
+                    <tr>
+                        <td><strong>Totale Kilometer:</strong></td>
+                        <td>${actualPage.filteredKm}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anzahl Fahrten</strong></td>
+                        <td>${actualPage.filteredListCount}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
+    </div>
     <div class="panel panel-default" id="auswertungen">
         <div class="panel-heading">Liste</div>
 
@@ -120,7 +124,7 @@ Auswertung
                 <tbody>
 
                 <c:forEach items="${actualPage.filteredTrips}"
-                    var="trip">
+                           var="trip">
                     <tr>
                         <td>${trip.username}</td>
                         <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
