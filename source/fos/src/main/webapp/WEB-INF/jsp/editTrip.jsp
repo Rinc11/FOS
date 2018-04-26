@@ -31,22 +31,22 @@ Formular zum eine Fahrt abändern
 
                     <div class="form-group">
                         <label>Start-Ort</label>
-                        <input class="form-control" name="serialnumber" type="text" placeholder="Seriennummer"
+                        <input class="form-control" name="placeStart" type="text" placeholder="Seriennummer"
                                value="${trip.placeStart}" required>
                     </div>
                     <div class="form-group">
                         <label>Stopp-Ort</label>
-                        <input class="form-control" name="brand" type="text" placeholder="Tesla"
+                        <input class="form-control" name="placeEnd" type="text" placeholder="Tesla"
                                value="${trip.placeEnd}" required>
                     </div>
                     <div class="form-group">
                         <label>Kilometerstand vor der Fahrt</label>
-                        <input class="form-control" name="type" type="number"  placeholder="Model S"
+                        <input class="form-control" name="startKM" type="number"  placeholder="Model S"
                                value="${trip.startKM}" required>
                     </div>
                     <div class="form-group">
                         <label>Kilometerstand nach der Fahrt</label>
-                        <input class="form-control" name="buildYear" type="number" placeholder="2018"
+                        <input class="form-control" name="endKM" type="number" placeholder="2018"
                                value="${trip.endKM}" required>
                     </div>
                     <div class="form-group">

@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TripPage extends FosPage {
 
     private String jspFile = "/WEB-INF/jsp/trip.jsp";
+    private static final String EDITTRIPTAG = "editTrip";
 
     public TripPage(HttpServletRequest request, String jspFile) {
         this(request);
@@ -23,6 +25,13 @@ public class TripPage extends FosPage {
 
     public TripPage(HttpServletRequest request) {
         super(request, false);
+        String command = request.getParameter("command");
+        if (command != null) {
+           if (command.startsWith(EDITTRIPTAG)) {
+                updateItem(Integer.valueOf(request.getParameter("tripID")), null, null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
+                        , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.valueOf(request.getParameter("type")), null);
+            }
+        }
 
     }
 
@@ -53,6 +62,30 @@ public class TripPage extends FosPage {
             Logging.logDatabaseException(request, notLoadedExeption);
         }
         return "/WEB-INF/jsp/trip.jsp";
+    }
+
+    public void updateItem(Integer tripID, Integer vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, Integer startKM, Integer endKM, Trip.TripType type, String username) {
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+                Trip trip = Trip.getTrip(tripID, conn);
+                vehicleID = trip.getVehicleID();
+                startTime = trip.getStartTime();
+                endTime = trip.getEndTime();
+                username = trip.getUsername();
+
+                Trip.updateTrip(tripID, vehicleID, startTime, endTime, placeStart, placeEnd, startKM, endKM, type, username, conn);
+
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
     }
 
     public Trip getRequestTrip() {
