@@ -38,20 +38,13 @@ public class HomePage extends FosPage {
             }
         }
     }
-
-    /**
-     * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
-     *
-     * @return
-     */
-    public Boolean getHasOpenTrip() {
-
+    public Trip getOpenTrip() {
         Connection conn = null;
+        Trip trip = null;
         try {
             conn = Helper.getConnection();
-            if (Trip.getOpenTripByUsername(getUser().getUserName(), conn) != null){
-                return true;
-            }
+            trip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
+
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (NotLoadedException e) {
@@ -63,6 +56,21 @@ public class HomePage extends FosPage {
                 Logging.logConnectionNotCloseable(e);
             }
         }
+        return trip;
+    }
+
+
+    /**
+     * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
+     *
+     * @return
+     */
+    public Boolean getHasOpenTrip() {
+
+            if (getOpenTrip() !=null){
+                return true;
+            }
+
         return false;
     }
 
