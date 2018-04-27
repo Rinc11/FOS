@@ -103,7 +103,13 @@ public class Trip implements Serializable {
             trip.placeStart.setValue(resultSet.getString("PlaceStart"));
             trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
             trip.startKM.setValue(resultSet.getInt("Start_km"));
-            trip.endKM.setValue(resultSet.getInt("End_km"));
+
+            Integer endkm = resultSet.getInt("End_km");
+            if(resultSet.wasNull()){
+                endkm = null;
+            }
+            trip.endKM.setValue(endkm);
+
             trip.type.setValue(TripType.valueOf(resultSet.getString("TripType").toUpperCase()));
             trip.username.setValue(resultSet.getString("Username"));
 

@@ -61,7 +61,11 @@ public abstract class FosPage {
      * @return angemeldeter Benutzer
      */
     public Person getUser() {
-        return (Person) request.getSession().getAttribute("userLoggedIn");
+        Object userLoggedIn = request.getSession().getAttribute("userLoggedIn");
+        if(userLoggedIn == null){
+            return null;
+        }
+        return (Person) userLoggedIn;
     }
 
     public void tryLogIn(String userName, String password) {
