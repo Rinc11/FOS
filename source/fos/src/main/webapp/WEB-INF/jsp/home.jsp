@@ -45,7 +45,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 </div>
                                 <div class="form-group">
                                     <label>Kilometerstand</label>
-                                    <input type="number" name="startKM" class="form-control" required="true" min="0"
+                                    <input type="number" name="startKM" class="form-control value="${actualPage.lastTripByVehicle.endKM}" required="true" min="0"
                                            placeholder="Kilometerstand">
                                 </div>
                                 <div class="form-group">
@@ -133,7 +133,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                         <td>${actualPage.companyKmPrivate}km</td>
                                     </tr>
                                     <tr>
-                                        <td style="padding-right: 15px">gerschäftliche Firmen-Kilometer:</td>
+                                        <td style="padding-right: 15px">geschäftliche Firmen-Kilometer:</td>
                                         <td>${actualPage.companyKmBusiness}km</td>
                                     </tr>
                                 </table>
@@ -157,7 +157,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 <legend>Benutzerverwaltung</legend>
                                 <table>
                                     <tr>
-                                        <td style="padding-right: 15px">gesperte Benutzer:</td>
+                                        <td style="padding-right: 15px">gesperrte Benutzer:</td>
                                         <td>${actualPage.lockedUserCount}</td>
                                     </tr>
                                 </table>

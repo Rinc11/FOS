@@ -32,7 +32,8 @@ Startseite welche nach dem einlogen aufgerufen wird.
                         <th>Auto</th>
                         <th>Start</th>
                         <th>Stopp</th>
-                        <th>Anzahl Kilometer</th>
+                        <th>Start km</th>
+                        <th>Stopp km</th>
                         <th>Fahrttyp</th>
                         <th>Actions</th>
                     </tr>
@@ -45,7 +46,8 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
                             <td>${trip.placeStart}</td>
                             <td>${trip.placeEnd}</td>
-                            <td>${trip.endKM - trip.startKM}</td>
+                            <td>${trip.startKM}</td>
+                            <td>${trip.endKM}</td>
                             <td>${trip.type}</td>
                             <td>
                                 <a class="btn btn-default" href="/fahrtAendern?tripID=${trip.tripID}"><span
