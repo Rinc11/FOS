@@ -45,7 +45,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 </div>
                                 <div class="form-group">
                                     <label>Kilometerstand</label>
-                                    <input type="number" name="startKM" class="form-control value="${actualPage.lastTripByVehicle.endKM}" required="true" min="0"
+                                    <input type="number" name="startKM" class="form-control  required="true" min="0"
                                            placeholder="Kilometerstand">
                                 </div>
                                 <div class="form-group">
