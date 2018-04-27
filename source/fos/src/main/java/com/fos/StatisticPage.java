@@ -104,6 +104,10 @@ public class StatisticPage extends FosPage {
     }
 
     public int getFilteredKm(){
+        return getFilteredKm(filteredTrips, request);
+    }
+
+    public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request){
         List<Trip> filterdTripsWithKm = filteredTrips.stream().filter(f -> {
             try {
                 return f.getEndKM() != null;

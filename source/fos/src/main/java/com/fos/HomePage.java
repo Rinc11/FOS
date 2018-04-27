@@ -44,11 +44,8 @@ public class HomePage extends FosPage {
         try {
             conn = Helper.getConnection();
             trip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-
-        } catch (SQLException e) {
+        } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
-        } catch (NotLoadedException e) {
-            e.printStackTrace();
         } finally {
             try {
                 conn.close();
@@ -80,7 +77,22 @@ public class HomePage extends FosPage {
      * @return
      */
     public int getPersonalKmBusiness() {
-        return 500;
+        int result = 0;
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.GESCHÄFTLICH);
+            result = StatisticPage.getFilteredKm(filteredTrips, request);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -89,7 +101,22 @@ public class HomePage extends FosPage {
      * @return
      */
     public int getPersonalKmPrivate() {
-        return 210;
+        int result = 0;
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.PRIVAT);
+            result = StatisticPage.getFilteredKm(filteredTrips, request);
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -98,7 +125,22 @@ public class HomePage extends FosPage {
      * @return
      */
     public int getCompanyKmBusiness() {
-        return 50000;
+        int result = 0;
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null,null, null, null, Trip.TripType.GESCHÄFTLICH);
+            result = StatisticPage.getFilteredKm(filteredTrips, request);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -107,7 +149,22 @@ public class HomePage extends FosPage {
      * @return
      */
     public int getCompanyKmPrivate() {
-        return 311;
+        int result = 0;
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.PRIVAT);
+            result = StatisticPage.getFilteredKm(filteredTrips, request);
+        } catch ( SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return result;
     }
 
     public Integer getLockedUserCount() {
