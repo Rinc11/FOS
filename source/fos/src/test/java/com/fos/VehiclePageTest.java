@@ -46,7 +46,7 @@ public class VehiclePageTest {
     }
 
     /**
-     * testet die Methode updateItem als Admin-User
+     * testet die Methode updateItem als Admin-User für vehicles
      *
      * @throws SQLException
      * @throws NotLoadedException
@@ -82,11 +82,44 @@ public class VehiclePageTest {
         assertEquals(true, vehicle.isActive());
 
         //abgeänderter Test-Datensatz wieder zurücksetzen
-        Vehicle.updateVehicle(2, "136c8b4", "Honda","Civic",2010, Vehicle.VehicleFuelType.BENZIN, conn);
+        Vehicle.updateVehicle(2, "136c8b4", "Honda", "Civic", 2010, Vehicle.VehicleFuelType.BENZIN, conn);
     }
 
     /**
-     * testet die Methode removeItem als Admin-User
+     * testet die Methode updateItem als Mitarbeiter-User für vehicles
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testUpdateItemAsEmployee() throws SQLException, NotLoadedException {
+        Integer vehicleID = 2;
+        String serialnumber = "136c8b4";
+        String brand = "Honda";
+        String type = "Civic";
+        Integer buildYear = 2001;
+        Vehicle.VehicleFuelType fuelType = Vehicle.VehicleFuelType.BENZIN;
+
+        loggedInUserIsEmployee();
+
+        when(request.getParameter("command")).thenReturn("editVehicle:" + vehicleID);
+        when(request.getParameter("vehicleID")).thenReturn(vehicleID.toString());
+        when(request.getParameter("serialnumber")).thenReturn(serialnumber);
+        when(request.getParameter("brand")).thenReturn(brand);
+        when(request.getParameter("type")).thenReturn(type);
+        when(request.getParameter("buildYear")).thenReturn(buildYear.toString());
+        when(request.getParameter("fuelType")).thenReturn(fuelType.toString());
+
+        ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
+        new VehiclePage(request);
+
+        verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+        assertEquals(1, errorListArgument.getValue().size());
+        assertEquals("fehlende Rechte", errorListArgument.getValue().get(0));
+    }
+
+    /**
+     * testet die Methode removeItem als Admin-User für vehicles
      *
      * @throws SQLException
      * @throws NotLoadedException
@@ -111,7 +144,7 @@ public class VehiclePageTest {
     }
 
     /**
-     * testet die Methode removeItem als Mitarbeiter-User
+     * testet die Methode removeItem als Mitarbeiter-User für vehicles
      *
      * @throws SQLException
      * @throws NotLoadedException
