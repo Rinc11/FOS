@@ -22,22 +22,28 @@ public class HomePage extends FosPage {
 
     private static final String ADDSTARTTRIP = "startTrip";
     private static final String ADDSTOPTRIP = "stopTrip";
+
     /**
      * Logic für die Startseite
      *
-     * @param request  servlet request
+     * @param request servlet request
      */
-    public HomePage(HttpServletRequest request) throws NotLoadedException {
+    public HomePage(HttpServletRequest request) {
         super(request, false);
         String command = request.getParameter("command");
         if (command != null) {
-            if (command.startsWith(ADDSTARTTRIP)) {
-                startTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(),request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName() );
-            } else if (command.equals(ADDSTOPTRIP)) {
-                stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
+            try {
+                if (command.startsWith(ADDSTARTTRIP)) {
+                    startTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName());
+                } else if (command.equals(ADDSTOPTRIP)) {
+                    stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
+                }
+            } catch (NotLoadedException e) {
+                Logging.logDatabaseException(request, e);
             }
         }
     }
+
     public Trip getOpenTrip() {
         Connection conn = null;
         Trip trip = null;
@@ -64,9 +70,9 @@ public class HomePage extends FosPage {
      */
     public Boolean getHasOpenTrip() {
 
-            if (getOpenTrip() !=null){
-                return true;
-            }
+        if (getOpenTrip() != null) {
+            return true;
+        }
 
         return false;
     }
@@ -129,7 +135,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null,null, null, null, Trip.TripType.GESCHÄFTLICH);
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.GESCHÄFTLICH);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
@@ -155,7 +161,7 @@ public class HomePage extends FosPage {
             conn = Helper.getConnection();
             List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.PRIVAT);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
-        } catch ( SQLException e) {
+        } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
         } finally {
             try {
@@ -209,17 +215,14 @@ public class HomePage extends FosPage {
         return new ArrayList<>();
     }
 
-    public void startTrip(int vehicleID, Date startTime, String placeStart, int startKM, Trip.TripType type, String username){
+    public void startTrip(int vehicleID, Date startTime, String placeStart, int startKM, Trip.TripType type, String username) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-                Trip.startNewTrip(vehicleID, startTime, placeStart, startKM, type, username, conn);
-        }
-        catch (SQLException e) {
+            Trip.startNewTrip(vehicleID, startTime, placeStart, startKM, type, username, conn);
+        } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
-        }
-
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -227,14 +230,14 @@ public class HomePage extends FosPage {
             }
         }
     }
-    public void stopTrip(String placeEnd, int kmEnd){
+
+    public void stopTrip(String placeEnd, int kmEnd) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
             Trip openTrip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd ,openTrip.getType(), openTrip.getUsername(), conn);
-        }
-        catch (SQLException e) {
+            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd, openTrip.getType(), openTrip.getUsername(), conn);
+        } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (NotLoadedException e) {
             e.printStackTrace();

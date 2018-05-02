@@ -5,6 +5,7 @@ import com.fos.database.Person;
 import com.fos.database.Trip;
 import com.fos.database.Vehicle;
 import com.fos.tools.FosPage;
+import com.fos.tools.FosPageExport;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StatisticPage extends FosPage {
+public class StatisticPage extends FosPageExport {
     private String jspFile = "/WEB-INF/jsp/statistic.jsp";
     private List<Trip> filteredTrips = new ArrayList<>();
 
@@ -160,5 +161,10 @@ public class StatisticPage extends FosPage {
             }
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public String getExport() {
+        return "my Test; bla ; bla";
     }
 }

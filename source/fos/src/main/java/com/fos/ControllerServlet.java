@@ -2,18 +2,22 @@ package com.fos;
 
 import com.fos.database.NotLoadedException;
 import com.fos.tools.FosPage;
+import com.fos.tools.FosPageExport;
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 @WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/fahrzeugAendern", "/benutzerHinzufuegen",
-        "/benutzerAendern", "/auswertung", "/fahrt", "/fahrtAendern"})
+        "/benutzerAendern", "/auswertung", "/auswertung.csv","/fahrt", "/fahrtAendern"})//
 public class ControllerServlet extends HttpServlet {
 
     @Override
@@ -30,6 +34,7 @@ public class ControllerServlet extends HttpServlet {
 
         FosPage fosUserPage = null;
         String staticPage = "";
+        boolean exportCsv = false;
         switch (request.getRequestURI()) {
             case "/benutzer":
                 fosUserPage = new UserPage(request);
@@ -52,6 +57,10 @@ public class ControllerServlet extends HttpServlet {
             case "/auswertung":
                 fosUserPage = new StatisticPage(request);
                 break;
+            case "/auswertung.csv":
+                exportCsv = true;
+                fosUserPage = new StatisticPage(request);
+                break;
             case "/fahrt":
                 fosUserPage = new TripPage(request);
                 break;
@@ -59,25 +68,36 @@ public class ControllerServlet extends HttpServlet {
                 fosUserPage = new TripPage(request, "/WEB-INF/jsp/editTrip.jsp");
                 break;
             case "/":
-                try {
-                    fosUserPage = new HomePage(request);
-                } catch (NotLoadedException e) {
-                    Logging.logDatabaseException(request, e);
-                }
+                fosUserPage = new HomePage(request);
                 break;
             default:
                 Logging.logMessage("Seite nicht erkannt", Level.ERROR);
                 break;
         }
         if (fosUserPage != null && fosUserPage.loginValid()) {
-            request.setAttribute("actualPage", fosUserPage);
-            request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
+            if (!exportCsv) {
+                request.setAttribute("actualPage", fosUserPage);
+                request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
+            } else {
+                createCsv(response,(FosPageExport) fosUserPage);
+            }
         } else if (!staticPage.equals("")) {
             Logging.messageToUser(request, "statische Seite");
             request.getRequestDispatcher(staticPage).include(request, response);
         } else {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);
         }
+    }
+
+    //https://www.mkyong.com/java/how-to-download-file-from-website-java-jsp/
+    private void createCsv(HttpServletResponse response, FosPageExport fosPageExport) throws IOException {
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition",
+                "attachment;filename=export.csv");
+        StringBuilder sb = new StringBuilder();
+        sb.append(fosPageExport.getExport());
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(sb.toString().getBytes("UTF-8"));
     }
 
     private void checkLogout(HttpServletRequest request) {
