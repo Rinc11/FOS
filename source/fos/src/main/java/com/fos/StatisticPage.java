@@ -100,15 +100,15 @@ public class StatisticPage extends FosPageExport {
         return filteredTrips;
     }
 
-    public int getFilteredListCount(){
+    public int getFilteredListCount() {
         return filteredTrips.size();
     }
 
-    public int getFilteredKm(){
+    public int getFilteredKm() {
         return getFilteredKm(filteredTrips, request);
     }
 
-    public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request){
+    public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request) {
         List<Trip> filterdTripsWithKm = filteredTrips.stream().filter(f -> {
             try {
                 return f.getEndKM() != null;
@@ -118,7 +118,7 @@ public class StatisticPage extends FosPageExport {
             }
         }).collect(Collectors.toList());
         int sumOfKm = 0;
-        for(Trip trip : filterdTripsWithKm){
+        for (Trip trip : filterdTripsWithKm) {
             try {
                 sumOfKm += trip.getEndKM() - trip.getStartKM();
             } catch (NotLoadedException e) {
@@ -165,6 +165,20 @@ public class StatisticPage extends FosPageExport {
 
     @Override
     public String getExport() {
-        return "my Test; bla ; bla";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Fahrer;Auto;Fahrt Start;Fahrt Ziel;Kilometer;Fahrt Typ\n");
+        try {
+            for (Trip trip : filteredTrips) {
+                sb.append(trip.getUsername().replace(';', ':') + ";");
+                sb.append((trip.getVehicle().getBrand()+" " + trip.getVehicle().getType()).replace(';', ':') + ";");
+                sb.append(trip.getPlaceStart().replace(';', ':') + ";");
+                sb.append(trip.getPlaceEnd().replace(';', ':') + ";");
+                sb.append(trip.getEndKM()- trip.getStartKM() + ";");
+                sb.append(trip.getType() + "\n");
+            }
+        } catch (NotLoadedException e) {
+            Logging.logDatabaseException(request,e);
+        }
+        return sb.toString();
     }
 }

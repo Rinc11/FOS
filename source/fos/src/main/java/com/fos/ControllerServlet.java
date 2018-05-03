@@ -91,13 +91,13 @@ public class ControllerServlet extends HttpServlet {
 
     //https://www.mkyong.com/java/how-to-download-file-from-website-java-jsp/
     private void createCsv(HttpServletResponse response, FosPageExport fosPageExport) throws IOException {
-        response.setContentType("application/octet-stream");
+        response.setContentType("text/csv; charset=UTF-16");
         response.setHeader("Content-Disposition",
                 "attachment;filename=export.csv");
         StringBuilder sb = new StringBuilder();
         sb.append(fosPageExport.getExport());
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(sb.toString().getBytes("UTF-8"));
+        outputStream.write(sb.toString().getBytes("UTF-16"));
     }
 
     private void checkLogout(HttpServletRequest request) {
