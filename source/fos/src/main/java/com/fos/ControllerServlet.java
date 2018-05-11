@@ -33,7 +33,6 @@ public class ControllerServlet extends HttpServlet {
         checkLogout(request);
 
         FosPage fosUserPage = null;
-        String staticPage = "";
         boolean exportCsv = false;
         switch (request.getRequestURI()) {
             case "/benutzer":
@@ -81,9 +80,6 @@ public class ControllerServlet extends HttpServlet {
             } else {
                 createCsv(response,(FosPageExport) fosUserPage);
             }
-        } else if (!staticPage.equals("")) {
-            Logging.messageToUser(request, "statische Seite");
-            request.getRequestDispatcher(staticPage).include(request, response);
         } else {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);
         }
@@ -97,7 +93,7 @@ public class ControllerServlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         sb.append(fosPageExport.getExport());
         ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(sb.toString().getBytes("UTF-16"));
+        outputStream.write(sb.toString().getBytes("utf-16be"));
     }
 
     private void checkLogout(HttpServletRequest request) {

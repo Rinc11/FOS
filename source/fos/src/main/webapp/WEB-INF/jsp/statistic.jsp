@@ -23,7 +23,7 @@ Auswertung
     <div class="title">
         <h1>Auswertung</h1>
         <p>Laden Sie Ihre ausgewerteten Daten bequem als *.csv herunter.</p>
-        <p><a href="auswertung.csv">Export</a></p>
+        <p><a href="auswertung.csv?tripVehicle=${param.tripVehicle}&tripPerson=${param.tripPerson}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&tripType=${param.tripType}">Export</a></p>
     </div>
     <form action="auswertung" method="get">
         <fieldset id="filteroptionen">
