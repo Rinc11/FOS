@@ -33,60 +33,64 @@ public class StatisticPage extends FosPageExport {
     public StatisticPage(HttpServletRequest request) {
         super(request, false);
         Connection conn = null;
-        try {
-            String tripVehicleParameter = request.getParameter("tripVehicle");
-            Integer tripVehicleId = null;
-            if (tripVehicleParameter != null && !tripVehicleParameter.equals("")) {
-                tripVehicleId = Integer.parseInt(tripVehicleParameter);
-            }
-
-
-            String tripPersonUserName = request.getParameter("tripPerson");
-            if (tripPersonUserName == null || tripPersonUserName.equals("")) {
-                tripPersonUserName = null;
-            }
-
-            if (!getUser().getIsAdmin()) {
-                tripPersonUserName = getUser().getUserName();
-            }
-
-
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String dateFromParameter = request.getParameter("dateFrom");
-            Date dateFrom = null;
-            Date dateTo = null;
+        if(getUser() != null) {
             try {
-
-                if (dateFromParameter != null && !dateFromParameter.equals("")) {
-                    dateFrom = dateFormat.parse(dateFromParameter);
+                String tripVehicleParameter = request.getParameter("tripVehicle");
+                Integer tripVehicleId = null;
+                if (tripVehicleParameter != null && !tripVehicleParameter.equals("")) {
+                    tripVehicleId = Integer.parseInt(tripVehicleParameter);
                 }
 
-                String dateToParameter = request.getParameter("dateTo");
-                if (dateToParameter != null && !dateToParameter.equals("")) {
-                    dateTo = dateFormat.parse(dateToParameter);
-                }
-            } catch (ParseException e) {
-                Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
-            }
 
-            String tripTypeParameter = request.getParameter("tripType");
-            Trip.TripType tripType = null;
-            if (tripTypeParameter != null && !tripTypeParameter.equals("")) {
-                if (tripTypeParameter.equals("g")) {
-                    tripType = Trip.TripType.GESCHÄFTLICH;
-                } else if (tripTypeParameter.equals("p")) {
-                    tripType = Trip.TripType.PRIVAT;
+                String tripPersonUserName = request.getParameter("tripPerson");
+                if (tripPersonUserName != null && tripPersonUserName.equals("")) {
+                    tripPersonUserName = null;
                 }
-            }
-            conn = Helper.getConnection();
-            filteredTrips = Trip.getFilteredTrips(conn, tripVehicleId, tripPersonUserName, dateFrom, dateTo, tripType);
-        } catch (NotLoadedException | SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
+
+                if (!getUser().getIsAdmin()) {
+                    tripPersonUserName = getUser().getUserName();
+                }
+
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFromParameter = request.getParameter("dateFrom");
+                Date dateFrom = null;
+                Date dateTo = null;
+                try {
+
+                    if (dateFromParameter != null && !dateFromParameter.equals("")) {
+                        dateFrom = dateFormat.parse(dateFromParameter);
+                    }
+
+                    String dateToParameter = request.getParameter("dateTo");
+                    if (dateToParameter != null && !dateToParameter.equals("")) {
+                        dateTo = dateFormat.parse(dateToParameter);
+                    }
+                } catch (ParseException e) {
+                    Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
+                }
+
+                String tripTypeParameter = request.getParameter("tripType");
+                Trip.TripType tripType = null;
+                if (tripTypeParameter != null && !tripTypeParameter.equals("")) {
+                    if (tripTypeParameter.equals("g")) {
+                        tripType = Trip.TripType.GESCHÄFTLICH;
+                    } else if (tripTypeParameter.equals("p")) {
+                        tripType = Trip.TripType.PRIVAT;
+                    }
+                }
+                conn = Helper.getConnection();
+                filteredTrips = Trip.getFilteredTrips(conn, tripVehicleId, tripPersonUserName, dateFrom, dateTo, tripType);
+            } catch (NotLoadedException | SQLException e) {
+                Logging.logDatabaseException(request, e);
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    Logging.logConnectionNotCloseable(e);
+                }
             }
         }
     }

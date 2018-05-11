@@ -17,7 +17,7 @@ public abstract class FosPage {
 
     public static void logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.removeAttribute("userName");
+        session.removeAttribute("userLoggedIn");
         session.invalidate();
     }
 
