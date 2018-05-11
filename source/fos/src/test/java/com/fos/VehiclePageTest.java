@@ -46,6 +46,47 @@ public class VehiclePageTest {
     }
 
     /**
+     * testet die Methode addNewItem als Admin-User
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testAddNewItemAsAdmin() throws SQLException, NotLoadedException {
+        Integer vehicleID = 3;
+        String serialnumber = "979";
+        String brand = "VW";
+        String type = "Golf";
+        Integer buildYear = 2014;
+        Vehicle.VehicleFuelType fuelType = Vehicle.VehicleFuelType.BENZIN;
+
+        loggedInUserIsAdmin();
+
+        when(request.getParameter("command")).thenReturn("addVehicle");
+        when(request.getParameter("vehicleID")).thenReturn(vehicleID.toString());
+        when(request.getParameter("serialnumber")).thenReturn(serialnumber);
+        when(request.getParameter("brand")).thenReturn(brand);
+        when(request.getParameter("type")).thenReturn(type);
+        when(request.getParameter("buildYear")).thenReturn(buildYear.toString());
+        when(request.getParameter("fuelType")).thenReturn(fuelType.toString());
+
+        new VehiclePage(request);
+
+        Vehicle vehicle = Vehicle.getVehicle(vehicleID, conn);
+        assertEquals(vehicleID, vehicle.getVehicleID());
+        assertEquals(serialnumber, vehicle.getSerialnumber());
+        assertEquals(brand, vehicle.getBrand());
+        assertEquals(type, vehicle.getType());
+        assertEquals(buildYear, vehicle.getBuildYear());
+        assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
+        assertEquals(true, vehicle.isActive());
+
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Vehicles\" SET \"Active_YN\" = TRUE WHERE \"VehicleID\" = ?");
+        preparedStatement.setInt(1, testVehicleID);
+        preparedStatement.execute();
+    }
+
+    /**
      * testet die Methode updateItem als Admin-User für vehicles
      *
      * @throws SQLException
