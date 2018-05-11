@@ -87,6 +87,39 @@ public class VehiclePageTest {
     }
 
     /**
+     * testet die Methode addNewItem als Mitarbeiter-User
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testAddNewItemAsEmployee() throws SQLException, NotLoadedException {
+        Integer vehicleID = 3;
+        String serialnumber = "979";
+        String brand = "VW";
+        String type = "Golf";
+        Integer buildYear = 2014;
+        Vehicle.VehicleFuelType fuelType = Vehicle.VehicleFuelType.BENZIN;
+
+        loggedInUserIsEmployee();
+
+        when(request.getParameter("command")).thenReturn("addVehicle");
+        when(request.getParameter("vehicleID")).thenReturn(vehicleID.toString());
+        when(request.getParameter("serialnumber")).thenReturn(serialnumber);
+        when(request.getParameter("brand")).thenReturn(brand);
+        when(request.getParameter("type")).thenReturn(type);
+        when(request.getParameter("buildYear")).thenReturn(buildYear.toString());
+        when(request.getParameter("fuelType")).thenReturn(fuelType.toString());
+
+        ArgumentCaptor<List<String>> errorListArgument = ArgumentCaptor.forClass(List.class);
+        new VehiclePage(request);
+
+        verify(request).setAttribute(eq("errorMessage"), errorListArgument.capture());
+        assertEquals(1, errorListArgument.getValue().size());
+        assertEquals("fehlende Rechte", errorListArgument.getValue().get(0));
+    }
+
+    /**
      * testet die Methode updateItem als Admin-User für vehicles
      *
      * @throws SQLException
