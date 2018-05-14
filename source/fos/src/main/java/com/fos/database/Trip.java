@@ -171,6 +171,28 @@ public class Trip implements Serializable {
         return trip;
     }
 
+    public static Trip getLastTripByVehicle(int vehicleID, Connection conn) throws SQLException {
+        Trip trip = null;
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
+                " FROM \"Trip\" WHERE \"VehicleID\" = '"+ vehicleID +"' ORDER BY \"StartTime\" DESC LIMIT 1");
+
+        if (resultSet.next()) {
+
+            trip = new Trip(resultSet.getInt("TripID"));
+            trip.vehicleID.setValue(resultSet.getInt("VehicleID"));
+            trip.startTime.setValue(resultSet.getTimestamp("StartTime"));
+            trip.endTime.setValue(resultSet.getTimestamp("EndTime"));
+            trip.placeStart.setValue(resultSet.getString("PlaceStart"));
+            trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
+            trip.startKM.setValue(resultSet.getInt("Start_km"));
+            trip.endKM.setValue(resultSet.getInt("End_km"));
+            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
+            trip.username.setValue(resultSet.getString("Username"));
+        }
+        return trip;
+    }
+
 
     private final DbObject<Integer> tripID = new DbObject<>();
     private final DbObject<Integer> vehicleID = new DbObject<>();

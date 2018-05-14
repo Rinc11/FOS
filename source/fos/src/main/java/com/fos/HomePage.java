@@ -77,6 +77,27 @@ public class HomePage extends FosPage {
         return false;
     }
 
+    public Trip getLastTripByVehicle(int id){
+
+        Connection conn = null;
+        Trip trip = null;
+        try {
+            conn = Helper.getConnection();
+            trip = Trip.getLastTripByVehicle(id, conn);
+
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return trip;
+    }
+
     /**
      * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
      *
