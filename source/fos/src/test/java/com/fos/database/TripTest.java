@@ -46,6 +46,13 @@ public class TripTest {
         Assert.assertEquals((Integer) 1,  trip.getVehicleID());
         Assert.assertEquals(timestamp,  trip.getStartTime());
     }
+    @Test
+    public void testGetLastTripByVehicle() throws SQLException, NotLoadedException {
+        Connection conn = Helper.getConnection();
+        Trip trip = Trip.getLastTripByVehicle(1, conn);
+        Assert.assertEquals(trip.getPlaceEnd(), "Zürich");
+
+    }
 
 
 }
