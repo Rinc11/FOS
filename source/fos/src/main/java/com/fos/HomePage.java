@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,60 +37,6 @@ public class HomePage extends FosPage {
         }
     }
 
-
-    public Trip getOpenTrip() {
-        Connection conn = null;
-        Trip trip = null;
-        try {
-            conn = Helper.getConnection();
-            trip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-        } catch (NotLoadedException | SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-        return trip;
-    }
-
-
-    /**
-     * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
-     *
-     * @return
-     */
-    public Boolean getHasOpenTrip() {
-
-        if (getOpenTrip() != null) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public Trip getLastTripByVehicle(int id){
-
-        Connection conn = null;
-        Trip trip = null;
-        try {
-            conn = Helper.getConnection();
-            trip = Trip.getLastTripByVehicle(id, conn);
-
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        }
-        finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-        return trip;
-    }
 
     /**
      * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
@@ -229,41 +174,6 @@ public class HomePage extends FosPage {
             }
         }
         return new ArrayList<>();
-    }
-
-    public void startTrip(int vehicleID, Date startTime, String placeStart, int startKM, Trip.TripType type, String username) {
-        Connection conn = null;
-        try {
-            conn = Helper.getConnection();
-            Trip.startNewTrip(vehicleID, startTime, placeStart, startKM, type, username, conn);
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-    }
-
-    public void stopTrip(String placeEnd, int kmEnd) {
-        Connection conn = null;
-        try {
-            conn = Helper.getConnection();
-            Trip openTrip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd, openTrip.getType(), openTrip.getUsername(), conn);
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } catch (NotLoadedException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
     }
 
     @Override
