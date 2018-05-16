@@ -21,6 +21,7 @@ public class TripPage extends FosPage {
     private static final String ADDSTARTTRIP = "startTrip";
     private static final String ADDSTOPTRIP = "stopTrip";
     private static final String SAVEVEHICLE = "saveVehicle";
+    private static final String DELETEVEHICLE = "deleteVehicle";
 
 
     public TripPage(HttpServletRequest request, String jspFile) {
@@ -45,6 +46,9 @@ public class TripPage extends FosPage {
                else if (command.startsWith(SAVEVEHICLE)) {
                     request.getSession().setAttribute("vehicle", request.getParameter("tripVehicle"));
                 }
+           else if (command.startsWith(DELETEVEHICLE)) {
+               request.getSession().setAttribute("vehicle", null);
+           }
         } catch (NotLoadedException e) {
             Logging.logDatabaseException(request, e);
         }

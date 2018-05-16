@@ -21,6 +21,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <p>Ihre persönliche Startseite</p>
     </div>
     <div class="row">
+    <c:if test="${vehicle == null}">
         <div class="col-lg-12">
         <div class="panel panel-default" id="formStart">
             <div class="panel-heading">Formular
@@ -44,6 +45,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
             </div>
         </div>
         </div>
+    </c:if>
         <c:if test="${userLoggedIn.isAdmin == false}">
             <div class="col-lg-6">
                 <div class="panel panel-default">

@@ -55,8 +55,11 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             <legend>Fahrt starten</legend>
                             <div class="form-group">
                                 <label>Fahrzeug</label>
-                                <p>Sie haben folgendes Fahrzeug gewählt: <b>${actualPage.vehicle.brand} ${actualPage.vehicle.type}</b></p>
+                                <p>Sie haben folgendes Fahrzeug gewählt: <b>${actualPage.vehicle.brand} ${actualPage.vehicle.type}</b> |
+                                <form action="/fahrt" method="post"><input type="hidden" name="command" value="deleteVehicle">
+                                <button type="submit" class="btn btn-default">Fahrzeug ändern</button></form></p>
                             </div>
+                            <form action="/fahrt" method="post">
                             <div class="form-group">
                                 <label>Ortschaft</label>
                                 <input id="kmdfasdsf" type="text" id="startPlace" name="placeStart" class="form-control" required="true"
