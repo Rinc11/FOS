@@ -68,6 +68,14 @@ public abstract class FosPage {
         return (Person) userLoggedIn;
     }
 
+    public int getSelectedVehicleID() {
+        Object vehicleID = request.getSession().getAttribute("vehicle");
+        if(vehicleID == null){
+            return 0;
+        }
+        return (int) vehicleID;
+    }
+
     public void tryLogIn(String userName, String password) {
         //check ob die Anmeldedaten übertragen wuden
         if (userName == null && password == null) {

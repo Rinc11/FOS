@@ -21,75 +21,29 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <p>Ihre persönliche Startseite</p>
     </div>
     <div class="row">
-        <c:if test="${actualPage.hasOpenTrip == false}">
-            <div class="col-lg-6">
-                <div class="panel panel-default" id="formStart">
-                    <div class="panel-heading">Formular
-                    </div>
-                    <div class="panel-body">
-                        <form action="/" method="post">
-                            <fieldset>
-                                <legend>Fahrt starten</legend>
-                                <div class="form-group">
-                                    <label>Fahrzeug</label>
-                                    <select class="form-control" name="tripVehicle" required="true">
-                                        <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
-                                            <option value="${vehicle.vehicleID}">${vehicle.brand} ${vehicle.type}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Ortschaft</label>
-                                    <input type="text" name="placeStart" class="form-control" required="true"
-                                           placeholder="Ortschaft">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kilometerstand</label>
-                                    <input type="number" name="startKM" class="form-control  required="true" min="0"
-                                           placeholder="Kilometerstand">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fahrttyp</label>
-                                    <select class="form-control" name="type">
-                                        <option selected>GESCHÄFTLICH</option>
-                                        <option>PRIVAT</option>
-                                    </select>
-                                </div>
-                                <input type="hidden" name="command" value="startTrip">
-                                <button type="submit" class="btn btn-default">Senden</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+        <div class="col-lg-12">
+        <div class="panel panel-default" id="formStart">
+            <div class="panel-heading">Formular
             </div>
-        </c:if>
-        <c:if test="${actualPage.hasOpenTrip}">
-            <div class="col-lg-6">
-                <div class="panel panel-default" id="formStop">
-                    <div class="panel-heading">Formular
-                    </div>
-                    <div class="panel-body">
-                        <form>
-                            <fieldset>
-                                <legend>Fahrt stoppen</legend>
-                                <div class="form-group">
-                                    <label>Ortschaft</label>
-                                    <input type="text" required="true" name="place" class="form-control"
-                                           placeholder="Ortschaft">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kilometerstand</label>
-                                    <input type="number" name="kmEnd" min="${actualPage.openTrip.startKM}" required="true" class="form-control"
-                                           placeholder="Kilometerstand">
-                                </div>
-                                <input type="hidden" name="command" value="stopTrip">
-                                <button type="submit" class="btn btn-default">Senden</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+            <div class="panel-body">
+                <form action="/fahrt" method="post">
+                    <fieldset>
+                        <legend>Fahrzeug wählen</legend>
+                        <div class="form-group">
+                            <label>Fahrzeug</label>
+                            <select class="form-control" name="tripVehicle" required="true" onload="setLastTripData(this);" onchange="lastTripData(this);">
+                                <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
+                                    <option value="${vehicle.vehicleID}">${vehicle.brand} ${vehicle.type}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <input type="hidden" name="command" value="saveVehicle">
+                        <button type="submit" class="btn btn-default">Senden</button>
+                    </fieldset>
+                </form>
             </div>
-        </c:if>
+        </div>
+        </div>
         <c:if test="${userLoggedIn.isAdmin == false}">
             <div class="col-lg-6">
                 <div class="panel panel-default">
@@ -161,6 +115,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                         <td>${actualPage.lockedUserCount}</td>
                                     </tr>
                                 </table>
+                                <br>
                                 <br>
                                 <button type="submit" class="btn btn-default">zur Benutzerverwaltung</button>
                             </fieldset>

@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class HomePage extends FosPage {
 
-    private static final String ADDSTARTTRIP = "startTrip";
-    private static final String ADDSTOPTRIP = "stopTrip";
+    private static final String SAVEVEHICLE = "saveVehicle";
+
 
     /**
      * Logic für die Startseite
@@ -32,17 +32,12 @@ public class HomePage extends FosPage {
         super(request, false);
         String command = request.getParameter("command");
         if (command != null) {
-            try {
-                if (command.startsWith(ADDSTARTTRIP)) {
-                    startTrip(Integer.valueOf(request.getParameter("tripVehicle")), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName());
-                } else if (command.equals(ADDSTOPTRIP)) {
-                    stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
+                if (command.startsWith(SAVEVEHICLE)) {
+                    request.getSession().setAttribute("vehicle", request.getParameter("tripVehicle"));
                 }
-            } catch (NotLoadedException e) {
-                Logging.logDatabaseException(request, e);
-            }
         }
     }
+
 
     public Trip getOpenTrip() {
         Connection conn = null;
