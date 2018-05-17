@@ -83,10 +83,10 @@ Auswertung
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label> </label>
                     <div class="form-group">
-                        <a href="auswertung" class="btn btn-default">Zurücksetzen</a>
+                        <a href="auswertung" class="btn btn-default">Reset</a>
                         <button type="submit" class="btn btn-default">Filtern</button>
                         <a class="btn btn-default"
                            href="auswertung.csv?tripVehicle=${param.tripVehicle}&tripPerson=${param.tripPerson}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&tripType=${param.tripType}">Export</a>
@@ -97,10 +97,46 @@ Auswertung
     </form>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script>
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+
+                    var data = google.visualization.arrayToDataTable([
+                        ['Task', 'Hours per Day'],
+                        ['Geschäftlich',      ${actualPage.filteredKmBusiness}],
+                        ['Privat',     ${actualPage.filteredKmPrivat}],
+
+
+                    ]);
+
+                    var options = {
+                        title: 'Vergleich Fahrten: Privat/Geschäftlich'
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                    chart.draw(data, options);
+                }
+            </script>
+            <div id="piechart" style="width: 100%; height: 35%;"></div>
+            <br>
+        </div>
+        <div class="col-md-6">
             <div class="panel panel-default" id="auswertungen">
                 <div class="panel-heading">Auswertung</div>
                 <table class="table table-responsive">
+                    <tr>
+                        <td><strong>Anzahl Kilometer Privat</strong></td>
+                        <td>${actualPage.filteredKmPrivat}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anzahl Kilometer Geschäftlich</strong></td>
+                        <td>${actualPage.filteredKmBusiness}</td>
+                    </tr>
                     <tr>
                         <td><strong>Totale Kilometer:</strong></td>
                         <td>${actualPage.filteredKm}</td>
@@ -112,6 +148,7 @@ Auswertung
                 </table>
             </div>
         </div>
+
     </div>
     <div class="panel panel-default" id="auswertungen">
         <div class="panel-heading">Liste</div>
