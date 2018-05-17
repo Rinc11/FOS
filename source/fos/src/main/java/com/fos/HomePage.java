@@ -157,8 +157,6 @@ public class HomePage extends FosPage {
         return null;
     }
 
-
-
     @Override
     public String getJspPath() {
         return "/WEB-INF/jsp/home.jsp";

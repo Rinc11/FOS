@@ -133,23 +133,6 @@ public class StatisticPage extends FosPageExport {
     }
 
 
-    public List<Vehicle> getVehiclesToChoose() {
-        Connection conn = null;
-        try {
-            conn = Helper.getConnection();
-            return Vehicle.getAllVehicles(conn);
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-        return new ArrayList<>();
-    }
-
     public List<Person> getPersonToChoose() {
         Connection conn = null;
         try {
