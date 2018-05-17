@@ -108,6 +108,21 @@ footer {
     background-size: contain;
 }
 
+footer {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.btn-default {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.glyphicon glyphicon-trash {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 @media screen and (max-width: 767px) {
   #FOSmaske {
     width: 50%;
