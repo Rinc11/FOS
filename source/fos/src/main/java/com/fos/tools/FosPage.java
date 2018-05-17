@@ -2,12 +2,15 @@ package com.fos.tools;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
+import com.fos.database.Vehicle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Logik die für alle Seiten des fos Projektes gilt
@@ -122,5 +125,21 @@ public abstract class FosPage {
                 Logging.logConnectionNotCloseable(e);
             }
         }
+    }
+    public List<Vehicle> getVehiclesToChoose() {
+        Connection conn = null;
+        try {
+            conn = Helper.getConnection();
+            return Vehicle.getAllVehicles(conn);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return new ArrayList<>();
     }
 }

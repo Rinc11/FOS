@@ -217,22 +217,7 @@ public class TripPage extends FosPage {
         }
     }
 
-    public List<Vehicle> getVehiclesToChoose() {
-        Connection conn = null;
-        try {
-            conn = Helper.getConnection();
-            return Vehicle.getAllVehicles(conn);
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-        return new ArrayList<>();
-    }
+
 
     public Trip getRequestTrip() {
         Integer tripID = Integer.valueOf(request.getParameter("tripID"));
