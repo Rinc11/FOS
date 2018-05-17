@@ -21,31 +21,32 @@ Startseite welche nach dem einlogen aufgerufen wird.
         <p>Ihre persönliche Startseite</p>
     </div>
     <div class="row">
-    <c:if test="${vehicle == null}">
-        <div class="col-lg-12">
-        <div class="panel panel-default" id="formStart">
-            <div class="panel-heading">Formular
+        <c:if test="${vehicle == null}">
+            <div class="col-lg-12">
+                <div class="panel panel-default" id="formStart">
+                    <div class="panel-heading">Formular
+                    </div>
+                    <div class="panel-body">
+                        <form action="/fahrt" method="post">
+                            <fieldset>
+                                <legend>Fahrzeug wählen</legend>
+                                <div class="form-group">
+                                    <label>Fahrzeug</label>
+                                    <select class="form-control" name="tripVehicle" required="true"
+                                            onload="setLastTripData(this);" onchange="lastTripData(this);">
+                                        <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
+                                            <option value="${vehicle.vehicleID}">${vehicle.brand} ${vehicle.type}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="command" value="saveVehicle">
+                                <button type="submit" class="btn btn-default">Wählen</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <form action="/fahrt" method="post">
-                    <fieldset>
-                        <legend>Fahrzeug wählen</legend>
-                        <div class="form-group">
-                            <label>Fahrzeug</label>
-                            <select class="form-control" name="tripVehicle" required="true" onload="setLastTripData(this);" onchange="lastTripData(this);">
-                                <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
-                                    <option value="${vehicle.vehicleID}">${vehicle.brand} ${vehicle.type}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <input type="hidden" name="command" value="saveVehicle">
-                        <button type="submit" class="btn btn-default">Senden</button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-        </div>
-    </c:if>
+        </c:if>
         <c:if test="${userLoggedIn.isAdmin == false}">
             <div class="col-lg-6">
                 <div class="panel panel-default">
@@ -57,11 +58,11 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 <legend>Persönliche Auwertung</legend>
                                 <table>
                                     <tr>
-                                        <td style="padding-right: 15px">private Kilometer:  </td>
+                                        <td style="padding-right: 15px">private Kilometer:</td>
                                         <td>${actualPage.personalKmPrivate}km</td>
                                     </tr>
                                     <tr>
-                                        <td style="padding-right: 15px">gerschäftliche Kilometer:  </td>
+                                        <td style="padding-right: 15px">gerschäftliche Kilometer:</td>
                                         <td>${actualPage.personalKmBusiness}km</td>
                                     </tr>
                                 </table>
@@ -128,6 +129,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
         </c:if>
     </div>
 </div>
+<br>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>
 </html>

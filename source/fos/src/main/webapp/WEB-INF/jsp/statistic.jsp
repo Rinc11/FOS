@@ -12,7 +12,7 @@ Auswertung
 <head>
     <title>FOS</title>
     <jsp:include page="jspTemplates/importHead.jsp"/>
-    <link rel="stylesheet" type="text/css" href="print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="print.css" media="print"/>
 </head>
 <body>
 <c:set var="navSelection" value="Auswertung" scope="request"/><%--setzt eine Variable um die Navigation richtig zu setzen--%>
@@ -23,9 +23,11 @@ Auswertung
     <div class="title">
         <h1>Auswertung</h1>
         <p>Laden Sie Ihre ausgewerteten Daten bequem als *.csv herunter.</p>
-        <p><a href="auswertung.csv?tripVehicle=${param.tripVehicle}&tripPerson=${param.tripPerson}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&tripType=${param.tripType}">Export</a></p>
+
     </div>
     <form action="auswertung" method="get">
+        <legend style="color: rgb(64, 99, 180);"><a class="btn btn-default" onclick="toggle('filteroptionen')">Filter
+            ein-/ausblenden</a></legend>
         <fieldset id="filteroptionen">
 
             <div class="row">
@@ -86,6 +88,8 @@ Auswertung
                     <div class="form-group">
                         <a href="auswertung" class="btn btn-default">Zurücksetzen</a>
                         <button type="submit" class="btn btn-default">Filtern</button>
+                        <a class="btn btn-default"
+                           href="auswertung.csv?tripVehicle=${param.tripVehicle}&tripPerson=${param.tripPerson}&dateFrom=${param.dateFrom}&dateTo=${param.dateTo}&tripType=${param.tripType}">Export</a>
                     </div>
                 </div>
             </div>
@@ -111,37 +115,40 @@ Auswertung
     </div>
     <div class="panel panel-default" id="auswertungen">
         <div class="panel-heading">Liste</div>
-
-        <div class="scrollme">
-            <table class="table table-responsive">
-                <thead>
-                <tr>
-                    <th>Fahrer</th>
-                    <th>Auto</th>
-                    <th>Fahrt Start</th>
-                    <th>Fahrt Ziel</th>
-                    <th>Kilometer</th>
-                    <th>Fahrt Typ</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <c:forEach items="${actualPage.filteredTrips}"
-                           var="trip">
+        <div class="panel-body">
+            <div class="scrollme">
+                <table class="table table-responsive">
+                    <thead>
                     <tr>
-                        <td>${trip.username}</td>
-                        <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
-                        <td>${trip.placeStart}</td>
-                        <td>${trip.placeEnd}</td>
-                        <td>${trip.endKM - trip.startKM}</td>
-                        <td>${trip.type}</td>
+                        <th>Fahrer</th>
+                        <th>Auto</th>
+                        <th>Fahrt Start</th>
+                        <th>Fahrt Ziel</th>
+                        <th>Kilometer</th>
+                        <th>Fahrt Typ</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+
+                    <c:forEach items="${actualPage.filteredTrips}"
+                               var="trip">
+                        <tr>
+                            <td>${trip.username}</td>
+                            <td>${trip.vehicle.brand} ${trip.vehicle.type}</td>
+                            <td>${trip.placeStart}</td>
+                            <td>${trip.placeEnd}</td>
+                            <td>${trip.endKM - trip.startKM}</td>
+                            <td>${trip.type}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+<br>
+<br>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>
 </html>

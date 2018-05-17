@@ -31,14 +31,15 @@ Startseite welche nach dem einlogen aufgerufen wird.
                         <legend>Fahrzeug wählen</legend>
                         <div class="form-group">
                             <label>Fahrzeug</label>
-                            <select class="form-control" name="tripVehicle" required="true" onload="setLastTripData(this);" onchange="lastTripData(this);">
+                            <select class="form-control" name="tripVehicle" required="true"
+                                    onload="setLastTripData(this);" onchange="lastTripData(this);">
                                 <c:forEach var="vehicle" items="${actualPage.vehiclesToChoose}">
                                     <option value="${vehicle.vehicleID}">${vehicle.brand} ${vehicle.type}</option>
                                 </c:forEach>
                             </select>
                         </div>
                         <input type="hidden" name="command" value="saveVehicle">
-                        <button type="submit" class="btn btn-default">Senden</button>
+                        <button type="submit" class="btn btn-default">Wählen</button>
                     </fieldset>
                 </form>
             </div>
@@ -46,28 +47,36 @@ Startseite welche nach dem einlogen aufgerufen wird.
     </c:if>
     <c:if test="${actualPage.hasOpenTrip == false && vehicle != null}">
 
-            <div class="panel panel-default" id="formStart">
-                <div class="panel-heading">Formular
-                </div>
-                <div class="panel-body">
-                    <form action="/fahrt" method="post">
-                        <fieldset>
-                            <legend>Fahrt starten</legend>
-                            <div class="form-group">
-                                <label>Fahrzeug</label>
-                                <p>Sie haben folgendes Fahrzeug gewählt: <b>${actualPage.vehicle.brand} ${actualPage.vehicle.type}</b> |
-                                <form action="/fahrt" method="post"><input type="hidden" name="command" value="deleteVehicle">
-                                <button type="submit" class="btn btn-default">Fahrzeug ändern</button></form></p>
-                            </div>
-                            <form action="/fahrt" method="post">
+        <div class="panel panel-default" id="formStart">
+            <div class="panel-heading">Formular
+            </div>
+            <div class="panel-body">
+                <form action="/fahrt" method="post">
+                    <fieldset>
+                        <legend>Fahrt starten</legend>
+                        <div class="form-group">
+                            <label>Fahrzeug</label>
+                            <p>Sie haben folgendes Fahrzeug gewählt:
+                                <b>${actualPage.vehicle.brand} ${actualPage.vehicle.type}</b> |
+                            <form action="/fahrt" method="post"><input type="hidden" name="command"
+                                                                       value="deleteVehicle">
+                                <button type="submit" class="btn btn-default">Fahrzeug ändern</button>
+                            </form>
+                            </p>
+                        </div>
+                        <form action="/fahrt" method="post">
                             <div class="form-group">
                                 <label>Ortschaft</label>
-                                <input id="kmdfasdsf" type="text" id="startPlace" name="placeStart" class="form-control" required="true"
-                                       placeholder="Ortschaft" value="${actualPage.getLastTripByVehicle(vehicle).placeEnd}">
+                                <input id="kmdfasdsf" type="text" id="startPlace" name="placeStart" class="form-control"
+                                       required="true"
+                                       placeholder="Ortschaft"
+                                       value="${actualPage.getLastTripByVehicle(vehicle).placeEnd}">
                             </div>
                             <div class="form-group">
                                 <label>Kilometerstand</label>
-                                <input  type="number" name="startKM" class="form-control" required="true" min="0" placeholder="Kilometerstand" value="${actualPage.getLastTripByVehicle(vehicle).endKM}">
+                                <input type="number" name="startKM" class="form-control" required="true" min="0"
+                                       placeholder="Kilometerstand"
+                                       value="${actualPage.getLastTripByVehicle(vehicle).endKM}">
                             </div>
                             <div class="form-group">
                                 <label>Fahrttyp</label>
@@ -78,37 +87,38 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             </div>
                             <input type="hidden" name="command" value="startTrip">
                             <button type="submit" class="btn btn-default">Senden</button>
-                        </fieldset>
-                    </form>
-                </div>
+                    </fieldset>
+                </form>
             </div>
+        </div>
 
     </c:if>
     <c:if test="${actualPage.hasOpenTrip}">
 
-            <div class="panel panel-default" id="formStop">
-                <div class="panel-heading">Formular
-                </div>
-                <div class="panel-body">
-                    <form>
-                        <fieldset>
-                            <legend>Fahrt stoppen</legend>
-                            <div class="form-group">
-                                <label>Ortschaft</label>
-                                <input type="text" required="true" name="place" class="form-control"
-                                       placeholder="Ortschaft">
-                            </div>
-                            <div class="form-group">
-                                <label>Kilometerstand</label>
-                                <input type="number" name="kmEnd" min="${actualPage.openTrip.startKM}" required="true" class="form-control"
-                                       placeholder="Kilometerstand">
-                            </div>
-                            <input type="hidden" name="command" value="stopTrip">
-                            <button type="submit" class="btn btn-default">Senden</button>
-                        </fieldset>
-                    </form>
-                </div>
+        <div class="panel panel-default" id="formStop">
+            <div class="panel-heading">Formular
             </div>
+            <div class="panel-body">
+                <form>
+                    <fieldset>
+                        <legend>Fahrt stoppen</legend>
+                        <div class="form-group">
+                            <label>Ortschaft</label>
+                            <input type="text" required="true" name="place" class="form-control"
+                                   placeholder="Ortschaft">
+                        </div>
+                        <div class="form-group">
+                            <label>Kilometerstand</label>
+                            <input type="number" name="kmEnd" min="${actualPage.openTrip.startKM}" required="true"
+                                   class="form-control"
+                                   placeholder="Kilometerstand">
+                        </div>
+                        <input type="hidden" name="command" value="stopTrip">
+                        <button type="submit" class="btn btn-default">Senden</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
 
     </c:if>
     <div class="panel panel-default" id="tables">
@@ -119,7 +129,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                 <table class="table table-responsive">
                     <thead>
                     <tr>
-                        <th>Fahrtnr.</th>
+                        <th>Nr.</th>
                         <th>Auto</th>
                         <th>Start</th>
                         <th>Stopp</th>
@@ -152,6 +162,8 @@ Startseite welche nach dem einlogen aufgerufen wird.
         </div>
     </div>
 </div>
+<br>
+<br>
 <jsp:include page="jspTemplates/footer.jsp"/>
 </body>
 </html>
