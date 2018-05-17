@@ -84,12 +84,14 @@ Auswertung
                 <div class="col-md-3">
                     <label> </label>
                     <div class="form-group">
+                        <a href="auswertung" class="btn btn-default">Zurücksetzen</a>
                         <button type="submit" class="btn btn-default">Filtern</button>
                     </div>
                 </div>
             </div>
         </fieldset>
     </form>
+
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default" id="auswertungen">
