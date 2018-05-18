@@ -95,7 +95,7 @@ Formular für einen neuen Benutzer oder zum einen Benutzer ändern
                         </select>
                     </div>
                     <input name="command" value="addUser" type="hidden">
-                    <button type="submit" class="btn btn-default">Senden</button>
+                    <button type="submit" class="btn btn-default">Speichern</button>
                 </fieldset>
             </form>
         </div>

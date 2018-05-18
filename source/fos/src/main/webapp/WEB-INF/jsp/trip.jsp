@@ -86,7 +86,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                 </select>
                             </div>
                             <input type="hidden" name="command" value="startTrip">
-                            <button type="submit" class="btn btn-default">Senden</button>
+                            <button type="submit" class="btn btn-default">Fahrt starten</button>
                     </fieldset>
                 </form>
             </div>
@@ -114,7 +114,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                                    placeholder="Kilometerstand">
                         </div>
                         <input type="hidden" name="command" value="stopTrip">
-                        <button type="submit" class="btn btn-default">Senden</button>
+                        <button type="submit" class="btn btn-default">Fahrt stoppen</button>
                     </fieldset>
                 </form>
             </div>
