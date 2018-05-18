@@ -130,7 +130,7 @@ public class StatisticPage extends FosPageExport {
         int sumOfKm = 0;
         for (Trip trip : filterdTripsWithKm) {
             try {
-                if(trip.getType() == type){
+                if(type == null || trip.getType() == type){
                 sumOfKm += trip.getEndKM() - trip.getStartKM();}
             } catch (NotLoadedException e) {
                 Logging.logDatabaseException(request, e);
@@ -140,23 +140,7 @@ public class StatisticPage extends FosPageExport {
     }
 
     public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request) {
-        List<Trip> filterdTripsWithKm = filteredTrips.stream().filter(f -> {
-            try {
-                return f.getEndKM() != null;
-            } catch (NotLoadedException e) {
-                Logging.logDatabaseException(request, e);
-                return false;
-            }
-        }).collect(Collectors.toList());
-        int sumOfKm = 0;
-        for (Trip trip : filterdTripsWithKm) {
-            try {
-                    sumOfKm += trip.getEndKM() - trip.getStartKM();
-            } catch (NotLoadedException e) {
-                Logging.logDatabaseException(request, e);
-            }
-        }
-        return sumOfKm;
+        return  getFilteredKm(filteredTrips, request, null);
     }
 
 

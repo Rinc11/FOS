@@ -98,7 +98,7 @@ Auswertung
 
     <div class="row">
         <div class="col-md-6">
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
             <script>
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(drawChart);
@@ -106,7 +106,7 @@ Auswertung
                 function drawChart() {
 
                     var data = google.visualization.arrayToDataTable([
-                        ['Task', 'Hours per Day'],
+                        ['Type', 'KM'],
                         ['Geschäftlich',      ${actualPage.filteredKmBusiness}],
                         ['Privat',     ${actualPage.filteredKmPrivat}],
 
@@ -122,7 +122,7 @@ Auswertung
                     chart.draw(data, options);
                 }
             </script>
-            <div id="piechart" style="width: 100%; height: 35%;"></div>
+            <div id="piechart" ></div>
             <br>
         </div>
         <div class="col-md-6">
@@ -145,6 +145,7 @@ Auswertung
                         <td><strong>Anzahl Fahrten</strong></td>
                         <td>${actualPage.filteredListCount}</td>
                     </tr>
+
                 </table>
             </div>
         </div>

@@ -33,25 +33,22 @@ public class TripPage extends FosPage {
         super(request, false);
         String command = request.getParameter("command");
         if (command != null) {
-            try{
-           if (command.startsWith(EDITTRIPTAG)) {
-                updateItem(Integer.valueOf(request.getParameter("tripID")), Integer.valueOf(request.getParameter("tripVehicle")), null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
-                        , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.valueOf(request.getParameter("type")), null);
-            }
-            else if (command.startsWith(ADDSTARTTRIP)) {
-                startTrip(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName());
-            } else if (command.equals(ADDSTOPTRIP)) {
-                stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
-            }
-               else if (command.startsWith(SAVEVEHICLE)) {
+            try {
+                if (command.startsWith(EDITTRIPTAG)) {
+                    updateItem(Integer.valueOf(request.getParameter("tripID")), Integer.valueOf(request.getParameter("tripVehicle")), null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
+                            , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.valueOf(request.getParameter("type")), null);
+                } else if (command.startsWith(ADDSTARTTRIP)) {
+                    startTrip(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName());
+                } else if (command.equals(ADDSTOPTRIP)) {
+                    stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
+                } else if (command.startsWith(SAVEVEHICLE)) {
                     request.getSession().setAttribute("vehicle", request.getParameter("tripVehicle"));
+                } else if (command.startsWith(DELETEVEHICLE)) {
+                    request.getSession().setAttribute("vehicle", null);
                 }
-           else if (command.startsWith(DELETEVEHICLE)) {
-               request.getSession().setAttribute("vehicle", null);
-           }
-        } catch (NotLoadedException e) {
-            Logging.logDatabaseException(request, e);
-        }
+            } catch (NotLoadedException e) {
+                Logging.logDatabaseException(request, e);
+            }
         }
 
     }
@@ -89,7 +86,7 @@ public class TripPage extends FosPage {
         return false;
     }
 
-    public Trip getLastTripByVehicle(int id){
+    public Trip getLastTripByVehicle(int id) {
 
         Connection conn = null;
         Trip trip = null;
@@ -99,8 +96,7 @@ public class TripPage extends FosPage {
 
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -162,7 +158,8 @@ public class TripPage extends FosPage {
         }
         return new ArrayList<>();
     }
-    public Vehicle getVehicle(){
+
+    public Vehicle getVehicle() {
 
         Connection conn = null;
         Vehicle vehicle = null;
@@ -171,8 +168,7 @@ public class TripPage extends FosPage {
             vehicle = Vehicle.getVehicle(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -194,21 +190,21 @@ public class TripPage extends FosPage {
         return "/WEB-INF/jsp/trip.jsp";
     }
 
-    public void updateItem(Integer tripID, Integer vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, Integer startKM, Integer endKM, Trip.TripType type, String username) {
+    public void updateItem(Integer tripID, Integer vehicleID, Date startTime, Date endTime, String placeStart,
+                           String placeEnd, Integer startKM, Integer endKM, Trip.TripType type, String username) {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-                Trip trip = Trip.getTrip(tripID, conn);
-                startTime = trip.getStartTime();
-                endTime = trip.getEndTime();
-                username = trip.getUsername();
+            Trip trip = Trip.getTrip(tripID, conn);
+            startTime = trip.getStartTime();
+            endTime = trip.getEndTime();
+            username = trip.getUsername();
 
-                Trip.updateTrip(tripID, vehicleID, startTime, endTime, placeStart, placeEnd, startKM, endKM, type, username, conn);
+            Trip.updateTrip(tripID, vehicleID, startTime, endTime, placeStart, placeEnd, startKM, endKM, type, username, conn);
 
         } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -216,7 +212,6 @@ public class TripPage extends FosPage {
             }
         }
     }
-
 
 
     public Trip getRequestTrip() {
