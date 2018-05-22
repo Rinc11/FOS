@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class StatisticPage extends FosPageExport {
     private String jspFile = "/WEB-INF/jsp/statistic.jsp";
-    private List<Trip> filteredTrips = new ArrayList<>();
+    List<Trip> filteredTrips = new ArrayList<>();
 
     /**
      * Erstellt eine neue Statistic Seite
