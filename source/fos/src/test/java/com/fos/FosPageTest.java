@@ -129,7 +129,7 @@ public class FosPageTest {
 
         TestFosPage.logout(request);
 
-        verify(request.getSession()).removeAttribute("userName");
+        verify(request.getSession()).removeAttribute("userLoggedIn");
         verify(request.getSession()).invalidate();
     }
 
