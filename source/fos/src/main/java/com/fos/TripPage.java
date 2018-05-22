@@ -53,6 +53,11 @@ public class TripPage extends FosPage {
 
     }
 
+    /**
+     * Zwischen Methode für getHasOpenTrip, liest die letzte Fahrt eines Benuzters
+     *
+     * @return letzte offene Fahrt
+     */
     public Trip getOpenTrip() {
         Connection conn = null;
         Trip trip = null;
@@ -73,9 +78,9 @@ public class TripPage extends FosPage {
 
 
     /**
-     * muss noch mit Trip verbunden werden(logik kommt in Meilenstein 3)
+     * Teilt mit ob eine offene Fahrt existiert
      *
-     * @return
+     * @return gibt einen Boolean zurück ob die angemeldete Person eine offene Fahrt hat
      */
     public Boolean getHasOpenTrip() {
 

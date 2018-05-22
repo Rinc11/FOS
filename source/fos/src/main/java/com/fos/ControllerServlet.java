@@ -1,6 +1,5 @@
 package com.fos;
 
-import com.fos.database.NotLoadedException;
 import com.fos.tools.FosPage;
 import com.fos.tools.FosPageExport;
 import com.fos.tools.Logging;
@@ -12,9 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 @WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/fahrzeugAendern", "/benutzerHinzufuegen",
         "/benutzerAendern", "/auswertung", "/auswertung.csv","/fahrt", "/fahrtAendern"})//

@@ -3,8 +3,6 @@ package com.fos;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Trip;
-import com.fos.database.Vehicle;
-import com.fos.tools.FosPage;
 import com.fos.tools.FosPageExport;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
