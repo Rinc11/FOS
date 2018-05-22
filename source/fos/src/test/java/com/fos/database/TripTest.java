@@ -51,7 +51,7 @@ public class TripTest {
     public void testGetLastTripByVehicle() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Trip trip = Trip.getLastTripByVehicle(1, conn);
-        Assert.assertEquals(trip.getPlaceEnd(), "Zürich");
+        Assert.assertEquals(trip.getPlaceEnd(), "Winterthur");
 
     }
 
