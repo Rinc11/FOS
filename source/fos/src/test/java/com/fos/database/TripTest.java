@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.fos.tools.TestHelper;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -52,6 +53,37 @@ public class TripTest {
         Trip trip = Trip.getLastTripByVehicle(1, conn);
         Assert.assertEquals(trip.getPlaceEnd(), "Zürich");
 
+    }
+
+    /**
+     * testet ob die getTrip Methode sich korrekt verhält
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testGetTrip() throws SQLException, NotLoadedException {
+        Connection conn = Helper.getConnection();
+
+        int tripID = 1;
+        int vehicleID = 1;
+        String placeStart = "Frauenfeld";
+        String placeEnd = "Winterthur";
+        int startKM = 100;
+        int endKM = 130;
+        Trip.TripType type = Trip.TripType.PRIVAT;
+        String username = "suttema2";
+
+        Trip trip = Trip.getTrip(tripID,conn);
+
+        Assert.assertEquals((Integer) tripID, trip.getTripID());
+        Assert.assertEquals((Integer) vehicleID, trip.getVehicleID());
+        Assert.assertEquals(placeStart, trip.getPlaceStart());
+        Assert.assertEquals(placeEnd, trip.getPlaceEnd());
+        Assert.assertEquals((Integer) startKM, trip.getStartKM());
+        Assert.assertEquals((Integer) endKM, trip.getEndKM());
+        Assert.assertTrue(type == trip.getType());
+        Assert.assertEquals(username, trip.getUsername());
     }
 
 
