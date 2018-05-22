@@ -69,6 +69,16 @@ public class StatisticPageTest {
         }));
     }
 
+
+    @Test
+    public void textExport() throws NotLoadedException {
+        setLoggedIn(true);
+        StatisticPage statisticPage = new StatisticPage(request);
+        String export = statisticPage.getExport();
+        Assert.assertTrue(export.startsWith("Fahrer;Auto;Fahrt Start;Fahrt Ziel;Kilometer;Fahrt Typ"));
+        Assert.assertTrue(export.contains(userLoggedIn+";"));
+    }
+
     /**
      * setzt den Benutzer der eingeloggt ist.
      * @param isAdmin sezt ob es einen Admin ist
