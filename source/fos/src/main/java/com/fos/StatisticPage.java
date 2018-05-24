@@ -31,69 +31,95 @@ public class StatisticPage extends FosPage implements FosPageExport {
      */
     public StatisticPage(HttpServletRequest request) {
         super(request, false);
+        loadFilteredTrips();
+    }
+
+    private void loadFilteredTrips() {
+        if (getUser() == null) {
+            return;
+        }
+
         Connection conn = null;
-        if(getUser() != null) {
+        try {
+            conn = Helper.getConnection();
+            filteredTrips = Trip.getFilteredTrips(conn,
+                    getVehicleIdFromRequest(),
+                    getTripPersonFromRequest(getUser()),
+                    getFromDateFromRequest(),
+                    getToDateFromRequest(),
+                    getTripTypeFromRequest());
+        } catch (NotLoadedException | SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
             try {
-                String tripVehicleParameter = request.getParameter("tripVehicle");
-                Integer tripVehicleId = null;
-                if (tripVehicleParameter != null && !tripVehicleParameter.equals("")) {
-                    tripVehicleId = Integer.parseInt(tripVehicleParameter);
+                if (conn != null) {
+                    conn.close();
                 }
-
-
-                String tripPersonUserName = request.getParameter("tripPerson");
-                if (tripPersonUserName != null && tripPersonUserName.equals("")) {
-                    tripPersonUserName = null;
-                }
-
-                if (!getUser().getIsAdmin()) {
-                    tripPersonUserName = getUser().getUserName();
-                }
-
-
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String dateFromParameter = request.getParameter("dateFrom");
-                Date dateFrom = null;
-                Date dateTo = null;
-                try {
-
-                    if (dateFromParameter != null && !dateFromParameter.equals("")) {
-                        dateFrom = dateFormat.parse(dateFromParameter);
-                    }
-
-                    String dateToParameter = request.getParameter("dateTo");
-                    if (dateToParameter != null && !dateToParameter.equals("")) {
-                        dateTo = dateFormat.parse(dateToParameter);
-                    }
-                } catch (ParseException e) {
-                    Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
-                }
-
-                String tripTypeParameter = request.getParameter("tripType");
-                Trip.TripType tripType = null;
-                if (tripTypeParameter != null && !tripTypeParameter.equals("")) {
-                    if (tripTypeParameter.equals("g")) {
-                        tripType = Trip.TripType.GESCHÄFTLICH;
-                    } else if (tripTypeParameter.equals("p")) {
-                        tripType = Trip.TripType.PRIVAT;
-                    }
-                }
-                conn = Helper.getConnection();
-                filteredTrips = Trip.getFilteredTrips(conn, tripVehicleId, tripPersonUserName, dateFrom, dateTo, tripType);
-            } catch (NotLoadedException | SQLException e) {
-                Logging.logDatabaseException(request, e);
-            } finally {
-                try {
-                    if (conn != null) {
-                        conn.close();
-                    }
-                } catch (SQLException e) {
-                    Logging.logConnectionNotCloseable(e);
-                }
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
             }
         }
     }
 
+    private Integer getVehicleIdFromRequest(){
+        String tripVehicleParameter = request.getParameter("tripVehicle");
+        if (tripVehicleParameter != null && !tripVehicleParameter.equals("")) {
+            return Integer.parseInt(tripVehicleParameter);
+        }
+        return null;
+    }
+
+    private String getTripPersonFromRequest(Person userLoggedIn) throws NotLoadedException {
+        String tripPersonUserName = request.getParameter("tripPerson");
+        if (tripPersonUserName != null && tripPersonUserName.equals("")) {
+            tripPersonUserName = null;
+        }
+
+        if (!userLoggedIn.getIsAdmin()) {
+            tripPersonUserName = userLoggedIn.getUserName();
+        }
+        return tripPersonUserName;
+    }
+
+    private Date getFromDateFromRequest(){
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                String dateFromParameter = request.getParameter("dateFrom");
+                if (dateFromParameter != null && !dateFromParameter.equals("")) {
+                    return dateFormat.parse(dateFromParameter);
+                }
+            } catch (ParseException e) {
+                Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
+            }
+        return null;
+    }
+
+
+    private Trip.TripType getTripTypeFromRequest(){
+        String tripTypeParameter = request.getParameter("tripType");
+        if (tripTypeParameter != null && !tripTypeParameter.equals("")) {
+            if (tripTypeParameter.equals("g")) {
+                return Trip.TripType.GESCHÄFTLICH;
+            } else if (tripTypeParameter.equals("p")) {
+                return Trip.TripType.PRIVAT;
+            }
+        }
+        return null;
+    }
+
+
+    private Date getToDateFromRequest(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            String dateToParameter = request.getParameter("dateTo");
+            if (dateToParameter != null && !dateToParameter.equals("")) {
+                return dateFormat.parse(dateToParameter);
+            }
+        } catch (ParseException e) {
+            Logging.logErrorVisibleToUser(request, "Datum konnte nicht gelesen werden", e, Level.ERROR);
+        }
+        return null;
+    }
     @Override
     public String getJspPath() {
         return jspFile;
@@ -110,9 +136,11 @@ public class StatisticPage extends FosPage implements FosPageExport {
     public int getFilteredKm() {
         return getFilteredKm(filteredTrips, request, Trip.TripType.GESCHÄFTLICH) + getFilteredKm(filteredTrips, request, Trip.TripType.PRIVAT);
     }
+
     public int getFilteredKmPrivat() {
         return getFilteredKm(filteredTrips, request, Trip.TripType.PRIVAT);
     }
+
     public int getFilteredKmBusiness() {
         return getFilteredKm(filteredTrips, request, Trip.TripType.GESCHÄFTLICH);
     }
@@ -129,8 +157,9 @@ public class StatisticPage extends FosPage implements FosPageExport {
         int sumOfKm = 0;
         for (Trip trip : filterdTripsWithKm) {
             try {
-                if(type == null || trip.getType() == type){
-                sumOfKm += trip.getEndKM() - trip.getStartKM();}
+                if (type == null || trip.getType() == type) {
+                    sumOfKm += trip.getEndKM() - trip.getStartKM();
+                }
             } catch (NotLoadedException e) {
                 Logging.logDatabaseException(request, e);
             }
@@ -139,7 +168,7 @@ public class StatisticPage extends FosPage implements FosPageExport {
     }
 
     public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request) {
-        return  getFilteredKm(filteredTrips, request, null);
+        return getFilteredKm(filteredTrips, request, null);
     }
 
 
@@ -167,14 +196,14 @@ public class StatisticPage extends FosPage implements FosPageExport {
         try {
             for (Trip trip : filteredTrips) {
                 sb.append(trip.getUsername().replace(';', ':') + ";");
-                sb.append((trip.getVehicle().getBrand()+" " + trip.getVehicle().getType()).replace(';', ':') + ";");
+                sb.append((trip.getVehicle().getBrand() + " " + trip.getVehicle().getType()).replace(';', ':') + ";");
                 sb.append(trip.getPlaceStart().replace(';', ':') + ";");
                 sb.append(trip.getPlaceEnd().replace(';', ':') + ";");
-                sb.append(trip.getEndKM()- trip.getStartKM() + ";");
+                sb.append(trip.getEndKM() - trip.getStartKM() + ";");
                 sb.append(trip.getType() + "\n");
             }
         } catch (NotLoadedException e) {
-            Logging.logDatabaseException(request,e);
+            Logging.logDatabaseException(request, e);
         }
         return sb.toString();
     }
