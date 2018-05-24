@@ -1,8 +1,10 @@
-package com.fos.tools;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Vehicle;
+import com.fos.tools.Helper;
+import com.fos.tools.Logging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

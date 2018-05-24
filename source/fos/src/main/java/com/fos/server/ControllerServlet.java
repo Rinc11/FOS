@@ -1,7 +1,8 @@
-package com.fos;
+package com.fos.server;
 
-import com.fos.tools.FosPage;
-import com.fos.tools.FosPageExport;
+import com.fos.page.*;
+import com.fos.page.FosPage;
+import com.fos.page.FosPageExport;
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
 

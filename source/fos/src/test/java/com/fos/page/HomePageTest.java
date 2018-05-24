@@ -1,7 +1,8 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
+import com.fos.page.HomePage;
 import com.fos.tools.Helper;
 import org.junit.Before;
 import org.junit.BeforeClass;

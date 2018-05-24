@@ -1,8 +1,7 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
-import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import com.fos.tools.MissingPermissionException;

@@ -1,4 +1,4 @@
-<%@ page import="com.fos.HomePage" %>
+<%@ page import="com.fos.page.HomePage" %>
 <%@ page import="com.fos.database.Person" %><%--
 Startseite welche nach dem einlogen aufgerufen wird.
 --%>

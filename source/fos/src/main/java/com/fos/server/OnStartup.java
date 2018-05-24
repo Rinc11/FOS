@@ -1,4 +1,4 @@
-package com.fos;
+package com.fos.server;
 
 import com.fos.tools.Logging;
 import databaseupdater.SqlUpdate;
