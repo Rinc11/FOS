@@ -32,27 +32,11 @@ public class TripTest {
     }
 
 
-    /**
-     * tested das testVehicle ob alle Werte so sind wie in der Datenbank.
-     *
-     * @throws SQLException
-     * @throws NotLoadedException
-     */
-    @Test
-    public void testIfTestTripExists() throws SQLException, NotLoadedException {
-        Connection conn = Helper.getConnection();
-        Trip trip = Trip.getTrip(defaultTestTripID, conn);
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.of(2018, Month.MARCH, 8, 13, 4, 3, 614000000));
-        Assert.assertEquals(defaultTestTripID, trip.getTripID());
-        Assert.assertEquals((Integer) 1,  trip.getVehicleID());
-        Assert.assertEquals(timestamp,  trip.getStartTime());
-    }
     @Test
     public void testGetLastTripByVehicle() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
         Trip trip = Trip.getLastTripByVehicle(1, conn);
         Assert.assertEquals(trip.getPlaceEnd(), "Winterthur");
-
     }
 
     /**
@@ -65,8 +49,9 @@ public class TripTest {
     public void testGetTrip() throws SQLException, NotLoadedException {
         Connection conn = Helper.getConnection();
 
-        int tripID = 1;
         int vehicleID = 1;
+        Timestamp startTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, Month.MARCH, 8, 13, 4, 3, 614000000));
+        Timestamp endTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, Month.MARCH, 9, 13, 4, 10, 340000000));
         String placeStart = "Frauenfeld";
         String placeEnd = "Winterthur";
         int startKM = 100;
@@ -74,10 +59,12 @@ public class TripTest {
         Trip.TripType type = Trip.TripType.PRIVAT;
         String username = "suttema2";
 
-        Trip trip = Trip.getTrip(tripID,conn);
+        Trip trip = Trip.getTrip(defaultTestTripID,conn);
 
-        Assert.assertEquals((Integer) tripID, trip.getTripID());
+        Assert.assertEquals(defaultTestTripID, trip.getTripID());
         Assert.assertEquals((Integer) vehicleID, trip.getVehicleID());
+        Assert.assertEquals(startTimestamp,  trip.getStartTime());
+        Assert.assertEquals(endTimestamp,  trip.getEndTime());
         Assert.assertEquals(placeStart, trip.getPlaceStart());
         Assert.assertEquals(placeEnd, trip.getPlaceEnd());
         Assert.assertEquals((Integer) startKM, trip.getStartKM());
@@ -85,6 +72,7 @@ public class TripTest {
         Assert.assertTrue(type == trip.getType());
         Assert.assertEquals(username, trip.getUsername());
     }
+
 
 
 }
