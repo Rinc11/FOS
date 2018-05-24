@@ -3,6 +3,7 @@ package com.fos;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Trip;
+import com.fos.tools.FosPage;
 import com.fos.tools.FosPageExport;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StatisticPage extends FosPageExport {
+public class StatisticPage extends FosPage implements FosPageExport {
     private String jspFile = "/WEB-INF/jsp/statistic.jsp";
     List<Trip> filteredTrips = new ArrayList<>();
 
