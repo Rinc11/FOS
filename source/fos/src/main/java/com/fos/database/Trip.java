@@ -150,35 +150,25 @@ public class Trip implements Serializable {
     }
 
     public static Trip getOpenTripByUsername(String username, Connection conn) throws SQLException {
-        Trip trip = null;
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
                 " FROM \"Trip\" WHERE \"Username\" = '"+ username +"' AND \"PlaceEnd\" IS NULL");
 
-        if (resultSet.next()) {
-
-            trip = new Trip(resultSet.getInt("TripID"));
-            trip.vehicleID.setValue(resultSet.getInt("VehicleID"));
-            trip.startTime.setValue(resultSet.getTimestamp("StartTime"));
-            trip.endTime.setValue(resultSet.getTimestamp("EndTime"));
-            trip.placeStart.setValue(resultSet.getString("PlaceStart"));
-            trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
-            trip.startKM.setValue(resultSet.getInt("Start_km"));
-            trip.endKM.setValue(resultSet.getInt("End_km"));
-            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
-            trip.username.setValue(resultSet.getString("Username"));
-        }
-        return trip;
+        return loadTripFromResultSet(resultSet);
     }
 
     public static Trip getLastTripByVehicle(int vehicleID, Connection conn) throws SQLException {
-        Trip trip = null;
+
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
                 " FROM \"Trip\" WHERE \"VehicleID\" = '"+ vehicleID +"' ORDER BY \"StartTime\" DESC LIMIT 1");
 
-        if (resultSet.next()) {
+        return loadTripFromResultSet(resultSet);
+    }
 
+    private static Trip loadTripFromResultSet(ResultSet resultSet) throws SQLException {
+        Trip trip = null;
+        if (resultSet.next()) {
             trip = new Trip(resultSet.getInt("TripID"));
             trip.vehicleID.setValue(resultSet.getInt("VehicleID"));
             trip.startTime.setValue(resultSet.getTimestamp("StartTime"));
