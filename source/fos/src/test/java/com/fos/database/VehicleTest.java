@@ -162,7 +162,6 @@ public class VehicleTest {
         Assert.assertEquals(buildYear, vehicle.getBuildYear());
         Assert.assertTrue(Vehicle.VehicleFuelType.BENZIN == vehicle.getFuelType());
 
-        Vehicle.updateVehicle(2, "136c8b4", "Honda", "Civic", 2010, Vehicle.VehicleFuelType.BENZIN, conn);
     }
 
 }
