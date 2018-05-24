@@ -40,7 +40,7 @@ public class StatisticPageTest {
     }
 
     @Test
-    public void testFilteredTripsAdmin() throws NotLoadedException {
+    public void testTripsAdmin() throws NotLoadedException {
         setLoggedIn(true);
         StatisticPage statisticPage = new StatisticPage(request);
         Assert.assertTrue(statisticPage.filteredTrips.size() != 0);
@@ -55,7 +55,7 @@ public class StatisticPageTest {
     }
 
     @Test
-    public void testFilteredTripsNotAdmin() throws NotLoadedException {
+    public void testTripsNotAdmin() throws NotLoadedException {
         setLoggedIn(false);
         StatisticPage statisticPage = new StatisticPage(request);
         Assert.assertTrue(statisticPage.filteredTrips.size() != 0);
@@ -69,6 +69,21 @@ public class StatisticPageTest {
         }));
     }
 
+    @Test
+    public void testTripsFiltered() throws NotLoadedException {
+        setLoggedIn(true);
+        when(request.getParameter("tripVehicle")).thenReturn("1");
+        StatisticPage statisticPage = new StatisticPage(request);
+        Assert.assertTrue(statisticPage.filteredTrips.size() != 0);
+        Assert.assertTrue( statisticPage.filteredTrips.stream().allMatch(s -> {
+            try {
+                return s.getVehicleID().equals(1);
+            } catch (NotLoadedException e) {
+                Assert.fail();
+            }
+            return false;
+        }));
+    }
 
     @Test
     public void textExport() throws NotLoadedException {
