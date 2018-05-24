@@ -132,7 +132,9 @@ public class TripPage extends FosPage {
         try {
             conn = Helper.getConnection();
             Trip openTrip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd, openTrip.getType(), openTrip.getUsername(), conn);
+            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(),
+                    new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd,
+                    openTrip.getType(), openTrip.getUsername(), conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (NotLoadedException e) {

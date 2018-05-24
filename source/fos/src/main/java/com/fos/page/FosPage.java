@@ -67,7 +67,7 @@ public abstract class FosPage {
      */
     public Person getUser() {
         Object userLoggedIn = request.getSession().getAttribute("userLoggedIn");
-        if(userLoggedIn == null){
+        if (userLoggedIn == null) {
             return null;
         }
         return (Person) userLoggedIn;
@@ -75,12 +75,18 @@ public abstract class FosPage {
 
     public int getSelectedVehicleID() {
         Object vehicleID = request.getSession().getAttribute("vehicle");
-        if(vehicleID == null){
+        if (vehicleID == null) {
             return 0;
         }
         return (int) vehicleID;
     }
 
+    /**
+     * probiert den Benutzer einzuloggen
+     *
+     * @param userName Benutzername
+     * @param password Passwort
+     */
     public void tryLogIn(String userName, String password) {
         //check ob die Anmeldedaten übertragen wuden
         if (userName == null && password == null) {
@@ -128,6 +134,7 @@ public abstract class FosPage {
             }
         }
     }
+
     public List<Vehicle> getVehiclesToChoose() {
         Connection conn = null;
         try {

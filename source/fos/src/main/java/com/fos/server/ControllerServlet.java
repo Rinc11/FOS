@@ -1,8 +1,13 @@
 package com.fos.server;
 
-import com.fos.page.*;
+import com.fos.page.UserPage;
 import com.fos.page.FosPage;
+import com.fos.page.VehiclePage;
+import com.fos.page.StatisticPage;
+import com.fos.page.TripPage;
+import com.fos.page.HomePage;
 import com.fos.page.FosPageExport;
+
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
 
@@ -15,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet({"", "/benutzer", "/fahrzeug", "/fahrzeugHinzufuegen", "/fahrzeugAendern", "/benutzerHinzufuegen",
-        "/benutzerAendern", "/auswertung", "/auswertung.csv","/fahrt", "/fahrtAendern"})//
+        "/benutzerAendern", "/auswertung", "/auswertung.csv", "/fahrt", "/fahrtAendern"})//
 public class ControllerServlet extends HttpServlet {
 
     @Override
@@ -76,7 +81,7 @@ public class ControllerServlet extends HttpServlet {
                 request.setAttribute("actualPage", fosUserPage);
                 request.getRequestDispatcher(fosUserPage.getJspPath()).include(request, response);
             } else {
-                createCsv(response,(FosPageExport) fosUserPage);
+                createCsv(response, (FosPageExport) fosUserPage);
             }
         } else {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").include(request, response);

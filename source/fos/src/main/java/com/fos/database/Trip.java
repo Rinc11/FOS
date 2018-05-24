@@ -25,7 +25,7 @@ public class Trip implements Serializable {
      * gibt den Datensatz einer Fahrt zurück
      *
      * @param tripID Angabe der Fahrt
-     * @param conn      Verbindung zur Datenbank
+     * @param conn   Verbindung zur Datenbank
      * @return Trip Datensatz der angefragten Fahrt aus der übergebenen Datenbank
      */
     public static Trip getTrip(int tripID, Connection conn) throws SQLException {
@@ -60,12 +60,23 @@ public class Trip implements Serializable {
         return getFilteredTrips(conn, null, null, null, null, null);
     }
 
+    /**
+     * gibt die Fahrten zurücke welche den Filterbedingungen entsprechen. Ist die Bedinung null wird es nicht gefiltert
+     *
+     * @param conn               verbindung zur Datenbank
+     * @param tripVehicleId      Nach FahrzeugId filtern
+     * @param tripPersonUserName nach dem Fahrer Filtern
+     * @param dateFrom           Datums Von Filter
+     * @param dateTo             Datum bis Filter
+     * @param tripType           Fahrt Typ Filter
+     * @return Eine Liste von Fahrten
+     */
     public static List<Trip> getFilteredTrips(Connection conn,
                                               Integer tripVehicleId,
                                               String tripPersonUserName,
                                               Date dateFrom,
                                               Date dateTo,
-                                              TripType tripType) throws SQLException{
+                                              TripType tripType) throws SQLException {
         List<Trip> result = new ArrayList<>();
         Statement statement = conn.createStatement();
         StringBuilder sqlCommand = new StringBuilder();
@@ -73,25 +84,25 @@ public class Trip implements Serializable {
         sqlCommand.append("\"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", ");
         sqlCommand.append("\"Trip\".\"Type\" as \"TripType\", \"Username\" ");
         sqlCommand.append("FROM \"Trip\" join \"Vehicles\" using (\"VehicleID\") WHERE 1=1\n");
-        if(tripVehicleId != null){
-            sqlCommand.append("AND \"VehicleID\" = "+tripVehicleId+"\n");
+        if (tripVehicleId != null) {
+            sqlCommand.append("AND \"VehicleID\" = " + tripVehicleId + "\n");
         }
-        if(tripPersonUserName != null){
-            sqlCommand.append("AND \"Username\" = '"+tripPersonUserName+"'\n");
+        if (tripPersonUserName != null) {
+            sqlCommand.append("AND \"Username\" = '" + tripPersonUserName + "'\n");
         }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if(dateFrom != null){
-            sqlCommand.append("AND \"StartTime\" >= '"+dateFormat.format(dateFrom)+"'\n");
+        if (dateFrom != null) {
+            sqlCommand.append("AND \"StartTime\" >= '" + dateFormat.format(dateFrom) + "'\n");
         }
-        if(dateTo != null){
+        if (dateTo != null) {
             Calendar c = Calendar.getInstance();
             c.setTime(dateTo);
             c.add(Calendar.DATE, 1);
-            sqlCommand.append( "AND \"StartTime\" < '"+dateFormat.format(c.getTime())+"'\n");
+            sqlCommand.append("AND \"StartTime\" < '" + dateFormat.format(c.getTime()) + "'\n");
         }
-        if(tripType != null){
-            sqlCommand.append( "AND \"Trip\".\"Type\" = '"+tripType.name()+"'\n");
+        if (tripType != null) {
+            sqlCommand.append("AND \"Trip\".\"Type\" = '" + tripType.name() + "'\n");
         }
         ResultSet resultSet = statement.executeQuery(sqlCommand.toString());
 
@@ -105,7 +116,7 @@ public class Trip implements Serializable {
             trip.startKM.setValue(resultSet.getInt("Start_km"));
 
             Integer endkm = resultSet.getInt("End_km");
-            if(resultSet.wasNull()){
+            if (resultSet.wasNull()) {
                 endkm = null;
             }
             trip.endKM.setValue(endkm);
@@ -122,6 +133,18 @@ public class Trip implements Serializable {
         return result;
     }
 
+    /**
+     * startet eine neue Fahrt
+     *
+     * @param vehicleID  Fahrzeug Id des Autos
+     * @param startTime  Fahrt start Zeit
+     * @param placeStart Startort der Fahrt
+     * @param startKM    Kilometer vor der Fahrt
+     * @param type       Typ der Fahrt
+     * @param username   Benutzername des Fahrers
+     * @param conn       Datenbankverbinung
+     * @throws SQLException
+     */
     public static void startNewTrip(Integer vehicleID, Date startTime, String placeStart, Integer startKM, TripType type, String username, Connection conn) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Trip\" (\"VehicleID\", \"StartTime\",  \"PlaceStart\",  \"Start_km\",  \"Type\", \"Username\") VALUES (?, ?, ?, ?,'" + type + "', ?)");
         preparedStatement.setInt(1, vehicleID);
@@ -149,23 +172,39 @@ public class Trip implements Serializable {
         preparedStatement.execute();
     }
 
+    /**
+     * gibt eine offene Fahrt eines Benutzer zurück null wenn keine vorhanden ist.
+     *
+     * @param username Benutzer von dem eine offene Fahrt gesucht werden soll
+     * @param conn     Datenbankverbindung
+     */
     public static Trip getOpenTripByUsername(String username, Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
-                " FROM \"Trip\" WHERE \"Username\" = '"+ username +"' AND \"PlaceEnd\" IS NULL");
+                " FROM \"Trip\" WHERE \"Username\" = '" + username + "' AND \"PlaceEnd\" IS NULL");
 
         return loadTripFromResultSet(resultSet);
     }
 
+    /**
+     * gibt die letzte Fahrt eines Fahrzeuges zurück
+     *
+     * @param vehicleID Fahrzeugid
+     * @param conn      Datenbankverbindung
+     */
     public static Trip getLastTripByVehicle(int vehicleID, Connection conn) throws SQLException {
 
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT \"TripID\", \"VehicleID\", \"StartTime\", \"EndTime\", \"PlaceStart\", \"PlaceEnd\", \"Start_km\", \"End_km\", \"Type\", \"Username\" " +
-                " FROM \"Trip\" WHERE \"VehicleID\" = '"+ vehicleID +"' ORDER BY \"StartTime\" DESC LIMIT 1");
+                " FROM \"Trip\" WHERE \"VehicleID\" = '" + vehicleID + "' ORDER BY \"StartTime\" DESC LIMIT 1");
 
         return loadTripFromResultSet(resultSet);
     }
 
+    /**
+     * lädt die Daten vom ResultSet
+     * @param resultSet result Set
+     */
     private static Trip loadTripFromResultSet(ResultSet resultSet) throws SQLException {
         Trip trip = null;
         if (resultSet.next()) {
@@ -248,7 +287,7 @@ public class Trip implements Serializable {
     /**
      * Enum mit den Werten für den Fahrtentyp
      */
-    public enum TripType{
+    public enum TripType {
         GESCHÄFTLICH, PRIVAT
     }
 }
