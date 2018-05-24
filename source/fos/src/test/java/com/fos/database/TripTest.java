@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -38,6 +39,13 @@ public class TripTest {
         Connection conn = Helper.getConnection();
         Trip trip = Trip.getLastTripByVehicle(1, conn);
         Assert.assertEquals(trip.getPlaceEnd(), "Winterthur");
+    }
+
+    @Test
+    public void testGetOpenTripByUsername() throws SQLException, NotLoadedException {
+        Connection conn = Helper.getConnection();
+        Trip trip = Trip.getOpenTripByUsername("suttema2", conn);
+        Assert.assertEquals(null, trip);
     }
 
     /**
@@ -145,6 +153,25 @@ public class TripTest {
 
     }
 
+    /**
+     * Testet ob die Fahrt mit der TripID 2 in der Liste von allen Fahrten erfasst ist.
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testGetAllTrip() throws SQLException {
+        Connection conn = Helper.getConnection();
+        List<Trip> trips = Trip.getAllTrips(conn);
+        Assert.assertTrue(trips.stream().anyMatch(trip -> {
+            try {
+                return trip.getTripID() == 2 && trip.getPlaceStart().equals("Frauenfeld") ;
+            } catch (NotLoadedException notLoadedExeption) {
+                notLoadedExeption.printStackTrace();
+            }
+            return false;
+        }));
+    }
 
 
 }
