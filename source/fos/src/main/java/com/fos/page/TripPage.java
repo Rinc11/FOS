@@ -1,9 +1,8 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Trip;
 import com.fos.database.Vehicle;
-import com.fos.tools.FosPage;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 
@@ -133,7 +132,9 @@ public class TripPage extends FosPage {
         try {
             conn = Helper.getConnection();
             Trip openTrip = Trip.getOpenTripByUsername(getUser().getUserName(), conn);
-            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(), new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd, openTrip.getType(), openTrip.getUsername(), conn);
+            Trip.updateTrip(openTrip.getTripID(), openTrip.getVehicleID(), openTrip.getStartTime(),
+                    new Date(), openTrip.getPlaceStart(), placeEnd, openTrip.getStartKM(), kmEnd,
+                    openTrip.getType(), openTrip.getUsername(), conn);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
         } catch (NotLoadedException e) {

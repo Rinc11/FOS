@@ -155,7 +155,7 @@ public class Person implements Serializable {
     /**
      * löscht eine Person in der Datenbank
      *
-     * @param username  den zu löschenden Benutzer
+     * @param username den zu löschenden Benutzer
      * @param conn     Die Connection zur Datenbank
      */
     public static void removePerson(String username, Connection conn) throws SQLException {

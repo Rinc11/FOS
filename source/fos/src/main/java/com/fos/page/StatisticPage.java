@@ -1,10 +1,8 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Trip;
-import com.fos.tools.FosPage;
-import com.fos.tools.FosPageExport;
 import com.fos.tools.Helper;
 import com.fos.tools.Logging;
 import org.apache.logging.log4j.Level;
@@ -198,8 +196,20 @@ public class StatisticPage extends FosPage implements FosPageExport {
                 sb.append(trip.getUsername().replace(';', ':') + ";");
                 sb.append((trip.getVehicle().getBrand() + " " + trip.getVehicle().getType()).replace(';', ':') + ";");
                 sb.append(trip.getPlaceStart().replace(';', ':') + ";");
-                sb.append(trip.getPlaceEnd().replace(';', ':') + ";");
-                sb.append(trip.getEndKM() - trip.getStartKM() + ";");
+                String placeEnd = trip.getPlaceEnd();
+                if(placeEnd == null){
+                    placeEnd = "";
+                }
+                sb.append(placeEnd.replace(';', ':') + ";");
+
+                Integer endKM = trip.getEndKM();
+                Integer startKM = trip.getStartKM();
+                int kmDone = 0;
+                if(endKM != null && startKM != null){
+                    kmDone = endKM - startKM;
+                }
+
+                sb.append(kmDone + ";");
                 sb.append(trip.getType() + "\n");
             }
         } catch (NotLoadedException e) {

@@ -1,8 +1,8 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
-import com.fos.tools.FosPage;
+import com.fos.page.FosPage;
 import com.fos.tools.Helper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +13,6 @@ import org.mockito.ArgumentMatchers;
 import com.fos.tools.TestHelper;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.sql.Connection;

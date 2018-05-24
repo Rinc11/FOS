@@ -1,8 +1,10 @@
-package com.fos.tools;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import com.fos.database.Vehicle;
+import com.fos.tools.Helper;
+import com.fos.tools.Logging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,7 +67,7 @@ public abstract class FosPage {
      */
     public Person getUser() {
         Object userLoggedIn = request.getSession().getAttribute("userLoggedIn");
-        if(userLoggedIn == null){
+        if (userLoggedIn == null) {
             return null;
         }
         return (Person) userLoggedIn;
@@ -73,12 +75,18 @@ public abstract class FosPage {
 
     public int getSelectedVehicleID() {
         Object vehicleID = request.getSession().getAttribute("vehicle");
-        if(vehicleID == null){
+        if (vehicleID == null) {
             return 0;
         }
         return (int) vehicleID;
     }
 
+    /**
+     * probiert den Benutzer einzuloggen
+     *
+     * @param userName Benutzername
+     * @param password Passwort
+     */
     public void tryLogIn(String userName, String password) {
         //check ob die Anmeldedaten übertragen wuden
         if (userName == null && password == null) {
@@ -126,6 +134,7 @@ public abstract class FosPage {
             }
         }
     }
+
     public List<Vehicle> getVehiclesToChoose() {
         Connection conn = null;
         try {

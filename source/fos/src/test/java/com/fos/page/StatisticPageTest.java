@@ -1,7 +1,8 @@
-package com.fos;
+package com.fos.page;
 
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
+import com.fos.page.StatisticPage;
 import com.fos.tools.TestHelper;
 import org.junit.Assert;
 import org.junit.Before;
