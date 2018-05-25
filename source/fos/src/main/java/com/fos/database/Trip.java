@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.Arrays;
 
 /**
  * Stellt Methoden für den Zugriff auf die Fahrtendaten aus der Datenbank bereit,
