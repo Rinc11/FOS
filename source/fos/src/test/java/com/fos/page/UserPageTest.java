@@ -1,6 +1,5 @@
 package com.fos.page;
 
-import com.fos.page.UserPage;
 import com.fos.database.NotLoadedException;
 import com.fos.database.Person;
 import org.junit.Assert;
