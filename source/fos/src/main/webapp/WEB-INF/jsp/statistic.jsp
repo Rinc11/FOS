@@ -98,30 +98,7 @@ Auswertung
 
     <div class="row">
         <div class="col-md-6">
-
-            <script>
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(drawChart);
-
-                function drawChart() {
-
-                    var data = google.visualization.arrayToDataTable([
-                        ['Type', 'KM'],
-                        ['Geschäftlich',      ${actualPage.filteredKmBusiness}],
-                        ['Privat',     ${actualPage.filteredKmPrivat}],
-
-
-                    ]);
-
-                    var options = {
-                        title: 'Vergleich Fahrten: Privat/Geschäftlich'
-                    };
-
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-                    chart.draw(data, options);
-                }
-            </script>
+            <script>drawChart(${actualPage.filteredKmBusiness}, ${actualPage.filteredKmPrivat});</script>
             <div id="piechart" ></div>
             <br>
         </div>

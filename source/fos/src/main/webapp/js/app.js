@@ -97,3 +97,27 @@ function password_generator(inputPWID, inputPWIDConfirm) {
     alert("Neues Passwort: " + password);
 }
 
+function drawChart(business, privat){
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Type', 'KM'],
+            ['Geschäftlich',      business],
+            ['Privat',     privat],
+
+
+        ]);
+
+        var options = {
+            title: 'Vergleich Fahrten: Privat/Geschäftlich'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+}
+
