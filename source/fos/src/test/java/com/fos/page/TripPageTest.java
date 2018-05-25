@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,7 +25,8 @@ public class TripPageTest {
     private Connection conn;
     private Person person;
     private HttpSession session;
-    private static final String userLoggedIn =  "suttema2";
+    private TripPage tripPage;
+    private static final String userLoggedIn = "suttema2";
 
     @BeforeClass
     public static void updateDatabase() throws Exception {
@@ -47,6 +47,7 @@ public class TripPageTest {
 
     /**
      * testet die Methode getLastTripByVehicle, ob sie richtig verhält
+     *
      * @throws SQLException
      * @throws NotLoadedException
      */
@@ -55,7 +56,7 @@ public class TripPageTest {
         int vehicleID = 2;
         Trip trip = Trip.getLastTripByVehicle(vehicleID, conn);
 
-        TripPage tripPage  = new TripPage(request);
+        TripPage tripPage = new TripPage(request);
         Trip tripTest = tripPage.getLastTripByVehicle(vehicleID);
         Assert.assertEquals(trip.getVehicleID(), tripTest.getVehicleID());
         Assert.assertEquals(trip.getPlaceStart(), tripTest.getPlaceStart());
@@ -81,7 +82,7 @@ public class TripPageTest {
         String placeEnd = "Winterthur";
         Integer startKM = 2000;
         Integer endKM = 2300;
-        Trip.TripType type = Trip.TripType.GESCHÄFTLICH;
+        Trip.TripType type = Trip.TripType.BUSINESS;
 
         when(request.getParameter("command")).thenReturn("startTrip");
         when(request.getSession().getAttribute("vehicle")).thenReturn(vehicleID.toString());
@@ -90,7 +91,6 @@ public class TripPageTest {
         when(request.getParameter("type")).thenReturn(type.toString());
 
         new TripPage(request);
-
 
         Trip trip = Trip.getOpenTripByUsername(userLoggedIn, conn);
 
@@ -112,10 +112,62 @@ public class TripPageTest {
 
         Assert.assertEquals(endKM, tripStop.getEndKM());
         Assert.assertEquals(placeEnd, tripStop.getPlaceEnd());
-
     }
 
 
+    /**
+     * testet die Methode updateTrip
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testUpdateTrip() throws SQLException, NotLoadedException {
+
+        Integer tripID = 2;
+        Integer vehicleID = 2;
+        String placeStart = "Altnau";
+        String placeEnd = "Güttingen";
+        Integer startKM = 403;
+        Integer endKM = 432;
+        Trip.TripType type = Trip.TripType.PRIVATE;
+
+        when(request.getParameter("command")).thenReturn("editTrip");
+        when(request.getParameter("tripID")).thenReturn(tripID.toString());
+        when(request.getParameter("tripVehicle")).thenReturn(vehicleID.toString());
+        when(request.getParameter("placeStart")).thenReturn(placeStart);
+        when(request.getParameter("placeEnd")).thenReturn(placeEnd);
+        when(request.getParameter("startKM")).thenReturn(startKM.toString());
+        when(request.getParameter("endKM")).thenReturn(endKM.toString());
+        when(request.getParameter("type")).thenReturn(type.toString());
+
+        new TripPage(request);
+
+        Trip trip = Trip.getTrip(tripID, conn);
+
+        Assert.assertEquals(vehicleID, trip.getVehicleID());
+        Assert.assertEquals(placeStart, trip.getPlaceStart());
+        Assert.assertEquals(startKM, trip.getStartKM());
+        Assert.assertEquals(type, trip.getType());
+        Assert.assertEquals(type, trip.getType());
+        Assert.assertEquals(endKM, trip.getEndKM());
+        Assert.assertEquals(placeEnd, trip.getPlaceEnd());
+    }
+
+    /**
+     * testet die Methode getOpenTrip bei der keine Fahrt offen ist
+     *
+     * @throws SQLException
+     * @throws NotLoadedException
+     */
+    @Test
+    public void testGetOpenTripWithNoOpenTrip() throws SQLException, NotLoadedException {
+
+        tripPage = new TripPage(request);
+        Trip trip = tripPage.getOpenTrip();
+
+        Assert.assertEquals(null, trip);
+    }
 
 
 }

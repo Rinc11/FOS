@@ -73,6 +73,30 @@ public abstract class FosPage {
         return (Person) userLoggedIn;
     }
 
+    /**
+     * gibt das Fahrzeug zurück, welches in der Session gespeichert ist
+     *
+     * @return vehicle
+     */
+    public Vehicle getVehicle() {
+
+        Connection conn = null;
+        Vehicle vehicle = null;
+        try {
+            conn = Helper.getConnection();
+            vehicle = Vehicle.getVehicle(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), conn);
+        } catch (SQLException e) {
+            Logging.logDatabaseException(request, e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logging.logConnectionNotCloseable(e);
+            }
+        }
+        return vehicle;
+    }
+
     public int getSelectedVehicleID() {
         Object vehicleID = request.getSession().getAttribute("vehicle");
         if (vehicleID == null) {

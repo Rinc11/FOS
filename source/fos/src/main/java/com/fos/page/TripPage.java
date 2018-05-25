@@ -86,7 +86,6 @@ public class TripPage extends FosPage {
         if (getOpenTrip() != null) {
             return true;
         }
-
         return false;
     }
 
@@ -163,25 +162,6 @@ public class TripPage extends FosPage {
             }
         }
         return new ArrayList<>();
-    }
-
-    public Vehicle getVehicle() {
-
-        Connection conn = null;
-        Vehicle vehicle = null;
-        try {
-            conn = Helper.getConnection();
-            vehicle = Vehicle.getVehicle(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), conn);
-        } catch (SQLException e) {
-            Logging.logDatabaseException(request, e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logging.logConnectionNotCloseable(e);
-            }
-        }
-        return vehicle;
     }
 
     @Override
