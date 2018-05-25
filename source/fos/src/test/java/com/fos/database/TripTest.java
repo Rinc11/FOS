@@ -6,7 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.fos.tools.TestHelper;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -65,7 +64,7 @@ public class TripTest {
         String placeEnd = "Winterthur";
         int startKM = 100;
         int endKM = 130;
-        Trip.TripType type = Trip.TripType.PRIVAT;
+        Trip.TripType type = Trip.TripType.PRIVATE;
         String username = "suttema2";
 
         Trip trip = Trip.getTrip(defaultTestTripID,conn);
@@ -97,7 +96,7 @@ public class TripTest {
         Date startTime = new Date();
         String placeStart = "Amriswil";
         int startKM = 5000;
-        Trip.TripType type = Trip.TripType.GESCHÄFTLICH;
+        Trip.TripType type = Trip.TripType.BUSINESS;
         String username = "testUser";
 
         Trip.startNewTrip(vehicleID, startTime, placeStart, startKM, type, username, conn);
@@ -132,7 +131,7 @@ public class TripTest {
         String placeEnd = "Romanshorn";
         int startKM = 5500;
         int endKM = 5510;
-        Trip.TripType type = Trip.TripType.GESCHÄFTLICH;
+        Trip.TripType type = Trip.TripType.BUSINESS;
         String username = "testUser";
 
         Trip tripBefore = Trip.getTrip(1, conn);

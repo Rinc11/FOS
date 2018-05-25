@@ -176,7 +176,7 @@ Auswertung
                             <td>${trip.placeStart}</td>
                             <td>${trip.placeEnd}</td>
                             <td>${trip.endKM - trip.startKM}</td>
-                            <td>${trip.type}</td>
+                            <td>${trip.type.toString()}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

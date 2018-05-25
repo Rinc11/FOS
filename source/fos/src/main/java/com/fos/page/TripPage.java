@@ -35,9 +35,9 @@ public class TripPage extends FosPage {
             try {
                 if (command.startsWith(EDITTRIPTAG)) {
                     updateItem(Integer.valueOf(request.getParameter("tripID")), Integer.valueOf(request.getParameter("tripVehicle")), null, null, request.getParameter("placeStart"), request.getParameter("placeEnd")
-                            , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.valueOf(request.getParameter("type")), null);
+                            , Integer.valueOf(request.getParameter("startKM")), Integer.valueOf(request.getParameter("endKM")), Trip.TripType.getValue(request.getParameter("type")), null);
                 } else if (command.startsWith(ADDSTARTTRIP)) {
-                    startTrip(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.valueOf(request.getParameter("type")), getUser().getUserName());
+                    startTrip(Integer.valueOf(request.getSession().getAttribute("vehicle").toString()), new Date(), request.getParameter("placeStart"), Integer.valueOf(request.getParameter("startKM")), Trip.TripType.getValue(request.getParameter("type")), getUser().getUserName());
                 } else if (command.equals(ADDSTOPTRIP)) {
                     stopTrip(request.getParameter("place"), Integer.valueOf(request.getParameter("kmEnd")));
                 } else if (command.startsWith(SAVEVEHICLE)) {

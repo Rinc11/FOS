@@ -149,7 +149,7 @@ Startseite welche nach dem einlogen aufgerufen wird.
                             <td>${trip.placeEnd}</td>
                             <td>${trip.startKM}</td>
                             <td>${trip.endKM}</td>
-                            <td>${trip.type}</td>
+                            <td>${trip.type.toString()}</td>
                             <td>
                                 <a class="btn btn-default" href="/fahrtAendern?tripID=${trip.tripID}"><span
                                         class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
