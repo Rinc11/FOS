@@ -43,7 +43,7 @@ public class Trip implements Serializable {
             trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
             trip.startKM.setValue(resultSet.getInt("Start_km"));
             trip.endKM.setValue(resultSet.getInt("End_km"));
-            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
+            trip.type.setValue(TripType.getValue(resultSet.getString("Type").toUpperCase()));
             trip.username.setValue(resultSet.getString("Username"));
             result = trip;
         }
@@ -102,7 +102,7 @@ public class Trip implements Serializable {
             sqlCommand.append("AND \"StartTime\" < '" + dateFormat.format(c.getTime()) + "'\n");
         }
         if (tripType != null) {
-            sqlCommand.append("AND \"Trip\".\"Type\" = '" + tripType.name() + "'\n");
+            sqlCommand.append("AND \"Trip\".\"Type\" = '" + tripType.toString() + "'\n");
         }
         ResultSet resultSet = statement.executeQuery(sqlCommand.toString());
 
@@ -121,7 +121,7 @@ public class Trip implements Serializable {
             }
             trip.endKM.setValue(endkm);
 
-            trip.type.setValue(TripType.valueOf(resultSet.getString("TripType").toUpperCase()));
+            trip.type.setValue(TripType.getValue(resultSet.getString("TripType").toUpperCase()));
             trip.username.setValue(resultSet.getString("Username"));
 
             Vehicle tripVehicle = new Vehicle(resultSet.getInt("VehicleID"));
@@ -146,7 +146,7 @@ public class Trip implements Serializable {
      * @throws SQLException
      */
     public static void startNewTrip(Integer vehicleID, Date startTime, String placeStart, Integer startKM, TripType type, String username, Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Trip\" (\"VehicleID\", \"StartTime\",  \"PlaceStart\",  \"Start_km\",  \"Type\", \"Username\") VALUES (?, ?, ?, ?,'" + type + "', ?)");
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO \"Trip\" (\"VehicleID\", \"StartTime\",  \"PlaceStart\",  \"Start_km\",  \"Type\", \"Username\") VALUES (?, ?, ?, ?,'" + type.toString() + "', ?)");
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.setTimestamp(2, Helper.dateToSqlTimestamp(startTime));
         preparedStatement.setString(3, placeStart);
@@ -157,7 +157,7 @@ public class Trip implements Serializable {
 
     public static void updateTrip(Integer tripID, Integer vehicleID, Date startTime, Date endTime, String placeStart, String placeEnd, Integer startKM, Integer endKM, TripType type, String username, Connection conn) throws SQLException {
 
-        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Trip\" SET  \"VehicleID\" = ?, \"StartTime\" = ?, \"EndTime\" = ?, \"PlaceStart\" = ?, \"PlaceEnd\" = ?, \"Start_km\" = ?, \"End_km\" = ?,\"Type\" = '" + type + "', \"Username\" = ? WHERE \"TripID\" = ?");
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE \"Trip\" SET  \"VehicleID\" = ?, \"StartTime\" = ?, \"EndTime\" = ?, \"PlaceStart\" = ?, \"PlaceEnd\" = ?, \"Start_km\" = ?, \"End_km\" = ?,\"Type\" = '" + type.toString() + "', \"Username\" = ? WHERE \"TripID\" = ?");
 
         preparedStatement.setInt(1, vehicleID);
         preparedStatement.setTimestamp(2, Helper.dateToSqlTimestamp(startTime));
@@ -216,7 +216,7 @@ public class Trip implements Serializable {
             trip.placeEnd.setValue(resultSet.getString("PlaceEnd"));
             trip.startKM.setValue(resultSet.getInt("Start_km"));
             trip.endKM.setValue(resultSet.getInt("End_km"));
-            trip.type.setValue(TripType.valueOf(resultSet.getString("Type").toUpperCase()));
+            trip.type.setValue(TripType.getValue(resultSet.getString("Type").toUpperCase()));
             trip.username.setValue(resultSet.getString("Username"));
         }
         return trip;
@@ -288,6 +288,28 @@ public class Trip implements Serializable {
      * Enum mit den Werten für den Fahrtentyp
      */
     public enum TripType {
-        GESCHÄFTLICH, PRIVAT
+        BUSINESS("GESCHÄFTLICH"), PRIVATE("PRIVAT");
+
+        private String text;
+
+        TripType(String text){
+            TripType tripType = this;
+
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+
+        public static TripType getValue(String enumText){
+            Optional<TripType> tripType = Arrays.stream(TripType.values()).filter(f -> f.toString().equals(enumText)).findAny();
+            if(tripType.isPresent()){
+                return tripType.get();
+            }else{
+                return null;
+            }
+        }
     }
 }

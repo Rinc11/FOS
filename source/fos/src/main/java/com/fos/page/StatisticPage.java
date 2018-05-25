@@ -97,9 +97,9 @@ public class StatisticPage extends FosPage implements FosPageExport {
         String tripTypeParameter = request.getParameter("tripType");
         if (tripTypeParameter != null && !tripTypeParameter.equals("")) {
             if (tripTypeParameter.equals("g")) {
-                return Trip.TripType.GESCHÄFTLICH;
+                return Trip.TripType.BUSINESS;
             } else if (tripTypeParameter.equals("p")) {
-                return Trip.TripType.PRIVAT;
+                return Trip.TripType.PRIVATE;
             }
         }
         return null;
@@ -132,15 +132,15 @@ public class StatisticPage extends FosPage implements FosPageExport {
     }
 
     public int getFilteredKm() {
-        return getFilteredKm(filteredTrips, request, Trip.TripType.GESCHÄFTLICH) + getFilteredKm(filteredTrips, request, Trip.TripType.PRIVAT);
+        return getFilteredKm(filteredTrips, request, Trip.TripType.BUSINESS) + getFilteredKm(filteredTrips, request, Trip.TripType.PRIVATE);
     }
 
     public int getFilteredKmPrivat() {
-        return getFilteredKm(filteredTrips, request, Trip.TripType.PRIVAT);
+        return getFilteredKm(filteredTrips, request, Trip.TripType.PRIVATE);
     }
 
     public int getFilteredKmBusiness() {
-        return getFilteredKm(filteredTrips, request, Trip.TripType.GESCHÄFTLICH);
+        return getFilteredKm(filteredTrips, request, Trip.TripType.BUSINESS);
     }
 
     public static int getFilteredKm(List<Trip> filteredTrips, HttpServletRequest request, Trip.TripType type) {

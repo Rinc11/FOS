@@ -45,7 +45,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.GESCHÄFTLICH);
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.BUSINESS);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
         } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
@@ -69,7 +69,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.PRIVAT);
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, getUser().getUserName(), null, null, Trip.TripType.PRIVATE);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
         } catch (NotLoadedException | SQLException e) {
             Logging.logDatabaseException(request, e);
@@ -93,7 +93,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.GESCHÄFTLICH);
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.BUSINESS);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);
@@ -117,7 +117,7 @@ public class HomePage extends FosPage {
         Connection conn = null;
         try {
             conn = Helper.getConnection();
-            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.PRIVAT);
+            List<Trip> filteredTrips = Trip.getFilteredTrips(conn, null, null, null, null, Trip.TripType.PRIVATE);
             result = StatisticPage.getFilteredKm(filteredTrips, request);
         } catch (SQLException e) {
             Logging.logDatabaseException(request, e);

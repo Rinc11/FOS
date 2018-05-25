@@ -62,10 +62,10 @@ Formular zum eine Fahrt abändern
                         <label>Typ</label>
                         <select class="form-control" name="type">
                             <option value="GESCHÄFTLICH"
-                                    <c:if test="${trip.type == 'GESCHÄFTLICH'}">selected</c:if>>GESCHÄFTLICH
+                                    <c:if test="${trip.type == 'BUSINESS'}">selected</c:if>>GESCHÄFTLICH
                             </option>
                             <option value="PRIVAT"
-                                    <c:if test="${trip.type == 'PRIVAT'}">selected</c:if>>PRIVAT
+                                    <c:if test="${trip.type == 'PRIVATE'}">selected</c:if>>PRIVAT
                             </option>
                         </select>
                     </div>
