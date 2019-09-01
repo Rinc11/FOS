@@ -2,6 +2,8 @@
 Gruppe 16 PSIT 2017/18 Repository
 Fabian Wipf, Jonas Rüegge, Marco Sutter, Reto Mayer
 
+Dies ist das Resultat einer Projektarbeit des Informatikstudiums 2017/2018 der ZHAW School of Engineering.
+
 FOS ist die Abkürzung für Fahrzeug Organisations-System.
 Dieses Dokument beschreibt das Pflichtenheft der Webanwendung FOS. Alle beschriebenen Anforderungen 
 sind rechtlich verbindlich und werden gemäss Beschreibung des Pflichtenhefts umgesetzt.
